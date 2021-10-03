@@ -78,46 +78,25 @@ const Gram = {
     isScalable: false
 }
 
+//TODO: remove last char if . or s
 export const Units = {
-     "cups": Cup,
      "cup": Cup,
      "c": Cup,
-     "cs": Cup,
-     "c.": Cup,
-     "cs.": Cup,
-     "tablespoons": Tablespoon,
      "tablespoon": Tablespoon,
      "tbsp": Tablespoon,
-     "tbsps": Tablespoon,
-     "tbsp.": Tablespoon,
-     "tbsps.": Tablespoon,
-     "teaspoons": Teaspoon,
      "teaspoon": Teaspoon,
-     "tsps": Teaspoon,
      "tsp": Teaspoon,
-     "tsps.": Teaspoon,
-     "tsp.": Teaspoon,
      "t": Teaspoon,
      "oz": Ounce,
      "ounce": Ounce,
-     "ounces": Ounce,
-     "ozs": Ounce,
-     "oz.": Ounce,
-     "ozs.": Ounce,
-     "pounds": Pound,
+     "pound": Pound,
      "lb": Pound,
-     "lbs": Pound,
-     "lb.": Pound,
-     "gallons": Gallon,
      "gallon": Gallon,
      "pint": Pint,
-     "pints": Pint,
      "quart": Quart,
-     "quarts": Quart,
      "q": Quart, 
-     "grams": Gram,
      "gram": Gram,
      "g": Gram 
  } as const
 
- export const UnitsType = typeof Units
+ export type UnitsType = keyof typeof Units
