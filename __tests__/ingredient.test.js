@@ -1,9 +1,8 @@
-const {MyIngredient, Ingredient} = require('../src/types/ingredient.js')
+const {Ingredient} = require('../src/types/ingredient.js')
 
-describe('parses input successfully', () => {
+describe('sorts, formats, and filters ingredient input', () => {
 
     describe('correctly handles amount input in isolation', () => {
-        
         test('sorts single digit integer as amount', () => {
             const TestIngredient = new Ingredient()
             TestIngredient.sort('1')
@@ -64,6 +63,18 @@ describe('parses input successfully', () => {
         })
     })
 
-    
+    describe('fills an ingredient with given input of different types', () => {
+        const TestIngredient = new Ingredient()
+        test('given valid three part input sorts all three parts correctly', () => {
+
+            TestIngredient.sort('cup')
+            TestIngredient.sort('1')
+            TestIngredient.sort('water')
+            expect(TestIngredient.amount.ml).toBe(1)
+            expect(TestIngredient.unit.name.long).toBe('cup')
+            expect(TestIngredient.ingredient.name).toBe('water')
+        })
+
+    })
 
 })
