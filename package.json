@@ -1,0 +1,11 @@
+{
+  "name": "slicer",
+  "version": "1.0.0",
+  "description": "An algorithm that parses recipe input to make ingredients scalable",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rachel Reilly",
+  "license": "ISC"
+}
