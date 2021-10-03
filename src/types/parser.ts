@@ -10,20 +10,6 @@ export class Parser{
     lastIngredient: Ingredient // in case of backtracking
     currentWord: string
 
-    currentIsDigit(word: string):boolean{
-        const regex = /\d/
-        return !!word.match(regex)
-    }
-
-    currentIsUnit(current:string):boolean{
-        const lastIndex = current.length - 1
-        const last = current[lastIndex]
-
-        // removes ending 's' or '.', i.e. "cups" or "tbsp."
-        if (last === ('s' || '.')) current = current.slice(0, lastIndex)
-        const isUnit = current in Units
-        return !!isUnit
-    }
 
     parse(input:string){
         const emptyChar = ' ' || '\n'
@@ -36,7 +22,7 @@ export class Parser{
                 this.currentWord += input[i]
             }
         }
-        
+
     }
 
     addCurrentToIngredients(){
