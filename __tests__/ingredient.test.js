@@ -65,15 +65,30 @@ describe('sorts, formats, and filters ingredient input', () => {
 
     describe('fills an ingredient with given input of different types', () => {
         const TestIngredient = new Ingredient()
-        test('given valid three part input sorts all three parts correctly', () => {
 
-            TestIngredient.sort('cup')
+        test('given valid ingredient without unit, returns valid unit is true', () => {
             TestIngredient.sort('1')
             TestIngredient.sort('water')
+            expect(TestIngredient.isValidIngredient()).toBe(true)
+        })
+        
+        test('given incomplete input, returns false for isCompleteInput()', () => {
+            expect(TestIngredient.isCompleteIngredient()).toBe(false)
+        })
+        
+        test('given valid three part input sorts all three parts correctly', () => {
+            TestIngredient.sort('cup')
+
             expect(TestIngredient.amount.ml).toBe(1)
             expect(TestIngredient.unit.name.long).toBe('cup')
             expect(TestIngredient.ingredient.name).toBe('water')
         })
+
+        test('returns true for complete ingredient', () => {
+            expect(TestIngredient.isCompleteIngredient()).toBe(true)
+        })
+
+       
 
     })
 
