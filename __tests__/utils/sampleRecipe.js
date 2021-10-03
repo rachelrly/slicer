@@ -27,11 +27,11 @@ Black pepper to taste
 1/2 cup sour cream
 `
 
-export const VULGAR_FRACTIONS = `¼ cup butter
-1 cup heavy cream
-1 clove garlic, crushed
-1 ½ cups freshly grated Parmesan cheese
-¼ cup chopped fresh parsley`
+// export const VULGAR_FRACTIONS = `¼ cup butter
+// 1 cup heavy cream
+// 1 clove garlic, crushed
+// 1 ½ cups freshly grated Parmesan cheese
+// ¼ cup chopped fresh parsley`
 
 
 const PANCAKES = `1 cup milk
@@ -46,4 +46,8 @@ Butter for greasing the pan -about 3 tablespoons
 Maple syrup for serving`
 
 
-export const RECIPES = {VULGAR_FRACTIONS, PANCAKES, SPECIAL_CHARACTERS, TIRAMISU, BASIC_BREAD}
+// export const RECIPES = {VULGAR_FRACTIONS, PANCAKES, SPECIAL_CHARACTERS, TIRAMISU, BASIC_BREAD}
+
+// export const TEST_INPUTS = [
+// '1/2', ''
+// ]

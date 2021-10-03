@@ -20,13 +20,13 @@ export class Amount {
         
     }
 
-    toFloat(amount: string){
+    toFloat(amount: string):number{
         // if is reg fraction
         const regex = /\//ig
-        const {index=null} = regex.exec(amount)
+        const isPresent = regex.exec(amount)
 
-        if (index) {
-            return fractionToFloat(amount, index)
+        if (isPresent?.index) {
+            return fractionToFloat(amount, isPresent?.index)
         } else {
             return Number(amount)
         }
@@ -35,14 +35,15 @@ export class Amount {
     }
 
     set(number: string){
-        this.ml = this.ml + this.toFloat(number)
+        const float = this.toFloat(number)
+        this.ml = this.ml ? this.ml + float : float
     }
 }
 
 class IngredientName {
     name: string
     set(current:string){
-        if (this.name.length){
+        if (!this.name){
             this.name = current
         } else {
             this.name += ' ' + current
@@ -56,19 +57,26 @@ export class Ingredient {
     ingredient?: IngredientName
 
     display(){
+
         return ({
-            amount: this.amount.ml, 
-            unit: this.unit.name, 
-            ingredient: this.ingredient
+            amount: this?.amount?.ml, 
+            unit: this?.unit?.name, 
+            ingredient: this?.ingredient
         })
     }
 
+
     sort(current: string):void{
         if (this.currentIsDigit(current)) {
+            if (!this.amount) this.amount = new Amount()
             this.amount.set(current)
         } else if (this.currentIsUnit(current)) {
+            const lastIndex = current.length - 1
+            const last = current[lastIndex]
+            if (last === ('s' || '.')) current = current.slice(0, lastIndex)
             this.unit = Units[current as UnitsType]
         } else {
+            if (!this.ingredient) this.ingredient = new IngredientName
             this.ingredient.set(current)
         }
     }
@@ -102,3 +110,14 @@ export class Ingredient {
    
 
 }
+
+
+
+export const MyIngredient:Ingredient = new Ingredient()
+
+
+////////////////////////////
+
+const ing = new Ingredient()
+
+ing.sort('1')
