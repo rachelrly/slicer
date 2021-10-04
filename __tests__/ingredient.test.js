@@ -75,7 +75,7 @@ describe('sorts, formats, and filters ingredient input', () => {
         test('given incomplete input, returns false for isCompleteInput()', () => {
             expect(TestIngredient.isCompleteIngredient()).toBe(false)
         })
-        
+
         test('given valid three part input sorts all three parts correctly', () => {
             TestIngredient.sort('cup')
 
@@ -84,7 +84,7 @@ describe('sorts, formats, and filters ingredient input', () => {
             expect(TestIngredient.ingredient.name).toBe('water')
         })
 
-        test('returns true for complete ingredient', () => {
+        test('given all parts, isCompleteInput() returns true', () => {
             expect(TestIngredient.isCompleteIngredient()).toBe(true)
         })
 

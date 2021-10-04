@@ -12,13 +12,11 @@ export interface Unit {
 }
 
 
-
+// replace all instances of ml
+// have isMl prop here readonly
 export class Amount {
     ml: number
-
-    isValid(){
-        
-    }
+    amount: number
 
     toFloat(amount: string):number{
         // if is reg fraction
@@ -55,16 +53,6 @@ export class Ingredient {
     amount?: Amount
     unit?: Unit
     ingredient?: IngredientName
-
-    display(){
-
-        return ({
-            amount: this?.amount?.ml, 
-            unit: this?.unit?.name, 
-            ingredient: this?.ingredient
-        })
-    }
-
 
     sort(current: string):void{
         if (this.currentIsDigit(current)) {
@@ -110,14 +98,3 @@ export class Ingredient {
    
 
 }
-
-
-
-export const MyIngredient:Ingredient = new Ingredient()
-
-
-////////////////////////////
-
-const ing = new Ingredient()
-
-ing.sort('1')
