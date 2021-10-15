@@ -2,6 +2,8 @@
 
 This repo contains the TypeScript algorithm to slice copy and pasted recipes.
 
+The goal of this project is to make a recipe parsing package with broader application than the [Sliced app](https://github.com/rachelrly/sliced).
+
 ## Tech Stack
 
 - TypeScript
