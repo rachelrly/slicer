@@ -13,11 +13,21 @@ The goal of this project is to make a recipe parsing package with broader applic
 
 ### /src
 
-This folder contains the TypeScript code of the Slicer algorithm
+Contains the TypeScript code of the Slicer algorithm
 
 #### /types
 
-This folder contains the TS Classes necessary to parse recipes
+##### ingredient.ts
+
+Defines `Amount` and `IngredientName` classes and integrates them with valid `Unit` to create the `Ingredient` class
+
+##### units.ts
+
+Declares valid units and equivalencies
+
+##### parser.ts
+
+Contains the class that loops through the string and controls the behavior of the parser
 
 #### index.ts
 
