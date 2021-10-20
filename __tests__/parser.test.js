@@ -13,21 +13,17 @@ describe("parser works as expected", () => {
 
   test("given valid recipe input sets a list of sorted ingredients", () => {
     TestParser.parse(BASIC_BREAD);
-    console.log("THIS IS AFTER ADDED BY PARSER", TestParser.ingredients);
     expect(TestParser.ingredients?.length).toBe(7);
   });
 
-  test("given a recipe, the first ingredient is returned as expected", () => {
-    const ingredient = TestParser.ingredients[0];
-    expect(ingredient.amount.ml).toBe(1);
-    expect(ingredient.unit).toBeNull();
-    expect(ingredient.ingredient.name).toBe("package active dry yeast");
-  });
+  // test("given a recipe, the first ingredient is returned as expected", () => {
+  //   const ingredient = TestParser.ingredients[0];
+  //   expect(ingredient.amount.amount).toBe(1);
+  //   expect(ingredient.unit).toBeNull();
+  //   expect(ingredient.ingredient.name).toBe("package active dry yeast");
+  // });
 
   // does it capture all units??
-  test("processes all valid units as valid", () => {
-    Object.keys(Units).map();
-  });
 
   // does it capture last item or leave it hanging??
 

@@ -13,31 +13,39 @@ exports.Parser = void 0;
 var ingredient_1 = require("./ingredient");
 var Parser = (function () {
     function Parser() {
+        this.ingredients = [];
+        this.currentIngredient = new ingredient_1.Ingredient();
+        this.currentWord = "";
     }
     Parser.prototype.parse = function (input) {
-        var emptyChar = ' ' || '\n' || '-';
+        var isEmptyChar = function (char) {
+            if (char == " ")
+                return true;
+            if (char === "\n")
+                return true;
+            if (char === "-")
+                return true;
+            return false;
+        };
         var i = 0;
         for (i = 0; i <= input.length; i++) {
-            if (input[i] == emptyChar) {
-                if (!this.currentIngredient)
-                    this.currentIngredient = new ingredient_1.Ingredient();
+            if (isEmptyChar(input[i])) {
                 this.currentIngredient.sort(this.currentWord);
-                this.currentWord = '';
-                this.addCurrentToIngredients();
+                this.currentWord = "";
             }
             else {
                 this.currentWord += input[i];
             }
+            this._addToIngredients();
         }
         if (this.currentIngredient)
-            this.addCurrentToIngredients();
+            this._addToIngredients();
     };
-    Parser.prototype.addCurrentToIngredients = function () {
-        if (!this.ingredients)
-            this.ingredients = [];
-        if (this.currentIngredient.isValidIngredient()) {
+    Parser.prototype._addToIngredients = function () {
+        var isValidIngredient = this.currentIngredient.isValidIngredient();
+        if (isValidIngredient) {
             this.ingredients = __spreadArray(__spreadArray([], this.ingredients, true), [this.currentIngredient], false);
-            this.currentIngredient = new ingredient_1.Ingredient;
+            this.currentIngredient = new ingredient_1.Ingredient();
         }
     };
     return Parser;
