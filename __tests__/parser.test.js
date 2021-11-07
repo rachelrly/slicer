@@ -35,9 +35,7 @@ describe("Parser class parses input data correctly", () => {
 
   test("given a valid recipe input, it parses ingredients correctly and in order", () => {
     const firstIngredient = TestParser.ingredients[0];
-    console.log("FIRST INGREDIENT", firstIngredient);
     const secondIngredient = TestParser.ingredients[1];
-    console.log("SECOND INGREDIENT", secondIngredient);
 
     expect(firstIngredient.amount.amount).toBe(1);
     expect(firstIngredient.unit).toBeNull();

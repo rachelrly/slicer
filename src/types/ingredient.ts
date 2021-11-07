@@ -107,7 +107,8 @@ export class Ingredient {
     // removes ending 's' or '.', i.e. "cups" or "tbsp."
     const lastIndex = current.length - 1;
     const last = current[lastIndex];
-    if (last === ("s" || ".")) current = current.slice(0, lastIndex);
+    const isDiscardChar = last === "s" || last === ".";
+    if (isDiscardChar) current = current.slice(0, lastIndex);
 
     const isUnit = Boolean(current in Units);
     return isUnit;

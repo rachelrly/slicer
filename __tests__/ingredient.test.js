@@ -1,29 +1,26 @@
 const { Ingredient } = require("../dist/types/ingredient");
 
-describe.skip("sorts, formats, and filters ingredient input", () => {
-  describe("correctly handles amount input in isolation", () => {
-    test("sorts single digit integer as amount", () => {
+describe("sorts, formats, and filters ingredient input", () => {
+  describe("correctly handles amount input", () => {
+    test("sorts integer as amount", () => {
       const TestIngredient = new Ingredient();
-      TestIngredient.sort("1");
-      expect(TestIngredient.amount.amount).toBe(1);
+      expect(TestIngredient.sort("1")).toBe("amount");
+    });
+
+    test("sorts fraction as amount", () => {
+      const TestIngredient = new Ingredient();
+      expect(TestIngredient.sort("1/2")).toBe("amount");
     });
 
     test("sorts fraction and converts to decimal", () => {
       const TestIngredient = new Ingredient();
-      TestIngredient.sort("1/2");
-      expect(TestIngredient.amount.amount).toBe(0.5);
+      expect(TestIngredient.sort("1.5")).toBe("amount");
     });
 
-    test("sorts fraction and converts to decimal", () => {
+    test("sums input with repeated numeric input", () => {
       const TestIngredient = new Ingredient();
-      TestIngredient.sort("1.5");
-      expect(TestIngredient.amount.amount).toBe(1.5);
-    });
-
-    test("adds to amount with additional numeric input", () => {
-      const TestIngredient = new Ingredient();
-      TestIngredient.sort("1");
-      TestIngredient.sort("2");
+      TestIngredient.setAmount("1");
+      TestIngredient.setAmount("2");
       expect(TestIngredient.amount.amount).toBe(3);
     });
   });
@@ -31,23 +28,20 @@ describe.skip("sorts, formats, and filters ingredient input", () => {
   describe("correctly handles unit input in isolation", () => {
     const TestIngredient = new Ingredient();
 
-    test("sets unit correctly based on valid string input", () => {
-      TestIngredient.sort("tsp");
-      expect(TestIngredient.unit.name.short).toBe("tsp");
+    test("sorts short unit as unit", () => {
+      expect(TestIngredient.sort("tsp")).toBe("unit");
     });
 
-    test("unit input to overwrite current unit input", () => {
-      TestIngredient.sort("tbsp");
-      expect(TestIngredient.unit.name.short).toBe("tbsp");
+    test("sorts plural unit as unit", () => {
+      expect(TestIngredient.sort("tsps")).toBe("unit");
     });
 
-    test('ignores "s" at the end of valid unit input', () => {
-      TestIngredient.sort("tsps");
-      expect(TestIngredient.unit.name.short).toBe("tsp");
+    test("sorts unit ending with period as unit", () => {
+      expect(TestIngredient.sort("tsp.")).toBe("unit");
     });
   });
 
-  describe("correctly handles ingredient name input in isolation", () => {
+  describe.skip("correctly handles ingredient name input in isolation", () => {
     const TestIngredient = new Ingredient();
 
     test("adds ingredient name", () => {
@@ -62,7 +56,7 @@ describe.skip("sorts, formats, and filters ingredient input", () => {
     });
   });
 
-  describe("given a valid amount, unit, and ingredient name, it fills an ingredient", () => {
+  describe.skip("given a valid amount, unit, and ingredient name, it fills an ingredient", () => {
     const TestIngredient = new Ingredient();
 
     test("given valid ingredient without unit, returns valid unit is true", () => {

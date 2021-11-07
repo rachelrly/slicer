@@ -98,7 +98,8 @@ var Ingredient = (function () {
     Ingredient.prototype._isUnit = function (current) {
         var lastIndex = current.length - 1;
         var last = current[lastIndex];
-        if (last === ("s" || "."))
+        var isDiscardChar = last === "s" || last === ".";
+        if (isDiscardChar)
             current = current.slice(0, lastIndex);
         var isUnit = Boolean(current in units_1.Units);
         return isUnit;
