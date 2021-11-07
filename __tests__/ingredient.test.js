@@ -41,27 +41,28 @@ describe("sorts, formats, and filters ingredient input", () => {
     });
   });
 
-  describe.skip("correctly handles ingredient name input in isolation", () => {
+  describe("correctly handles ingredient name input in isolation", () => {
+    //TODO: add sad path for "undefined"
     const TestIngredient = new Ingredient();
 
-    test("adds ingredient name", () => {
-      TestIngredient.sort("salt");
-      expect(TestIngredient.ingredient.name).toBe("salt");
+    test("sorts ingredient name as ingredient", () => {
+      expect(TestIngredient.sort("salt")).toBe("ingredient");
     });
 
-    test("continues to add ingredient name items seperated by spaces", () => {
-      TestIngredient.sort("and");
-      TestIngredient.sort("pepper");
+    test("concatinates repeated ingredient input seperated by spaces", () => {
+      TestIngredient.setIngredient("salt");
+      TestIngredient.setIngredient("and");
+      TestIngredient.setIngredient("pepper");
       expect(TestIngredient.ingredient.name).toBe("salt and pepper");
     });
   });
 
-  describe.skip("given a valid amount, unit, and ingredient name, it fills an ingredient", () => {
+  describe("given a valid amount, unit, and ingredient name, it fills an ingredient", () => {
     const TestIngredient = new Ingredient();
 
     test("given valid ingredient without unit, returns valid unit is true", () => {
-      TestIngredient.sort("1");
-      TestIngredient.sort("water");
+      TestIngredient.setAmount("1");
+      TestIngredient.setIngredient("water");
       expect(TestIngredient.isValidIngredient()).toBe(true);
     });
 
@@ -70,7 +71,7 @@ describe("sorts, formats, and filters ingredient input", () => {
     });
 
     test("given valid three part input sorts all three parts correctly", () => {
-      TestIngredient.sort("cup");
+      TestIngredient.setUnit("cup");
 
       expect(TestIngredient.amount.amount).toBe(1);
       expect(TestIngredient.unit.name.long).toBe("cup");
