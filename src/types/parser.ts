@@ -10,24 +10,7 @@ export class Parser {
     for (let i = 0; i <= input.length; i++) {
       if (_isEmptyChar(input[i]) || _isFinalChar(i)) {
         if (this.currentWord) {
-          const option = this.currentIngredient.sort(this.currentWord);
-          switch (option) {
-            case IngredientOptions.Amount:
-              const isFullIngredient =
-                this.currentIngredient.ingredient?.name ||
-                this.currentIngredient.unit;
-
-              if (isFullIngredient) this._addToIngredients();
-
-              this.currentIngredient.setAmount(this.currentWord);
-              break;
-            case IngredientOptions.Ingredient:
-              this.currentIngredient.setIngredient(this.currentWord);
-              break;
-            case IngredientOptions.Unit:
-              this.currentIngredient.setUnit(this.currentWord);
-              break;
-          }
+          this._addWordToIngredient(this.currentWord);
           this.currentWord = "";
         }
       } else {
@@ -48,6 +31,27 @@ export class Parser {
     function _isFinalChar(index: number) {
       const isFinal = input.length === index;
       return isFinal;
+    }
+  }
+
+  _addWordToIngredient(word: string) {
+    const option = this.currentIngredient.sort(word);
+    switch (option) {
+      case IngredientOptions.Amount:
+        const isFullIngredient =
+          this.currentIngredient.ingredient?.name ||
+          this.currentIngredient.unit;
+
+        if (isFullIngredient) this._addToIngredients();
+
+        this.currentIngredient.setAmount(word);
+        break;
+      case IngredientOptions.Ingredient:
+        this.currentIngredient.setIngredient(word);
+        break;
+      case IngredientOptions.Unit:
+        this.currentIngredient.setUnit(word);
+        break;
     }
   }
 
