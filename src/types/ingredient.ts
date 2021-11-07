@@ -24,6 +24,9 @@ export class Ingredient {
     } else return IngredientOptions.Ingredient;
   }
 
+  /**
+   * Methods to validate and set ingredient list
+   */
   setAmount(current: string) {
     this.amount.set(current);
   }
@@ -37,6 +40,18 @@ export class Ingredient {
 
   setIngredient(current: string) {
     this.ingredient.set(current);
+  }
+
+  scale(constant: number) {
+    // currently scales amount only
+    const unitMl = this.unit.quantityInMl;
+    const base = this.amount.amount * unitMl;
+    const scaled = this.amount.amount * constant;
+    const newAmount = scaled / base;
+    this.setAmount(newAmount.toString());
+    // how to scale unit??
+    // new quantity in ml
+    // what qualifies as a switch?
   }
 
   isCompleteIngredient(): boolean {

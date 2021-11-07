@@ -7,6 +7,12 @@ var Recipe = (function () {
         this.recipe = [];
         this.scaledRecipe = [];
     }
+    Recipe.prototype.setInput = function (input) {
+        this.input = input;
+    };
+    Recipe.prototype.setConstant = function (constant) {
+        this.constant = constant;
+    };
     Recipe.prototype.parseInput = function () {
         var parser = new parser_1.Parser();
         parser.parse(this.input);
