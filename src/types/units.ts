@@ -1,3 +1,14 @@
+export interface UnitName {
+  long: string;
+  short: string;
+}
+
+export interface Unit {
+  readonly quantityInMl?: number;
+  readonly name: UnitName;
+  readonly isScalable: boolean;
+}
+
 const Teaspoon = {
   quantityInMl: 4.92892,
   name: {

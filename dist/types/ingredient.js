@@ -1,55 +1,20 @@
 "use strict";
 exports.__esModule = true;
-exports.Ingredient = exports.Amount = exports.IngredientOptions = void 0;
+exports.Ingredient = exports.IngredientOptions = void 0;
 var units_1 = require("./units");
-var format_1 = require("../utils/format");
+var amount_1 = require("./amount");
+var ingredientName_1 = require("./ingredientName");
 var IngredientOptions;
 (function (IngredientOptions) {
     IngredientOptions["Amount"] = "amount";
     IngredientOptions["Unit"] = "unit";
     IngredientOptions["Ingredient"] = "ingredient";
 })(IngredientOptions = exports.IngredientOptions || (exports.IngredientOptions = {}));
-var Amount = (function () {
-    function Amount() {
-        this.amount = 0;
-    }
-    Amount.prototype.toFloat = function (amount) {
-        var regex = /\//gi;
-        var hasSlash = regex.exec(amount);
-        if (hasSlash === null || hasSlash === void 0 ? void 0 : hasSlash.index) {
-            return (0, format_1.fractionToFloat)(amount, hasSlash === null || hasSlash === void 0 ? void 0 : hasSlash.index);
-        }
-        else {
-            return Number(amount);
-        }
-    };
-    Amount.prototype.set = function (number) {
-        var float = this.toFloat(number);
-        var newAmount = this.amount + float;
-        this.amount = newAmount;
-    };
-    return Amount;
-}());
-exports.Amount = Amount;
-var IngredientName = (function () {
-    function IngredientName() {
-        this.name = "";
-    }
-    IngredientName.prototype.set = function (current) {
-        if (!this.name) {
-            this.name = current;
-        }
-        else {
-            this.name += " " + current;
-        }
-    };
-    return IngredientName;
-}());
 var Ingredient = (function () {
     function Ingredient() {
-        this.amount = new Amount();
+        this.amount = new amount_1.Amount();
         this.unit = null;
-        this.ingredient = new IngredientName();
+        this.ingredient = new ingredientName_1.IngredientName();
     }
     Ingredient.prototype.sort = function (current) {
         if (this._isDigit(current)) {
