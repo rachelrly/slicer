@@ -2,9 +2,15 @@ import { Units, UnitsType } from "./units";
 import { Errors } from "./errors";
 import { fractionToFloat } from "../utils/format";
 
-interface UnitName {
+export interface UnitName {
   long: string;
   short: string;
+}
+
+export enum IngredientOptions {
+  Amount = "amount",
+  Unit = "unit",
+  Ingredient = "ingredient",
 }
 
 export interface Unit {
@@ -51,19 +57,33 @@ export class Ingredient {
   unit?: Unit = null;
   ingredient? = new IngredientName();
 
-  sort(current: string): void {
+  sort(current: string): IngredientOptions {
     if (this._isDigit(current)) {
-      if (this.unit || this.ingredient.name)
-        throw new Error(Errors.AmountFullIngredient);
-      else this.amount.set(current);
+      return IngredientOptions.Amount;
     } else if (this._isUnit(current)) {
-      const lastIndex = current.length - 1;
-      const lastChar = current[lastIndex];
-      if (lastChar === ("s" || ".")) current = current.slice(0, lastIndex);
-      this.unit = Units[current as UnitsType];
-    } else {
-      this.ingredient.set(current);
-    }
+      return IngredientOptions.Unit;
+    } else if (Boolean(current)) {
+      // stops undefined
+      return IngredientOptions.Ingredient;
+    } else return IngredientOptions.Ingredient;
+  }
+
+  setAmount(current: string) {
+    console.log("SETTING AMOUNT", current);
+    this.amount.set(current);
+  }
+
+  setUnit(current: string) {
+    console.log("SETTING UNIT", current);
+    const lastIndex = current.length - 1;
+    const lastChar = current[lastIndex];
+    if (lastChar === ("s" || ".")) current = current.slice(0, lastIndex);
+    this.unit = Units[current as UnitsType];
+  }
+
+  setIngredient(current: string) {
+    console.log("SETTING INGREDIENT", current);
+    this.ingredient.set(current);
   }
 
   isCompleteIngredient(): boolean {
@@ -73,7 +93,7 @@ export class Ingredient {
   }
 
   isValidIngredient(): boolean {
-    // i.e. "1 cup rice", "1 egg", "salt"
+    // i.e. "1 cup rice", "1 egg"
     if (this.isCompleteIngredient()) return true;
     // TODO: add support for case with just ingredient name, i.e. salt
     else if (this.ingredient?.name && this.amount?.amount && !this.unit) {

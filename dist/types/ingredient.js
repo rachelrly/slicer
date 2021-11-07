@@ -1,9 +1,14 @@
 "use strict";
 exports.__esModule = true;
-exports.Ingredient = exports.Amount = void 0;
+exports.Ingredient = exports.Amount = exports.IngredientOptions = void 0;
 var units_1 = require("./units");
-var errors_1 = require("./errors");
 var format_1 = require("../utils/format");
+var IngredientOptions;
+(function (IngredientOptions) {
+    IngredientOptions["Amount"] = "amount";
+    IngredientOptions["Unit"] = "unit";
+    IngredientOptions["Ingredient"] = "ingredient";
+})(IngredientOptions = exports.IngredientOptions || (exports.IngredientOptions = {}));
 var Amount = (function () {
     function Amount() {
         this.amount = 0;
@@ -48,21 +53,32 @@ var Ingredient = (function () {
     }
     Ingredient.prototype.sort = function (current) {
         if (this._isDigit(current)) {
-            if (this.unit || this.ingredient.name)
-                throw new Error(errors_1.Errors.AmountFullIngredient);
-            else
-                this.amount.set(current);
+            return IngredientOptions.Amount;
         }
         else if (this._isUnit(current)) {
-            var lastIndex = current.length - 1;
-            var lastChar = current[lastIndex];
-            if (lastChar === ("s" || "."))
-                current = current.slice(0, lastIndex);
-            this.unit = units_1.Units[current];
+            return IngredientOptions.Unit;
         }
-        else {
-            this.ingredient.set(current);
+        else if (Boolean(current)) {
+            return IngredientOptions.Ingredient;
         }
+        else
+            return IngredientOptions.Ingredient;
+    };
+    Ingredient.prototype.setAmount = function (current) {
+        console.log("SETTING AMOUNT", current);
+        this.amount.set(current);
+    };
+    Ingredient.prototype.setUnit = function (current) {
+        console.log("SETTING UNIT", current);
+        var lastIndex = current.length - 1;
+        var lastChar = current[lastIndex];
+        if (lastChar === ("s" || "."))
+            current = current.slice(0, lastIndex);
+        this.unit = units_1.Units[current];
+    };
+    Ingredient.prototype.setIngredient = function (current) {
+        console.log("SETTING INGREDIENT", current);
+        this.ingredient.set(current);
     };
     Ingredient.prototype.isCompleteIngredient = function () {
         var _a, _b, _c;

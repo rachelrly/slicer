@@ -18,18 +18,34 @@ var Parser = (function () {
         this.currentWord = "";
     }
     Parser.prototype.parse = function (input) {
+        var _a;
         for (var i = 0; i <= input.length; i++) {
             if (_isEmptyChar(input[i]) || _isFinalChar(i)) {
                 if (this.currentWord) {
-                    this.currentIngredient.sort(this.currentWord);
+                    var option = this.currentIngredient.sort(this.currentWord);
+                    switch (option) {
+                        case ingredient_1.IngredientOptions.Amount:
+                            if (((_a = this.currentIngredient.ingredient) === null || _a === void 0 ? void 0 : _a.name) ||
+                                this.currentIngredient.unit) {
+                                this._addToIngredients();
+                            }
+                            this.currentIngredient.setAmount(this.currentWord);
+                            break;
+                        case ingredient_1.IngredientOptions.Ingredient:
+                            this.currentIngredient.setIngredient(this.currentWord);
+                            break;
+                        case ingredient_1.IngredientOptions.Unit:
+                            this.currentIngredient.setUnit(this.currentWord);
+                            break;
+                    }
                     this.currentWord = "";
                 }
             }
             else {
                 this.currentWord += input[i];
             }
-            this._addToIngredients();
         }
+        this._addToIngredients();
         function _isEmptyChar(char) {
             if (char == " ")
                 return true;
