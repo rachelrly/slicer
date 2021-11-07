@@ -13,31 +13,58 @@ exports.Parser = void 0;
 var ingredient_1 = require("./ingredient");
 var Parser = (function () {
     function Parser() {
+        this.ingredients = [];
+        this.currentIngredient = new ingredient_1.Ingredient();
+        this.currentWord = "";
     }
     Parser.prototype.parse = function (input) {
-        var emptyChar = ' ' || '\n' || '-';
-        var i = 0;
-        for (i = 0; i <= input.length; i++) {
-            if (input[i] == emptyChar) {
-                if (!this.currentIngredient)
-                    this.currentIngredient = new ingredient_1.Ingredient();
-                this.currentIngredient.sort(this.currentWord);
-                this.currentWord = '';
-                this.addCurrentToIngredients();
+        var _a;
+        for (var i = 0; i <= input.length; i++) {
+            if (_isEmptyChar(input[i]) || _isFinalChar(i)) {
+                if (this.currentWord) {
+                    var option = this.currentIngredient.sort(this.currentWord);
+                    switch (option) {
+                        case ingredient_1.IngredientOptions.Amount:
+                            var isFullIngredient = ((_a = this.currentIngredient.ingredient) === null || _a === void 0 ? void 0 : _a.name) ||
+                                this.currentIngredient.unit;
+                            if (isFullIngredient)
+                                this._addToIngredients();
+                            this.currentIngredient.setAmount(this.currentWord);
+                            break;
+                        case ingredient_1.IngredientOptions.Ingredient:
+                            this.currentIngredient.setIngredient(this.currentWord);
+                            break;
+                        case ingredient_1.IngredientOptions.Unit:
+                            this.currentIngredient.setUnit(this.currentWord);
+                            break;
+                    }
+                    this.currentWord = "";
+                }
             }
             else {
                 this.currentWord += input[i];
             }
         }
-        if (this.currentIngredient)
-            this.addCurrentToIngredients();
+        this._addToIngredients();
+        function _isEmptyChar(char) {
+            if (char == " ")
+                return true;
+            if (char === "\n")
+                return true;
+            if (char === "-")
+                return true;
+            return false;
+        }
+        function _isFinalChar(index) {
+            var isFinal = input.length === index;
+            return isFinal;
+        }
     };
-    Parser.prototype.addCurrentToIngredients = function () {
-        if (!this.ingredients)
-            this.ingredients = [];
-        if (this.currentIngredient.isValidIngredient()) {
+    Parser.prototype._addToIngredients = function () {
+        var isValidIngredient = this.currentIngredient.isValidIngredient();
+        if (isValidIngredient) {
             this.ingredients = __spreadArray(__spreadArray([], this.ingredients, true), [this.currentIngredient], false);
-            this.currentIngredient = new ingredient_1.Ingredient;
+            this.currentIngredient = new ingredient_1.Ingredient();
         }
     };
     return Parser;

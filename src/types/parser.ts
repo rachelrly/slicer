@@ -1,54 +1,61 @@
-//has current ingredient in constructor
-//has methods that control this
-import {Units, UnitsType} from './units'
-import {Ingredient} from './ingredient'
+import { Ingredient, IngredientOptions } from "./ingredient";
 
+// TODO: implement backtracking
+export class Parser {
+  ingredients: Ingredient[] = [];
+  currentIngredient: Ingredient = new Ingredient();
+  currentWord: string = "";
 
-export class Parser{
-    ingredients: Ingredient[]
-    currentIngredient: Ingredient
-    lastIngredient: Ingredient // in case of backtracking
-    currentWord: string
+  parse(input: string) {
+    for (let i = 0; i <= input.length; i++) {
+      if (_isEmptyChar(input[i]) || _isFinalChar(i)) {
+        if (this.currentWord) {
+          const option = this.currentIngredient.sort(this.currentWord);
+          switch (option) {
+            case IngredientOptions.Amount:
+              const isFullIngredient =
+                this.currentIngredient.ingredient?.name ||
+                this.currentIngredient.unit;
 
+              if (isFullIngredient) this._addToIngredients();
 
-    parse(input:string){
-        const emptyChar = ' ' || '\n' || '-'
-        let i = 0
-        for (i=0; i<=input.length; i++){
-            if (input[i] == emptyChar){
-                if (!this.currentIngredient) this.currentIngredient = new Ingredient()
-                this.currentIngredient.sort(this.currentWord)
-                this.currentWord = ''
-                this.addCurrentToIngredients()
-            } else {
-                this.currentWord += input[i]
-            }
+              this.currentIngredient.setAmount(this.currentWord);
+              break;
+            case IngredientOptions.Ingredient:
+              this.currentIngredient.setIngredient(this.currentWord);
+              break;
+            case IngredientOptions.Unit:
+              this.currentIngredient.setUnit(this.currentWord);
+              break;
+          }
+          this.currentWord = "";
         }
+      } else {
+        this.currentWord += input[i];
+      }
+    }
+    // adds last ingredient after loop finishes
+    this._addToIngredients();
 
-        if (this.currentIngredient) this.addCurrentToIngredients()
+    function _isEmptyChar(char: string) {
+      // TODO: Switch case?
+      if (char == " ") return true;
+      if (char === "\n") return true;
+      if (char === "-") return true;
+      return false;
     }
 
-    addCurrentToIngredients(){
-        if (!this.ingredients) this.ingredients = []
-        if (this.currentIngredient.isValidIngredient()){
-            this.ingredients = [...this.ingredients, this.currentIngredient]
-            this.currentIngredient = new Ingredient
-        } 
+    function _isFinalChar(index: number) {
+      const isFinal = input.length === index;
+      return isFinal;
     }
+  }
 
-
-
+  _addToIngredients() {
+    const isValidIngredient = this.currentIngredient.isValidIngredient();
+    if (isValidIngredient) {
+      this.ingredients = [...this.ingredients, this.currentIngredient];
+      this.currentIngredient = new Ingredient();
+    }
+  }
 }
-
-
-
-
-
-// ingredient
-    // sort
-        // is unit
-        // set unit
-        // is digit
-        // format number
-        // set digit
-        // set ingredient

@@ -1,100 +1,116 @@
-import {Units, UnitsType} from './units'
-import {fractionToFloat} from '../utils/format'
+import { Units, UnitsType } from "./units";
+import { Errors } from "./errors";
+import { fractionToFloat } from "../utils/format";
 
-interface UnitName{
-    long: string
-    short: string
+export interface UnitName {
+  long: string;
+  short: string;
 }
+
+export enum IngredientOptions {
+  Amount = "amount",
+  Unit = "unit",
+  Ingredient = "ingredient",
+}
+
 export interface Unit {
-    readonly quantityInMl?: number
-    readonly name: UnitName
-    readonly isScalable: boolean
+  readonly quantityInMl?: number;
+  readonly name: UnitName;
+  readonly isScalable: boolean;
 }
 
-
-// replace all instances of ml
-// have isMl prop here readonly
 export class Amount {
-    ml: number
-    amount: number
+  amount: number = 0;
 
-    toFloat(amount: string):number{
-        // if is reg fraction
-        const regex = /\//ig
-        const isPresent = regex.exec(amount)
+  toFloat(amount: string): number {
+    const regex = /\//gi;
+    const hasSlash = regex.exec(amount); // is a fraction
 
-        if (isPresent?.index) {
-            return fractionToFloat(amount, isPresent?.index)
-        } else {
-            return Number(amount)
-        }
-        // if vulger fraction
-        // convert to decimal
+    if (hasSlash?.index) {
+      return fractionToFloat(amount, hasSlash?.index);
+    } else {
+      return Number(amount);
     }
+    // TODO: add support for formatted fracs here
+  }
 
-    set(number: string){
-        const float = this.toFloat(number)
-        this.ml = this.ml ? this.ml + float : float
-    }
+  set(number: string) {
+    const float: number = this.toFloat(number);
+    const newAmount = this.amount + float;
+    this.amount = newAmount;
+  }
 }
 
 class IngredientName {
-    name: string
-    set(current:string){
-        if (!this.name){
-            this.name = current
-        } else {
-            this.name += ' ' + current
-        }
+  name: string = "";
+  set(current: string) {
+    if (!this.name) {
+      this.name = current;
+    } else {
+      this.name += " " + current;
     }
+  }
 }
 
 export class Ingredient {
-    amount?: Amount
-    unit?: Unit
-    ingredient?: IngredientName
+  amount? = new Amount();
+  unit?: Unit = null;
+  ingredient? = new IngredientName();
 
-    sort(current: string):void{
-        if (this.currentIsDigit(current)) {
-            if (!this.amount) this.amount = new Amount()
-            this.amount.set(current)
-        } else if (this.currentIsUnit(current)) {
-            const lastIndex = current.length - 1
-            const last = current[lastIndex]
-            if (last === ('s' || '.')) current = current.slice(0, lastIndex)
-            this.unit = Units[current as UnitsType]
-        } else {
-            if (!this.ingredient) this.ingredient = new IngredientName
-            this.ingredient.set(current)
-        }
-    }
+  sort(current: string): IngredientOptions {
+    if (this._isDigit(current)) {
+      return IngredientOptions.Amount;
+    } else if (this._isUnit(current)) {
+      return IngredientOptions.Unit;
+    } else if (Boolean(current)) {
+      // stops undefined
+      return IngredientOptions.Ingredient;
+    } else return IngredientOptions.Ingredient;
+  }
 
-    isCompleteIngredient():boolean{
-        return !!(this.amount && this.unit && this.ingredient)
-    }
+  setAmount(current: string) {
+    this.amount.set(current);
+  }
 
-    isValidIngredient():boolean{
-        // i.e. "1 cup rice", "1 egg", "salt"
-        if (this.isCompleteIngredient()) return true
-        else if (this.ingredient && (!this.amount && !this.unit)) return true
-        else if (this.ingredient && this.amount && !this.unit) return true
-        else return false
-    }
+  setUnit(current: string) {
+    const lastIndex = current.length - 1;
+    const lastChar = current[lastIndex];
+    if (lastChar === ("s" || ".")) current = current.slice(0, lastIndex);
+    this.unit = Units[current as UnitsType];
+  }
 
-    currentIsDigit(word: string):boolean{
-        const regex = /\d/
-        return !!word.match(regex)
-    }
+  setIngredient(current: string) {
+    this.ingredient.set(current);
+  }
 
-    currentIsUnit(current:string):boolean{
-        const lastIndex = current.length - 1
-        const last = current[lastIndex]
+  isCompleteIngredient(): boolean {
+    return Boolean(
+      this.amount?.amount && this.unit && this.ingredient?.name?.length
+    );
+  }
 
-        // removes ending 's' or '.', i.e. "cups" or "tbsp."
-        if (last === ('s' || '.')) current = current.slice(0, lastIndex)
-        const isUnit = current in Units
-        return !!isUnit
-    }
-   
+  isValidIngredient(): boolean {
+    // i.e. "1 cup rice", "1 egg"
+    if (this.isCompleteIngredient()) return true;
+    // TODO: add support for case with just ingredient name, i.e. salt
+    else if (this.ingredient?.name && this.amount?.amount && !this.unit) {
+      return true;
+    } else return false;
+  }
 
+  _isDigit(word: string): boolean {
+    const regex = /\d/;
+    return !!word.match(regex);
+  }
+
+  _isUnit(current: string): boolean {
+    // removes ending 's' or '.', i.e. "cups" or "tbsp."
+    const lastIndex = current.length - 1;
+    const last = current[lastIndex];
+    const isDiscardChar = last === "s" || last === ".";
+    if (isDiscardChar) current = current.slice(0, lastIndex);
+
+    const isUnit = Boolean(current in Units);
+    return isUnit;
+  }
 }
