@@ -2,6 +2,7 @@
 exports.__esModule = true;
 exports.Ingredient = exports.Amount = void 0;
 var units_1 = require("./units");
+var errors_1 = require("./errors");
 var format_1 = require("../utils/format");
 var Amount = (function () {
     function Amount() {
@@ -9,9 +10,9 @@ var Amount = (function () {
     }
     Amount.prototype.toFloat = function (amount) {
         var regex = /\//gi;
-        var isPresent = regex.exec(amount);
-        if (isPresent === null || isPresent === void 0 ? void 0 : isPresent.index) {
-            return (0, format_1.fractionToFloat)(amount, isPresent === null || isPresent === void 0 ? void 0 : isPresent.index);
+        var hasSlash = regex.exec(amount);
+        if (hasSlash === null || hasSlash === void 0 ? void 0 : hasSlash.index) {
+            return (0, format_1.fractionToFloat)(amount, hasSlash === null || hasSlash === void 0 ? void 0 : hasSlash.index);
         }
         else {
             return Number(amount);
@@ -47,12 +48,15 @@ var Ingredient = (function () {
     }
     Ingredient.prototype.sort = function (current) {
         if (this._isDigit(current)) {
-            this.amount.set(current);
+            if (this.unit || this.ingredient.name)
+                throw new Error(errors_1.Errors.AmountFullIngredient);
+            else
+                this.amount.set(current);
         }
         else if (this._isUnit(current)) {
             var lastIndex = current.length - 1;
-            var last = current[lastIndex];
-            if (last === ("s" || "."))
+            var lastChar = current[lastIndex];
+            if (lastChar === ("s" || "."))
                 current = current.slice(0, lastIndex);
             this.unit = units_1.Units[current];
         }
@@ -68,8 +72,9 @@ var Ingredient = (function () {
         var _a, _b;
         if (this.isCompleteIngredient())
             return true;
-        else if (((_a = this.ingredient) === null || _a === void 0 ? void 0 : _a.name) && ((_b = this.amount) === null || _b === void 0 ? void 0 : _b.amount) && !this.unit)
+        else if (((_a = this.ingredient) === null || _a === void 0 ? void 0 : _a.name) && ((_b = this.amount) === null || _b === void 0 ? void 0 : _b.amount) && !this.unit) {
             return true;
+        }
         else
             return false;
     };
@@ -82,8 +87,8 @@ var Ingredient = (function () {
         var last = current[lastIndex];
         if (last === ("s" || "."))
             current = current.slice(0, lastIndex);
-        var isUnit = current in units_1.Units;
-        return !!isUnit;
+        var isUnit = Boolean(current in units_1.Units);
+        return isUnit;
     };
     return Ingredient;
 }());

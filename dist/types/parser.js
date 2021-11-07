@@ -18,7 +18,19 @@ var Parser = (function () {
         this.currentWord = "";
     }
     Parser.prototype.parse = function (input) {
-        var isEmptyChar = function (char) {
+        for (var i = 0; i <= input.length; i++) {
+            if (_isEmptyChar(input[i]) || _isFinalChar(i)) {
+                if (this.currentWord) {
+                    this.currentIngredient.sort(this.currentWord);
+                    this.currentWord = "";
+                }
+            }
+            else {
+                this.currentWord += input[i];
+            }
+            this._addToIngredients();
+        }
+        function _isEmptyChar(char) {
             if (char == " ")
                 return true;
             if (char === "\n")
@@ -26,20 +38,11 @@ var Parser = (function () {
             if (char === "-")
                 return true;
             return false;
-        };
-        var i = 0;
-        for (i = 0; i <= input.length; i++) {
-            if (isEmptyChar(input[i])) {
-                this.currentIngredient.sort(this.currentWord);
-                this.currentWord = "";
-            }
-            else {
-                this.currentWord += input[i];
-            }
-            this._addToIngredients();
         }
-        if (this.currentIngredient)
-            this._addToIngredients();
+        function _isFinalChar(index) {
+            var isFinal = input.length === index;
+            return isFinal;
+        }
     };
     Parser.prototype._addToIngredients = function () {
         var isValidIngredient = this.currentIngredient.isValidIngredient();

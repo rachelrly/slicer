@@ -35,7 +35,7 @@ Currently does nothing
 
 ### /dist
 
-Contains the compiled JavaScript for the project
+Contains the compiled JavaScript code for the project
 
 ### /tests
 

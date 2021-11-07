@@ -51,56 +51,18 @@ export class Ingredient {
   unit?: Unit = null;
   ingredient? = new IngredientName();
 
-  sort(current: string): boolean {
-    //if it already has ingredient and amount
-    // if only amount or no amount, add to amount
-    // if amount and no unit, validate unit then ingredient
-    // if unit and mount, no need to validate
-    // just add as ingredient
-    const shouldTryAmount = !this.unit;
-    const shouldTryUnit = !this.ingredient.name;
-    if (shouldTryAmount){
-        const isValid = validateAsAmount()
-        if (isValid)
-    }
-    if () {
-
-      return true; // should validate ingredient
+  sort(current: string): void {
+    if (this._isDigit(current)) {
+      if (this.unit || this.ingredient.name)
+        throw new Error(Errors.AmountFullIngredient);
+      else this.amount.set(current);
     } else if (this._isUnit(current)) {
-      // if there already is an ingredient, this is a new ingredient??? sort prev??
-
+      const lastIndex = current.length - 1;
+      const lastChar = current[lastIndex];
+      if (lastChar === ("s" || ".")) current = current.slice(0, lastIndex);
       this.unit = Units[current as UnitsType];
-      return false; //FOR TESTING
     } else {
-      return false; //FOR TESTING
-    }
-
-    function validateAndSet(validate: ()=>boolean, set: ()=>void, next?: ()=>void){
-        const isValid = validate()
-        if (isValid) set()
-        else if (Boolean(next)) next()
-    }
-
-    function validateAsAmount():boolean{
-        return this._isDigit(current)
-    }
-
-    function setAmount():void {
-        this.amount.set(current);
-    }
-
-    function validateAsUnit(){
-        const lastIndex = current.length - 1;
-        const last = current[lastIndex];
-        if (last === ("s" || ".")) current = current.slice(0, lastIndex);
-    }
-
-    function setUnit(){
-        this.unit = Units[current as UnitsType];
-    }
-
-    function setIngredient(){
-        this.ingredient.set(current);
+      this.ingredient.set(current);
     }
   }
 
@@ -115,7 +77,6 @@ export class Ingredient {
     if (this.isCompleteIngredient()) return true;
     // TODO: add support for case with just ingredient name, i.e. salt
     else if (this.ingredient?.name && this.amount?.amount && !this.unit) {
-      console.log("HAS INGREDIENT AND NO UNIT, RETURNING TRUE");
       return true;
     } else return false;
   }
@@ -126,14 +87,12 @@ export class Ingredient {
   }
 
   _isUnit(current: string): boolean {
+    // removes ending 's' or '.', i.e. "cups" or "tbsp."
     const lastIndex = current.length - 1;
     const last = current[lastIndex];
-
-    // removes ending 's' or '.', i.e. "cups" or "tbsp."
     if (last === ("s" || ".")) current = current.slice(0, lastIndex);
-    const isUnit = current in Units;
-    if (!this.amount.amount)
-      throw new Error("Ingredient Error: " + Errors.UnitNoAmount);
-    else return !!isUnit;
+
+    const isUnit = Boolean(current in Units);
+    return isUnit;
   }
 }

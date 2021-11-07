@@ -7,43 +7,36 @@ export class Parser {
   currentWord: string = "";
 
   parse(input: string) {
-    const isEmptyChar = (char: string) => {
+    for (let i = 0; i <= input.length; i++) {
+      if (_isEmptyChar(input[i]) || _isFinalChar(i)) {
+        if (this.currentWord) {
+          this.currentIngredient.sort(this.currentWord);
+          this.currentWord = "";
+        }
+      } else {
+        this.currentWord += input[i];
+      }
+      this._addToIngredients();
+    }
+
+    function _isEmptyChar(char: string) {
       if (char == " ") return true;
       if (char === "\n") return true;
       if (char === "-") return true;
       return false;
-    };
-
-    for (let i = 0; i <= input.length; i++) {
-      if (isEmptyChar(input[i])) {
-        const shouldValidate = this.currentIngredient.sort(this.currentWord);
-        if (shouldValidate) this._addToIngredients();
-        this.currentWord = "";
-
-        console.log("RESET WORD, ingredient is ", this.currentIngredient);
-      } else {
-        this.currentWord += input[i];
-      }
     }
-    if (this.currentIngredient) this._addToIngredients();
+
+    function _isFinalChar(index: number) {
+      const isFinal = input.length === index;
+      return isFinal;
+    }
   }
 
   _addToIngredients() {
-    console.log("RUNNING ADD TO INGREDIENTS");
     const isValidIngredient = this.currentIngredient.isValidIngredient();
-    console.log("WILL I ADD BECAUSE VALID IS", isValidIngredient);
     if (isValidIngredient) {
       this.ingredients = [...this.ingredients, this.currentIngredient];
       this.currentIngredient = new Ingredient();
     }
   }
 }
-
-// ingredient
-// sort
-// is unit
-// set unit
-// is digit
-// format number
-// set digit
-// set ingredient
