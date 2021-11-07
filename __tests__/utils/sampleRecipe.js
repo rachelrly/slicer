@@ -1,6 +1,4 @@
-
-
-const TIRAMISU = `1/2 cup (120 ml) brewed espresso or very strong coffee, at room temperature
+export const TIRAMISU = `1/2 cup (120 ml) brewed espresso or very strong coffee, at room temperature
 1/4 cup (60 ml) dry Marsala wine, divided
 2 teaspoons vanilla extract
 3 large egg yolks
@@ -9,9 +7,9 @@ const TIRAMISU = `1/2 cup (120 ml) brewed espresso or very strong coffee, at roo
 3/4 cup (175 ml) heavy cream
 18 to 20 Savoiardi Italian ladyfingers (from 7-ounce package)
 1 ounce (30 grams) bittersweet chocolate or cocoa powder for dusting
-`
+`;
 
-const SPECIAL_CHARACTERS = `2 to 2 1/2 pounds chicken pieces, preferably thighs and legs
+export const SPECIAL_CHARACTERS = `2 to 2 1/2 pounds chicken pieces, preferably thighs and legs
 Salt
 2 to 3 tablespoons unsalted butter
 2 pounds yellow onions (about 2 to 3 large onions)
@@ -20,16 +18,9 @@ Black pepper to taste
 1 teaspoon hot paprika or cayenne, or to taste
 1 cup chicken broth
 1/2 cup sour cream
-`
+`;
 
-// export const VULGAR_FRACTIONS = `¼ cup butter
-// 1 cup heavy cream
-// 1 clove garlic, crushed
-// 1 ½ cups freshly grated Parmesan cheese
-// ¼ cup chopped fresh parsley`
-
-
-const PANCAKES = `1 cup milk
+export const PANCAKES = `1 cup milk
 1/2 cup sour cream
 1/4 cup granulated sugar
 2 large eggs
@@ -38,11 +29,4 @@ const PANCAKES = `1 cup milk
 2 teaspoons baking powder
 1 teaspoon salt
 Butter for greasing the pan -about 3 tablespoons
-Maple syrup for serving`
-
-
-// export const RECIPES = {VULGAR_FRACTIONS, PANCAKES, SPECIAL_CHARACTERS, TIRAMISU, BASIC_BREAD}
-
-// export const TEST_INPUTS = [
-// '1/2', ''
-// ]
+Maple syrup for serving`;
