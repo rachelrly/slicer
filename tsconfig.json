@@ -1,9 +1,11 @@
 {
-    "compilerOptions": {
-        "noImplicitAny": true,
-        "removeComments": true
-    },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules"]
-    
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "removeComments": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "sourceMap": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "__tests__"]
 }

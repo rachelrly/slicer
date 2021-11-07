@@ -33,8 +33,10 @@ Contains the class that loops through the string and controls the behavior of th
 
 Currently does nothing
 
+### /dist
+
+Contains the compiled JavaScript for the project
+
 ### /tests
 
 This folder contains unit tests for the various parts of the Slicer.
-
-All tests are written in JavaScript, not TypeScript.
