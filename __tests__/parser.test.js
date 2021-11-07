@@ -11,11 +11,11 @@ const BASIC_BREAD = `
 `;
 
 describe("Parser class parses a single ingredient correctly and adds to list", () => {
-  const input = "3 tablespoons sugar";
+  const INPUT = "3 tablespoons sugar";
   const TestParser = new Parser();
-  TestParser.parse(input);
-  console.log(TestParser.ingredients);
-  test("Given one ingredient, it parses correctly and returns an array with one Ingredient", () => {
+  TestParser.parse(INPUT);
+
+  test("Given a single ingredient, it parses correctly and returns an array with one Ingredient", () => {
     expect(TestParser.ingredients?.length).toBe(1);
     expect(TestParser.ingredients[0].amount.amount).toBe(3);
     expect(TestParser.ingredients[0].unit.name.short).toBe(
@@ -30,20 +30,21 @@ describe("Parser class parses input data correctly", () => {
 
   test("given valid input with a given number of ingredients, it returns an array of ingredients with that length", () => {
     TestParser.parse(BASIC_BREAD);
-
     expect(TestParser.ingredients?.length).toBe(6);
   });
 
-  // test("given a valid recipe input, it parses ingredients correctly and in order", () => {
-  //   const firstIngredient = recipe.ingredients[0];
-  //   const secondIngredient = recipe.ingredients[1];
+  test("given a valid recipe input, it parses ingredients correctly and in order", () => {
+    const firstIngredient = TestParser.ingredients[0];
+    console.log("FIRST INGREDIENT", firstIngredient);
+    const secondIngredient = TestParser.ingredients[1];
+    console.log("SECOND INGREDIENT", secondIngredient);
 
-  //   expect(firstIngredient.amount.amount).toBe(1);
-  //   expect(firstIngredient.unit).toBeNull();
-  //   expect(firstIngredient.ingredient.name).toBe("package active dry yeast");
+    expect(firstIngredient.amount.amount).toBe(1);
+    expect(firstIngredient.unit).toBeNull();
+    expect(firstIngredient.ingredient.name).toBe("package active dry yeast");
 
-  //   expect(secondIngredient.amount.amount).toBe(3);
-  //   expect(secondIngredient.unit.name.short).toBe(Units.tablespoon.name.short);
-  //   expect(secondIngredient.ingredient.name).toBe("sugar");
-  // });
+    expect(secondIngredient.amount.amount).toBe(3);
+    expect(secondIngredient.unit.name.short).toBe(Units.tablespoon.name.short);
+    expect(secondIngredient.ingredient.name).toBe("sugar");
+  });
 });

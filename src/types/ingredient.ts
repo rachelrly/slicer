@@ -69,12 +69,10 @@ export class Ingredient {
   }
 
   setAmount(current: string) {
-    console.log("SETTING AMOUNT", current);
     this.amount.set(current);
   }
 
   setUnit(current: string) {
-    console.log("SETTING UNIT", current);
     const lastIndex = current.length - 1;
     const lastChar = current[lastIndex];
     if (lastChar === ("s" || ".")) current = current.slice(0, lastIndex);
@@ -82,7 +80,6 @@ export class Ingredient {
   }
 
   setIngredient(current: string) {
-    console.log("SETTING INGREDIENT", current);
     this.ingredient.set(current);
   }
 

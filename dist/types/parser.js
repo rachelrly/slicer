@@ -25,10 +25,10 @@ var Parser = (function () {
                     var option = this.currentIngredient.sort(this.currentWord);
                     switch (option) {
                         case ingredient_1.IngredientOptions.Amount:
-                            if (((_a = this.currentIngredient.ingredient) === null || _a === void 0 ? void 0 : _a.name) ||
-                                this.currentIngredient.unit) {
+                            var isFullIngredient = ((_a = this.currentIngredient.ingredient) === null || _a === void 0 ? void 0 : _a.name) ||
+                                this.currentIngredient.unit;
+                            if (isFullIngredient)
                                 this._addToIngredients();
-                            }
                             this.currentIngredient.setAmount(this.currentWord);
                             break;
                         case ingredient_1.IngredientOptions.Ingredient:

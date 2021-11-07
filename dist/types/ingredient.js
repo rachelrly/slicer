@@ -65,11 +65,9 @@ var Ingredient = (function () {
             return IngredientOptions.Ingredient;
     };
     Ingredient.prototype.setAmount = function (current) {
-        console.log("SETTING AMOUNT", current);
         this.amount.set(current);
     };
     Ingredient.prototype.setUnit = function (current) {
-        console.log("SETTING UNIT", current);
         var lastIndex = current.length - 1;
         var lastChar = current[lastIndex];
         if (lastChar === ("s" || "."))
@@ -77,7 +75,6 @@ var Ingredient = (function () {
         this.unit = units_1.Units[current];
     };
     Ingredient.prototype.setIngredient = function (current) {
-        console.log("SETTING INGREDIENT", current);
         this.ingredient.set(current);
     };
     Ingredient.prototype.isCompleteIngredient = function () {
