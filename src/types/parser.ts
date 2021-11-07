@@ -1,13 +1,9 @@
-//has current ingredient in constructor
-//has methods that control this
-import { Units, UnitsType } from "./units";
 import { Ingredient } from "./ingredient";
 
-//TODO: Make constructor so you don't have to keep instantiating if not there
+// TODO: implement backtracking
 export class Parser {
   ingredients: Ingredient[] = [];
   currentIngredient: Ingredient = new Ingredient();
-  //lastIngredient: Ingredient; // in case of backtracking
   currentWord: string = "";
 
   parse(input: string) {
@@ -17,27 +13,27 @@ export class Parser {
       if (char === "-") return true;
       return false;
     };
-    let i = 0;
-    for (i = 0; i <= input.length; i++) {
-      if (isEmptyChar(input[i])) {
-        this.currentIngredient.sort(this.currentWord);
 
+    for (let i = 0; i <= input.length; i++) {
+      if (isEmptyChar(input[i])) {
+        const shouldValidate = this.currentIngredient.sort(this.currentWord);
+        if (shouldValidate) this._addToIngredients();
         this.currentWord = "";
+
+        console.log("RESET WORD, ingredient is ", this.currentIngredient);
       } else {
         this.currentWord += input[i];
       }
-      this._addToIngredients();
     }
     if (this.currentIngredient) this._addToIngredients();
   }
 
   _addToIngredients() {
-    // validates and adds
+    console.log("RUNNING ADD TO INGREDIENTS");
     const isValidIngredient = this.currentIngredient.isValidIngredient();
+    console.log("WILL I ADD BECAUSE VALID IS", isValidIngredient);
     if (isValidIngredient) {
       this.ingredients = [...this.ingredients, this.currentIngredient];
-
-      // replaces with blank ingredient
       this.currentIngredient = new Ingredient();
     }
   }

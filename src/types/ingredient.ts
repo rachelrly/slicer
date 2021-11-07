@@ -1,34 +1,31 @@
 import { Units, UnitsType } from "./units";
+import { Errors } from "./errors";
 import { fractionToFloat } from "../utils/format";
-//TODO: Make constructor so you don't have to keep instantiating if not there
 
 interface UnitName {
   long: string;
   short: string;
 }
+
 export interface Unit {
   readonly quantityInMl?: number;
   readonly name: UnitName;
   readonly isScalable: boolean;
 }
 
-// replace all instances of ml
-// have isMl prop here readonly
 export class Amount {
   amount: number = 0;
 
   toFloat(amount: string): number {
-    // if is reg fraction
     const regex = /\//gi;
-    const isPresent = regex.exec(amount);
+    const hasSlash = regex.exec(amount); // is a fraction
 
-    if (isPresent?.index) {
-      return fractionToFloat(amount, isPresent?.index);
+    if (hasSlash?.index) {
+      return fractionToFloat(amount, hasSlash?.index);
     } else {
       return Number(amount);
     }
-    // if vulger fraction
-    // convert to decimal
+    // TODO: add support for formatted fracs here
   }
 
   set(number: string) {
@@ -54,16 +51,56 @@ export class Ingredient {
   unit?: Unit = null;
   ingredient? = new IngredientName();
 
-  sort(current: string): void {
-    if (this._isDigit(current)) {
-      this.amount.set(current);
+  sort(current: string): boolean {
+    //if it already has ingredient and amount
+    // if only amount or no amount, add to amount
+    // if amount and no unit, validate unit then ingredient
+    // if unit and mount, no need to validate
+    // just add as ingredient
+    const shouldTryAmount = !this.unit;
+    const shouldTryUnit = !this.ingredient.name;
+    if (shouldTryAmount){
+        const isValid = validateAsAmount()
+        if (isValid)
+    }
+    if () {
+
+      return true; // should validate ingredient
     } else if (this._isUnit(current)) {
-      const lastIndex = current.length - 1;
-      const last = current[lastIndex];
-      if (last === ("s" || ".")) current = current.slice(0, lastIndex);
+      // if there already is an ingredient, this is a new ingredient??? sort prev??
+
       this.unit = Units[current as UnitsType];
+      return false; //FOR TESTING
     } else {
-      this.ingredient.set(current);
+      return false; //FOR TESTING
+    }
+
+    function validateAndSet(validate: ()=>boolean, set: ()=>void, next?: ()=>void){
+        const isValid = validate()
+        if (isValid) set()
+        else if (Boolean(next)) next()
+    }
+
+    function validateAsAmount():boolean{
+        return this._isDigit(current)
+    }
+
+    function setAmount():void {
+        this.amount.set(current);
+    }
+
+    function validateAsUnit(){
+        const lastIndex = current.length - 1;
+        const last = current[lastIndex];
+        if (last === ("s" || ".")) current = current.slice(0, lastIndex);
+    }
+
+    function setUnit(){
+        this.unit = Units[current as UnitsType];
+    }
+
+    function setIngredient(){
+        this.ingredient.set(current);
     }
   }
 
@@ -76,10 +113,11 @@ export class Ingredient {
   isValidIngredient(): boolean {
     // i.e. "1 cup rice", "1 egg", "salt"
     if (this.isCompleteIngredient()) return true;
-    // else if (this.ingredient && !this.amount && !this.unit) return true;
-    else if (this.ingredient?.name && this.amount?.amount && !this.unit)
+    // TODO: add support for case with just ingredient name, i.e. salt
+    else if (this.ingredient?.name && this.amount?.amount && !this.unit) {
+      console.log("HAS INGREDIENT AND NO UNIT, RETURNING TRUE");
       return true;
-    else return false;
+    } else return false;
   }
 
   _isDigit(word: string): boolean {
@@ -94,6 +132,8 @@ export class Ingredient {
     // removes ending 's' or '.', i.e. "cups" or "tbsp."
     if (last === ("s" || ".")) current = current.slice(0, lastIndex);
     const isUnit = current in Units;
-    return !!isUnit;
+    if (!this.amount.amount)
+      throw new Error("Ingredient Error: " + Errors.UnitNoAmount);
+    else return !!isUnit;
   }
 }
