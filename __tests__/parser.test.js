@@ -1,5 +1,5 @@
-const { Parser } = require("../src/types/parser");
-const { Units } = require("../src/types/units");
+const { Parser } = require("../dist/types/parser");
+const { Units } = require("../dist/types/units");
 
 const BASIC_BREAD = `1 package active dry yeast
 3 tablespoons sugar plus 1/2 teaspoon sugar

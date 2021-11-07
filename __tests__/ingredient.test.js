@@ -1,4 +1,4 @@
-const { Ingredient } = require("../src/types/ingredient.js");
+const { Ingredient } = require("../dist/types/ingredient");
 
 describe("sorts, formats, and filters ingredient input", () => {
   describe("correctly handles amount input in isolation", () => {
