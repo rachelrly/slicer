@@ -91,20 +91,21 @@ const Gram = {
 
 export function getUnitFromMl(amount: number, includeNonStandardUnits = true) {
   // nonstandard units are outside the traditional American recipe structure
+  const mlDoubled = (unit: Unit) => unit.quantityInMl * 2 - 1;
   switch (true) {
-    case amount < Gram.quantityInMl && includeNonStandardUnits:
+    case amount < mlDoubled(Ounce) && includeNonStandardUnits:
       return Gram;
-    case amount < Teaspoon.quantityInMl * 2:
+    case amount < mlDoubled(Teaspoon):
       return Teaspoon;
-    case amount < Tablespoon.quantityInMl * 2:
+    case amount < mlDoubled(Tablespoon):
       return Tablespoon;
-    case amount < Ounce.quantityInMl * 2 && includeNonStandardUnits:
+    case amount < mlDoubled(Ounce) && includeNonStandardUnits:
       return Ounce;
-    case amount < Cup.quantityInMl * 2:
+    case amount < mlDoubled(Cup):
       return Cup;
-    case amount < Pint.quantityInMl * 2 && includeNonStandardUnits:
+    case amount < mlDoubled(Pint) && includeNonStandardUnits:
       return Pint;
-    case amount < Quart.quantityInMl * 2 && includeNonStandardUnits:
+    case amount < mlDoubled(Quart) * 2 && includeNonStandardUnits:
       return Quart;
     default:
       return Gallon;
