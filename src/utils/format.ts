@@ -17,7 +17,10 @@ export function fractionToFloat(fraction: string, index: number): number {
   return total;
 }
 
-export function getUnitFromMl(amount: number, includeNonStandardUnits = false) {
+export function getUnitFromMl(
+  amount: number,
+  includeNonStandardUnits = false
+): Unit {
   // nonstandard units are outside the traditional American recipe structure
 
   if (amount > Gallon.quantityInMl * 20) {

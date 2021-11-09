@@ -1,6 +1,7 @@
 import { Ingredient } from "./ingredient";
 import { Parser } from "./parser";
-
+import { getUnitFromMl } from "../utils/format";
+import { Unit } from "./units";
 // holds input
 // controls scaling function
 //
@@ -28,5 +29,24 @@ export class Recipe {
     this.recipe = parser.ingredients;
   }
 
-  scaleRecipe() {}
+  scaleRecipe() {
+    const scaledRecipe = this.recipe.map(
+      (ingredient: Ingredient): Ingredient => {
+        const newAmountInMl: number =
+          ingredient.amount.amount *
+          ingredient.unit.quantityInMl *
+          this.constant;
+
+        const newUnit: Unit = getUnitFromMl(newAmountInMl);
+        const newAmountInUnit: bigint | number =
+          newAmountInMl / newUnit.quantityInMl;
+
+        ingredient.setAmount(newAmountInUnit.toString());
+        ingredient.setUnit(newUnit.name.long);
+        return ingredient;
+      }
+    );
+
+    this.scaledRecipe = scaledRecipe;
+  }
 }
