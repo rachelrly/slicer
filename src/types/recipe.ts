@@ -10,8 +10,9 @@ export class Recipe {
   input: string; //instantiate when created
   recipe: Ingredient[] = [];
   scaledRecipe: Ingredient[] = [];
-  constant: number;
+  constant: number = 1;
 
+  //todo: call scale recupe when input is created
   setInput(input: string) {
     this.input = input;
     this._parseInput();
@@ -19,8 +20,6 @@ export class Recipe {
 
   setConstant(constant: number) {
     this.constant = constant;
-    // trigger function to that returns scaled recipe
-    // this.scaledRecipe = response
   }
 
   _parseInput() {
