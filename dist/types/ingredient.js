@@ -42,6 +42,13 @@ var Ingredient = (function () {
     Ingredient.prototype.setIngredient = function (current) {
         this.ingredient.set(current);
     };
+    Ingredient.prototype.scale = function (constant) {
+        var unitMl = this.unit.quantityInMl;
+        var base = this.amount.amount * unitMl;
+        var scaled = this.amount.amount * constant;
+        var newAmount = scaled / base;
+        this.setAmount(newAmount.toString());
+    };
     Ingredient.prototype.isCompleteIngredient = function () {
         var _a, _b, _c;
         return Boolean(((_a = this.amount) === null || _a === void 0 ? void 0 : _a.amount) && this.unit && ((_c = (_b = this.ingredient) === null || _b === void 0 ? void 0 : _b.name) === null || _c === void 0 ? void 0 : _c.length));

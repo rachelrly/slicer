@@ -9,11 +9,12 @@ var Recipe = (function () {
     }
     Recipe.prototype.setInput = function (input) {
         this.input = input;
+        this._parseInput();
     };
     Recipe.prototype.setConstant = function (constant) {
         this.constant = constant;
     };
-    Recipe.prototype.parseInput = function () {
+    Recipe.prototype._parseInput = function () {
         var parser = new parser_1.Parser();
         parser.parse(this.input);
         this.recipe = parser.ingredients;

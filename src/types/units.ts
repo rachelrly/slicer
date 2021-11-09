@@ -9,7 +9,7 @@ export interface Unit {
   readonly isScalable: boolean;
 }
 
-const Teaspoon = {
+export const Teaspoon = {
   quantityInMl: 4.92892,
   name: {
     long: "teaspoon",
@@ -18,7 +18,7 @@ const Teaspoon = {
   isScalable: true,
 };
 
-const Tablespoon = {
+export const Tablespoon = {
   quantityInMl: 14.7868,
   name: {
     long: "tablespoon",
@@ -27,7 +27,7 @@ const Tablespoon = {
   isScalable: true,
 };
 
-const Ounce = {
+export const Ounce = {
   quantityInMl: 29.5735,
   name: {
     long: "ounce",
@@ -36,7 +36,7 @@ const Ounce = {
   isScalable: true,
 };
 
-const Cup = {
+export const Cup = {
   quantityInMl: 236.588,
   name: {
     long: "cup",
@@ -45,7 +45,7 @@ const Cup = {
   isScalable: true,
 };
 
-const Pint = {
+export const Pint = {
   quantityInMl: 473.176,
   name: {
     long: "pint",
@@ -54,7 +54,7 @@ const Pint = {
   isScalable: true,
 };
 
-const Quart = {
+export const Quart = {
   quantityInMl: 946.353,
   name: {
     long: "quart",
@@ -63,7 +63,7 @@ const Quart = {
   isScalable: true,
 };
 
-const Gallon = {
+export const Gallon = {
   quantityInMl: 3785.41,
   name: {
     long: "gallon",
@@ -72,7 +72,7 @@ const Gallon = {
   isScalable: true,
 };
 
-const Pound = {
+export const Pound = {
   name: {
     long: "pound",
     short: "lb",
@@ -80,7 +80,7 @@ const Pound = {
   isScalable: false,
 };
 
-const Gram = {
+export const Gram = {
   quantityInMl: 1,
   name: {
     long: "gram",
@@ -88,29 +88,6 @@ const Gram = {
   },
   isScalable: false,
 };
-
-export function getUnitFromMl(amount: number, includeNonStandardUnits = true) {
-  // nonstandard units are outside the traditional American recipe structure
-  const mlDoubled = (unit: Unit) => unit.quantityInMl * 2 - 1;
-  switch (true) {
-    case amount < mlDoubled(Ounce) && includeNonStandardUnits:
-      return Gram;
-    case amount < mlDoubled(Teaspoon):
-      return Teaspoon;
-    case amount < mlDoubled(Tablespoon):
-      return Tablespoon;
-    case amount < mlDoubled(Ounce) && includeNonStandardUnits:
-      return Ounce;
-    case amount < mlDoubled(Cup):
-      return Cup;
-    case amount < mlDoubled(Pint) && includeNonStandardUnits:
-      return Pint;
-    case amount < mlDoubled(Quart) * 2 && includeNonStandardUnits:
-      return Quart;
-    default:
-      return Gallon;
-  }
-}
 
 export const Units = {
   cup: Cup,

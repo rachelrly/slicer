@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
-exports.Units = void 0;
-var Teaspoon = {
+exports.Units = exports.Gram = exports.Pound = exports.Gallon = exports.Quart = exports.Pint = exports.Cup = exports.Ounce = exports.Tablespoon = exports.Teaspoon = void 0;
+exports.Teaspoon = {
     quantityInMl: 4.92892,
     name: {
         long: "teaspoon",
@@ -9,7 +9,7 @@ var Teaspoon = {
     },
     isScalable: true
 };
-var Tablespoon = {
+exports.Tablespoon = {
     quantityInMl: 14.7868,
     name: {
         long: "tablespoon",
@@ -17,7 +17,7 @@ var Tablespoon = {
     },
     isScalable: true
 };
-var Ounce = {
+exports.Ounce = {
     quantityInMl: 29.5735,
     name: {
         long: "ounce",
@@ -25,7 +25,7 @@ var Ounce = {
     },
     isScalable: true
 };
-var Cup = {
+exports.Cup = {
     quantityInMl: 236.588,
     name: {
         long: "cup",
@@ -33,7 +33,7 @@ var Cup = {
     },
     isScalable: true
 };
-var Pint = {
+exports.Pint = {
     quantityInMl: 473.176,
     name: {
         long: "pint",
@@ -41,7 +41,7 @@ var Pint = {
     },
     isScalable: true
 };
-var Quart = {
+exports.Quart = {
     quantityInMl: 946.353,
     name: {
         long: "quart",
@@ -49,7 +49,7 @@ var Quart = {
     },
     isScalable: true
 };
-var Gallon = {
+exports.Gallon = {
     quantityInMl: 3785.41,
     name: {
         long: "gallon",
@@ -57,14 +57,14 @@ var Gallon = {
     },
     isScalable: true
 };
-var Pound = {
+exports.Pound = {
     name: {
         long: "pound",
         short: "lb"
     },
     isScalable: false
 };
-var Gram = {
+exports.Gram = {
     quantityInMl: 1,
     name: {
         long: "gram",
@@ -73,22 +73,22 @@ var Gram = {
     isScalable: false
 };
 exports.Units = {
-    cup: Cup,
-    c: Cup,
-    tablespoon: Tablespoon,
-    tbsp: Tablespoon,
-    teaspoon: Teaspoon,
-    tsp: Teaspoon,
-    t: Teaspoon,
-    oz: Ounce,
-    ounce: Ounce,
-    pound: Pound,
-    lb: Pound,
-    gallon: Gallon,
-    pint: Pint,
-    quart: Quart,
-    q: Quart,
-    gram: Gram,
-    g: Gram
+    cup: exports.Cup,
+    c: exports.Cup,
+    tablespoon: exports.Tablespoon,
+    tbsp: exports.Tablespoon,
+    teaspoon: exports.Teaspoon,
+    tsp: exports.Teaspoon,
+    t: exports.Teaspoon,
+    oz: exports.Ounce,
+    ounce: exports.Ounce,
+    pound: exports.Pound,
+    lb: exports.Pound,
+    gallon: exports.Gallon,
+    pint: exports.Pint,
+    quart: exports.Quart,
+    q: exports.Quart,
+    gram: exports.Gram,
+    g: exports.Gram
 };
 //# sourceMappingURL=units.js.map

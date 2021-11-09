@@ -1,6 +1,6 @@
 const { Ingredient } = require("../dist/types/ingredient");
 
-describe("Ingredient class sorts, formats, and filters ingredient input", () => {
+describe.skip("Ingredient class sorts, formats, and filters ingredient input", () => {
   describe("correctly handles amount input", () => {
     test("sorts integer as amount", () => {
       const TestIngredient = new Ingredient();
