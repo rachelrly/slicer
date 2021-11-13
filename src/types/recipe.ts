@@ -41,6 +41,7 @@ export class Recipe {
             this.constant
           );
           console.log("THIS IS THE NEW AMOUNT I AM SETTING", newAmount);
+          console.log("THIS IS THE OLD AMOUNT", ingredient);
           ingredient.setAmount(newAmount);
           console.log("THIS IS THE NEW INGREDIENT AFTER SET", ingredient);
           return ingredient;

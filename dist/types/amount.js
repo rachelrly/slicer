@@ -16,8 +16,8 @@ var Amount = (function () {
             return Number(amount);
         }
     };
-    Amount.prototype.set = function (number) {
-        var float = this.toFloat(number);
+    Amount.prototype.set = function (number, parser) {
+        var float = parser ? this.toFloat(number) : Number(number);
         var newAmount = this.amount + float;
         this.amount = newAmount;
     };

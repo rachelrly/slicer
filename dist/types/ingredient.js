@@ -29,8 +29,9 @@ var Ingredient = (function () {
         else
             return IngredientOptions.Ingredient;
     };
-    Ingredient.prototype.setAmount = function (current) {
-        this.amount.set(current);
+    Ingredient.prototype.setAmount = function (current, _parser) {
+        if (_parser === void 0) { _parser = false; }
+        this.amount.set(current, _parser);
     };
     Ingredient.prototype.setUnit = function (current) {
         var lastIndex = current.length - 1;

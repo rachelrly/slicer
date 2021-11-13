@@ -25,7 +25,7 @@ describe.skip("Ingredient class sorts, formats, and filters ingredient input", (
     });
   });
 
-  describe("correctly handles unit input in isolation", () => {
+  describe.skip("correctly handles unit input in isolation", () => {
     const TestIngredient = new Ingredient();
 
     test("sorts short unit as unit", () => {
@@ -41,7 +41,7 @@ describe.skip("Ingredient class sorts, formats, and filters ingredient input", (
     });
   });
 
-  describe("correctly handles ingredient name input in isolation", () => {
+  describe.skip("correctly handles ingredient name input in isolation", () => {
     //TODO: add sad path for "undefined"
     const TestIngredient = new Ingredient();
 
@@ -57,7 +57,7 @@ describe.skip("Ingredient class sorts, formats, and filters ingredient input", (
     });
   });
 
-  describe("given a valid amount, unit, and ingredient name, it fills an ingredient", () => {
+  describe.skip("given a valid amount, unit, and ingredient name, it fills an ingredient", () => {
     const TestIngredient = new Ingredient();
 
     test("given valid ingredient without unit, returns valid unit is true", () => {

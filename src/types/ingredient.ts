@@ -27,8 +27,8 @@ export class Ingredient {
   /**
    * Methods to validate and set ingredient list
    */
-  setAmount(current: string) {
-    this.amount.set(current);
+  setAmount(current: string, parser = false) {
+    this.amount.set(current, parser);
   }
 
   setUnit(current: string) {

@@ -32,6 +32,7 @@ var Recipe = (function () {
             if (noScalableUnit) {
                 var newAmount_1 = _this._scaleAmountByConstant((_c = ingredient === null || ingredient === void 0 ? void 0 : ingredient.amount) === null || _c === void 0 ? void 0 : _c.amount, _this.constant);
                 console.log("THIS IS THE NEW AMOUNT I AM SETTING", newAmount_1);
+                console.log("THIS IS THE OLD AMOUNT", ingredient);
                 ingredient.setAmount(newAmount_1);
                 console.log("THIS IS THE NEW INGREDIENT AFTER SET", ingredient);
                 return ingredient;

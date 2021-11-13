@@ -53,7 +53,7 @@ var Parser = (function () {
                     this.currentIngredient.unit;
                 if (isFullIngredient)
                     this._addToIngredients();
-                this.currentIngredient.setAmount(word);
+                this.currentIngredient.setAmount(word, true);
                 break;
             case ingredient_1.IngredientOptions.Ingredient:
                 this.currentIngredient.setIngredient(word);

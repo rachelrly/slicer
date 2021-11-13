@@ -44,7 +44,7 @@ export class Parser {
 
         if (isFullIngredient) this._addToIngredients();
 
-        this.currentIngredient.setAmount(word);
+        this.currentIngredient.setAmount(word, true);
         break;
       case IngredientOptions.Ingredient:
         this.currentIngredient.setIngredient(word);
