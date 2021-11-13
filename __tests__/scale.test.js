@@ -2,7 +2,7 @@ const { Ingredient } = require("../dist/types/ingredient");
 const { Recipe } = require("../dist/types/recipe");
 const { Units } = require("../dist/types/units");
 
-describe("It scales an individual ingredient as expected", () => {
+describe("It parses a recipe from a string and multiplies it by a constant", () => {
   const BASIC_BREAD = `
 1 package active dry yeast
 3 tablespoons sugar 
@@ -25,11 +25,31 @@ describe("It scales an individual ingredient as expected", () => {
     const newRecipe = TestRecipe.scaledRecipe;
 
     recipe.forEach((ingredient, index) => {
-      console.log("THIS IS MY INGREDIENT", index, ingredient);
       const newIngredient = newRecipe[index];
       expect(ingredient.amount.amount).toBe(newIngredient.amount.amount);
-      expect(ingredient.unit.name.long).toBe(newIngredient.unit.name.long);
       expect(ingredient.ingredient.name).toBe(newIngredient.ingredient.name);
+      if (ingredient?.unit)
+        expect(ingredient.unit.name.long).toBe(newIngredient.unit.name.long);
+    });
+  });
+
+  test("It returns a scaled up recipe with the default constant of 2", () => {
+    const TestRecipe = new Recipe();
+    TestRecipe.setInput(BASIC_BREAD);
+    TestRecipe.setConstant(2);
+    console.log("THIS IS CONSTANT SANITY CHECK", TestRecipe.constant);
+    TestRecipe.scaleRecipe();
+    const recipe = TestRecipe.recipe;
+    const newRecipe = TestRecipe.scaledRecipe;
+
+    recipe.forEach((ingredient, index) => {
+      console.log(
+        index,
+        "AT THIS INGREDIENT, AT THIS INDEX",
+        ingredient,
+        newRecipe[index]
+      );
+      expect(ingredient.amount.amount).toBe(newRecipe[index].amount.amount * 2);
     });
   });
 

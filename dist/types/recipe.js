@@ -24,16 +24,39 @@ var Recipe = (function () {
     Recipe.prototype.scaleRecipe = function () {
         var _this = this;
         var scaledRecipe = this.recipe.map(function (ingredient) {
+            var _a, _b, _c;
+            var noScalableUnit = !(ingredient === null || ingredient === void 0 ? void 0 : ingredient.unit) || !((_a = ingredient === null || ingredient === void 0 ? void 0 : ingredient.unit) === null || _a === void 0 ? void 0 : _a.quantityInMl);
+            var ingredientNameOnly = !((_b = ingredient === null || ingredient === void 0 ? void 0 : ingredient.amount) === null || _b === void 0 ? void 0 : _b.amount);
+            if (ingredientNameOnly)
+                return ingredient;
+            if (noScalableUnit) {
+                var newAmount_1 = _this._scaleAmountByConstant((_c = ingredient === null || ingredient === void 0 ? void 0 : ingredient.amount) === null || _c === void 0 ? void 0 : _c.amount, _this.constant);
+                console.log("THIS IS THE NEW AMOUNT I AM SETTING", newAmount_1);
+                ingredient.setAmount(newAmount_1);
+                console.log("THIS IS THE NEW INGREDIENT AFTER SET", ingredient);
+                return ingredient;
+            }
             var newAmountInMl = ingredient.amount.amount *
                 ingredient.unit.quantityInMl *
                 _this.constant;
             var newUnit = (0, format_1.getUnitFromMl)(newAmountInMl);
-            var newAmountInUnit = newAmountInMl / newUnit.quantityInMl;
-            ingredient.setAmount(newAmountInUnit.toString());
+            var newAmount = _this._getAmountForCurrentUnit(newAmountInMl, newUnit.quantityInMl);
+            console.log("THIS IS MYING BEFORE SET AMOUNT", newAmount);
+            ingredient.setAmount(newAmount);
+            console.log("THIS IS MYING AFTER SET AMOUNT", ingredient);
             ingredient.setUnit(newUnit.name.long);
             return ingredient;
         });
         this.scaledRecipe = scaledRecipe;
+    };
+    Recipe.prototype._getAmountForCurrentUnit = function (amountInMl, mlPerUnit) {
+        var value = amountInMl / mlPerUnit;
+        var roundedValue = Number(value.toFixed(2));
+        return roundedValue.toString();
+    };
+    Recipe.prototype._scaleAmountByConstant = function (amount, constant) {
+        var product = amount * constant;
+        return product.toString();
     };
     return Recipe;
 }());
