@@ -1,6 +1,7 @@
-import { Units, Unit, UnitsType } from "./units";
+import { UNIT_COMPARISON, UnitType } from "./units";
 import { Amount } from "./amount";
 import { IngredientName } from "./ingredientName";
+import { ERRORS } from "./errors";
 
 export enum IngredientOptions {
   Amount = "amount",
@@ -10,41 +11,30 @@ export enum IngredientOptions {
 
 export class Ingredient {
   amount? = new Amount();
-  unit?: Unit = null;
+  unit?: UnitType = undefined;
   ingredient? = new IngredientName();
 
-  sort(current: string): IngredientOptions {
+  sortCurrentWord(current: string): void {
     if (this._isDigit(current)) {
-      return IngredientOptions.Amount;
-    } else if (this._isUnit(current)) {
-      return IngredientOptions.Unit;
+      this.setAmount(current);
+    } else if (Boolean(this._getUnit(current))) {
+      const unit = this._getUnit(current);
+      this.setUnit(unit);
     } else if (Boolean(current)) {
-      // stops undefined
-      return IngredientOptions.Ingredient;
-    } else return IngredientOptions.Ingredient;
-  }
-
-  /**
-   * Methods to validate and set ingredient list
-   */
-  setAmount(current: string, parser = false) {
-    this.amount.set(current, parser);
-  }
-
-  setUnit(current: string) {
-    const lastIndex = current.length - 1;
-    const lastChar = current[lastIndex];
-    if (lastChar === ("s" || ".")) current = current.slice(0, lastIndex);
-    this.unit = Units[current as UnitsType];
-  }
-
-  setIngredient(current: string) {
-    this.ingredient.set(current);
+      // Prevents undefined from being set as ingredient.
+      // This shouldn't be happening in the first place.
+      // Remove bool check when fixed
+      this.setIngredientName(current);
+    } else {
+      // We do not actually want to throw here
+      // this is temporary until error handling is proper
+      throw new Error(ERRORS.INGREDIENT.NO_VALID_PART);
+    }
   }
 
   scale(constant: number) {
     // currently scales amount only
-    const unitMl = this.unit.quantityInMl;
+    const unitMl = this.unit.mlInUnit;
     const base = this.amount.amount * unitMl;
     const scaled = this.amount.amount * constant;
     const newAmount = scaled / base;
@@ -52,6 +42,21 @@ export class Ingredient {
     // how to scale unit??
     // new quantity in ml
     // what qualifies as a switch?
+  }
+
+  /**
+   * Methods to validate and set ingredient list
+   */
+  setAmount(current: string) {
+    this.amount.set(current);
+  }
+
+  setUnit(unit: UnitType) {
+    this.unit = unit;
+  }
+
+  setIngredientName(current: string) {
+    this.ingredient.set(current);
   }
 
   isCompleteIngredient(): boolean {
@@ -69,19 +74,24 @@ export class Ingredient {
     } else return false;
   }
 
-  _isDigit(word: string): boolean {
+  private _isDigit(word: string): boolean {
     const regex = /\d/;
-    return !!word.match(regex);
+    return Boolean(word.match(regex));
   }
 
-  _isUnit(current: string): boolean {
-    // removes ending 's' or '.', i.e. "cups" or "tbsp."
-    const lastIndex = current.length - 1;
-    const last = current[lastIndex];
-    const isDiscardChar = last === "s" || last === ".";
-    if (isDiscardChar) current = current.slice(0, lastIndex);
+  private _getUnit(current: string): any {
+    // TODO: Handle Set Type
+    const compare = this._formatBeforeComparison(current);
+    const unit = UNIT_COMPARISON.has((key: any) => key.contains(compare));
+    return unit;
+  }
 
-    const isUnit = Boolean(current in Units);
-    return isUnit;
+  private _formatBeforeComparison(current: string) {
+    // When a unit only contains one character, this is often meaningful
+    // i.e. "T" is TABLESPOON and "t" is TEASPOON
+    // but "TABLESPOON" and "tablespoon" are both TABLESPOON
+    const shouldChangeCase = current.length > 1;
+    const compare = shouldChangeCase ? current.toLowerCase() : current;
+    return compare;
   }
 }

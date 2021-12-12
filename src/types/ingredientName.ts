@@ -1,7 +1,7 @@
 export class IngredientName {
-  name: string = "";
+  name: string = undefined;
   set(current: string) {
-    if (!this.name) {
+    if (Boolean(this.name)) {
       this.name = current;
     } else {
       this.name += " " + current;

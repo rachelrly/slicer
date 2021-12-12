@@ -1,14 +1,4 @@
-import {
-  Unit,
-  Gram,
-  Ounce,
-  Teaspoon,
-  Tablespoon,
-  Cup,
-  Pint,
-  Quart,
-  Gallon,
-} from "../types/units";
+import { UNITS } from "../types/units";
 
 export function fractionToFloat(fraction: string, index: number): number {
   const numerator = fraction.slice(0, index);
