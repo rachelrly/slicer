@@ -19,14 +19,19 @@ var Ingredient = (function () {
     }
     Ingredient.prototype.sortCurrentWord = function (current) {
         if (this._isDigit(current)) {
+            console.log("SETTING THIS AS DIGIT", current);
             this.setAmount(current);
+            console.log("THIS IS THE AMOUNT AFTER SET", this.amount);
         }
         else if (Boolean(this._getUnit(current))) {
+            console.log("SETTING THIS AS UNIT", current);
             var unit = this._getUnit(current);
             this.setUnit(unit);
+            console.log("THIS IS THE UNIT AFTER SET", this.unit);
         }
         else if (Boolean(current)) {
             this.setIngredientName(current);
+            console.log("THIS IS THE INGREDIENT NAME AFTER SET", this.ingredient.name);
         }
         else {
             throw new Error(errors_1.ERRORS.INGREDIENT.NO_VALID_PART);

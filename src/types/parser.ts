@@ -7,19 +7,28 @@ export class Parser {
   currentWord: string = "";
 
   parseRecipe(input: string) {
-    for (let i = 0; i <= input.length; i++) {
-      if (_isEmptyChar(input[i]) || _isFinalChar(i)) {
+    const inputLength = input.length;
+    for (let i = 0; i <= inputLength; i++) {
+      if (_isEmptyChar(input[i]) || _isFinalChar(i, inputLength)) {
         if (Boolean(this.currentWord)) {
+          // Sorts this.currentWord and sets in this.currentIngredient
           this.currentIngredient.sortCurrentWord(this.currentWord);
           this.currentWord = "";
+          const isValid = this.currentIngredient.isValidIngredient();
+          if (isValid) {
+            // sets new this.currentIngredient
+            this._addToIngredients();
+          }
         }
       } else {
         this.currentWord += input[i];
       }
     }
-
-    // adds last ingredient after loop finishes
-    // this._addToIngredients();
+    const isValid = this.currentIngredient.isValidIngredient();
+    if (isValid) {
+      // sets new this.currentIngredient
+      this._addToIngredients();
+    }
 
     function _isEmptyChar(char: string) {
       // TODO: Switch case?
@@ -29,17 +38,13 @@ export class Parser {
       return false;
     }
 
-    function _isFinalChar(index: number) {
-      const isFinal = input.length === index;
-      return isFinal;
+    function _isFinalChar(index: number, inputLength: number) {
+      return inputLength === index;
     }
   }
 
-  // _addToIngredients() {
-  //   const isValidIngredient = this.currentIngredient.isValidIngredient();
-  //   if (isValidIngredient) {
-  //     this.ingredients = [...this.ingredients, this.currentIngredient];
-  //     this.currentIngredient = new Ingredient();
-  //   }
-  // }
+  _addToIngredients() {
+    this.ingredients = [...this.ingredients, this.currentIngredient];
+    this.currentIngredient = new Ingredient();
+  }
 }

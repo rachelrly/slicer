@@ -16,15 +16,23 @@ export class Ingredient {
 
   sortCurrentWord(current: string): void {
     if (this._isDigit(current)) {
+      console.log("SETTING THIS AS DIGIT", current);
       this.setAmount(current);
+      console.log("THIS IS THE AMOUNT AFTER SET", this.amount);
     } else if (Boolean(this._getUnit(current))) {
+      console.log("SETTING THIS AS UNIT", current);
       const unit = this._getUnit(current);
       this.setUnit(unit);
+      console.log("THIS IS THE UNIT AFTER SET", this.unit);
     } else if (Boolean(current)) {
       // Prevents undefined from being set as ingredient.
       // This shouldn't be happening in the first place.
       // Remove bool check when fixed
       this.setIngredientName(current);
+      console.log(
+        "THIS IS THE INGREDIENT NAME AFTER SET",
+        this.ingredient.name
+      );
     } else {
       // We do not actually want to throw here
       // this is temporary until error handling is proper

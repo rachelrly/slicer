@@ -8,7 +8,7 @@ exports.UNITS = {
             long: "tablespoon",
             short: "tbsp"
         },
-        matchString: new Set(["t", "t.", "tsp", "teaspoon"])
+        matchString: new Set(["t", "t.", "tsp", "teaspoon", "teaspoons"])
     },
     TABLESPOON: {
         mlInUnit: 14.7868,
@@ -16,7 +16,7 @@ exports.UNITS = {
             long: "tablespoon",
             short: "tbsp"
         },
-        matchString: new Set(["T", "tbsp", "tablespoon"])
+        matchString: new Set(["T", "tbsp", "tbsp.", "tablespoon", "tablespoons"])
     },
     OUNCE: {
         mlInUnit: 29.5735,
@@ -24,7 +24,7 @@ exports.UNITS = {
             long: "ounce",
             short: "oz"
         },
-        matchString: new Set(["o", "oz", "ounce"])
+        matchString: new Set(["o", "oz", "oz.", "ozs", "ounce", "ounces"])
     },
     CUP: {
         mlInUnit: 236.588,
@@ -32,35 +32,35 @@ exports.UNITS = {
             long: "cup",
             short: "c"
         },
-        matchString: new Set(["c", "C", "cup"])
+        matchString: new Set(["c", "c.", "cs", "C", "Cs", "cup", "cups"])
     },
     PINT: {
         mlInUnit: 473.176,
         name: {
             long: "pint"
         },
-        matchString: new Set(["p", "P", "pint"])
+        matchString: new Set(["p", "p.", "P", "pint", "pints"])
     },
     QUART: {
         mlInUnit: 946.353,
         name: {
             long: "quart"
         },
-        matchString: new Set(["q", "Q", "quart"])
+        matchString: new Set(["q", "q.", "Q", "quart", "quarts"])
     },
     POUND: {
         name: {
             long: "pound",
             short: "lb"
         },
-        matchString: new Set(["lb", "pound"])
+        matchString: new Set(["lb", "lb.", "lbs", "lbs.", "pound", "pounds"])
     },
     GALLON: {
         mlInUnit: 3785.41,
         name: {
             long: "gallon"
         },
-        matchString: new Set(["G", "gallon"])
+        matchString: new Set(["G", "G.", "Gs", "gallon", "gallons"])
     },
     GRAM: {
         mlInUnit: 1,
@@ -68,7 +68,7 @@ exports.UNITS = {
             long: "gram",
             short: "g"
         },
-        matchString: new Set(["g", "gram"])
+        matchString: new Set(["g", "g.", "gram", "grams"])
     },
     PINCH: {
         name: {

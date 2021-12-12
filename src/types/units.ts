@@ -16,7 +16,7 @@ export const UNITS = {
       long: "tablespoon",
       short: "tbsp",
     },
-    matchString: new Set(["t", "t.", "tsp", "teaspoon"]),
+    matchString: new Set(["t", "t.", "tsp", "teaspoon", "teaspoons"]),
   },
   TABLESPOON: {
     mlInUnit: 14.7868,
@@ -24,7 +24,7 @@ export const UNITS = {
       long: "tablespoon",
       short: "tbsp",
     },
-    matchString: new Set(["T", "tbsp", "tablespoon"]),
+    matchString: new Set(["T", "tbsp", "tbsp.", "tablespoon", "tablespoons"]),
   },
   OUNCE: {
     mlInUnit: 29.5735,
@@ -32,7 +32,7 @@ export const UNITS = {
       long: "ounce",
       short: "oz",
     },
-    matchString: new Set(["o", "oz", "ounce"]),
+    matchString: new Set(["o", "oz", "oz.", "ozs", "ounce", "ounces"]),
   },
   CUP: {
     mlInUnit: 236.588,
@@ -40,35 +40,35 @@ export const UNITS = {
       long: "cup",
       short: "c",
     },
-    matchString: new Set(["c", "C", "cup"]),
+    matchString: new Set(["c", "c.", "cs", "C", "Cs", "cup", "cups"]),
   },
   PINT: {
     mlInUnit: 473.176,
     name: {
       long: "pint",
     },
-    matchString: new Set(["p", "P", "pint"]),
+    matchString: new Set(["p", "p.", "P", "pint", "pints"]),
   },
   QUART: {
     mlInUnit: 946.353,
     name: {
       long: "quart",
     },
-    matchString: new Set(["q", "Q", "quart"]),
+    matchString: new Set(["q", "q.", "Q", "quart", "quarts"]),
   },
   POUND: {
     name: {
       long: "pound",
       short: "lb",
     },
-    matchString: new Set(["lb", "pound"]),
+    matchString: new Set(["lb", "lb.", "lbs", "lbs.", "pound", "pounds"]),
   },
   GALLON: {
     mlInUnit: 3785.41,
     name: {
       long: "gallon",
     },
-    matchString: new Set(["G", "gallon"]),
+    matchString: new Set(["G", "G.", "Gs", "gallon", "gallons"]),
   },
   GRAM: {
     mlInUnit: 1,
@@ -76,7 +76,7 @@ export const UNITS = {
       long: "gram",
       short: "g",
     },
-    matchString: new Set(["g", "gram"]),
+    matchString: new Set(["g", "g.", "gram", "grams"]),
   },
   PINCH: {
     name: {
@@ -102,9 +102,6 @@ export const UNITS = {
 export const UNIT_COMPARISON = new Map();
 
 // TODO: Remove UNITS[x].matchString from unit returned since it is not being used
-
-// In previous versions, strings ending in "." or "s" were formatted before comparison.
-// This is depreciated because it requires preforming computation on ingredient names.
 UNIT_COMPARISON.set(UNITS.TEASPOON.matchString, UNITS.TEASPOON);
 UNIT_COMPARISON.set(UNITS.TABLESPOON.matchString, UNITS.TABLESPOON);
 UNIT_COMPARISON.set(UNITS.OUNCE.matchString, UNITS.OUNCE);
@@ -119,5 +116,3 @@ UNIT_COMPARISON.set(UNITS.SPLASH.matchString, UNITS.SPLASH);
 UNIT_COMPARISON.set(UNITS.DASH.matchString, UNITS.DASH);
 
 export type UnitsType = keyof typeof UNITS;
-
-// TODO: if length is > 1, do compare .toLowerCase()

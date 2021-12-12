@@ -10,30 +10,33 @@ const BASIC_BREAD = `
 2 tablespoons canola oil
 `;
 
-describe("Parser class parses a single ingredient correctly and adds to list", () => {
+describe("Given an array with the most simple complete ingredient string", () => {
   const INPUT = "3 tablespoons sugar";
   const TestParser = new Parser();
   TestParser.parseRecipe(INPUT);
 
-  test("Given a single ingredient, it parses correctly and returns an array with one Ingredient", () => {
-    expect(TestParser.ingredients?.length).toBe(1);
+  test("it parses ingredient parts correctly", () => {
     expect(TestParser.ingredients[0].amount.amount).toBe(3);
     expect(TestParser.ingredients[0].unit.name.short).toBe(
       Units.tablespoon.name.short
     );
     expect(TestParser.ingredients[0].ingredient.name).toBe("sugar");
   });
+
+  test("it returns an array with one ingredient", () => {
+    expect(TestParser.ingredients?.length).toBe(1);
+  });
 });
 
-describe("Parser class parses input data correctly", () => {
+describe("Given a full recipe", () => {
   const TestParser = new Parser();
 
-  test("given valid input with a given number of ingredients, it returns an array of ingredients with that length", () => {
+  test("it returns an array of the correct length", () => {
     TestParser.parseRecipe(BASIC_BREAD);
     expect(TestParser.ingredients?.length).toBe(6);
   });
 
-  test("given a valid recipe input, it parses ingredients correctly and in order", () => {
+  test("it parses the first two ingredients correctly and in order", () => {
     const firstIngredient = TestParser.ingredients[0];
     const secondIngredient = TestParser.ingredients[1];
 
