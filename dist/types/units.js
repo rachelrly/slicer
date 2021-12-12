@@ -1,94 +1,105 @@
 "use strict";
 exports.__esModule = true;
-exports.Units = exports.Gram = exports.Pound = exports.Gallon = exports.Quart = exports.Pint = exports.Cup = exports.Ounce = exports.Tablespoon = exports.Teaspoon = void 0;
-exports.Teaspoon = {
-    quantityInMl: 4.92892,
-    name: {
-        long: "teaspoon",
-        short: "tsp"
+exports.UNIT_COMPARISON = exports.UNITS = void 0;
+exports.UNITS = {
+    TEASPOON: {
+        mlInUnit: 14.7868,
+        name: {
+            long: "tablespoon",
+            short: "tbsp"
+        },
+        matchString: new Set(["t", "t.", "tsp", "teaspoon"])
     },
-    isScalable: true
-};
-exports.Tablespoon = {
-    quantityInMl: 14.7868,
-    name: {
-        long: "tablespoon",
-        short: "tbsp"
+    TABLESPOON: {
+        mlInUnit: 14.7868,
+        name: {
+            long: "tablespoon",
+            short: "tbsp"
+        },
+        matchString: new Set(["T", "tbsp", "tablespoon"])
     },
-    isScalable: true
-};
-exports.Ounce = {
-    quantityInMl: 29.5735,
-    name: {
-        long: "ounce",
-        short: "oz"
+    OUNCE: {
+        mlInUnit: 29.5735,
+        name: {
+            long: "ounce",
+            short: "oz"
+        },
+        matchString: new Set(["o", "oz", "ounce"])
     },
-    isScalable: true
-};
-exports.Cup = {
-    quantityInMl: 236.588,
-    name: {
-        long: "cup",
-        short: "c"
+    CUP: {
+        mlInUnit: 236.588,
+        name: {
+            long: "cup",
+            short: "c"
+        },
+        matchString: new Set(["c", "C", "cup"])
     },
-    isScalable: true
-};
-exports.Pint = {
-    quantityInMl: 473.176,
-    name: {
-        long: "pint",
-        short: "p"
+    PINT: {
+        mlInUnit: 473.176,
+        name: {
+            long: "pint"
+        },
+        matchString: new Set(["p", "P", "pint"])
     },
-    isScalable: true
-};
-exports.Quart = {
-    quantityInMl: 946.353,
-    name: {
-        long: "quart",
-        short: "q"
+    QUART: {
+        mlInUnit: 946.353,
+        name: {
+            long: "quart"
+        },
+        matchString: new Set(["q", "Q", "quart"])
     },
-    isScalable: true
-};
-exports.Gallon = {
-    quantityInMl: 3785.41,
-    name: {
-        long: "gallon",
-        short: "g"
+    POUND: {
+        name: {
+            long: "pound",
+            short: "lb"
+        },
+        matchString: new Set(["lb", "pound"])
     },
-    isScalable: true
-};
-exports.Pound = {
-    name: {
-        long: "pound",
-        short: "lb"
+    GALLON: {
+        mlInUnit: 3785.41,
+        name: {
+            long: "gallon"
+        },
+        matchString: new Set(["G", "gallon"])
     },
-    isScalable: false
-};
-exports.Gram = {
-    quantityInMl: 1,
-    name: {
-        long: "gram",
-        short: "g"
+    GRAM: {
+        mlInUnit: 1,
+        name: {
+            long: "gram",
+            short: "g"
+        },
+        matchString: new Set(["g", "gram"])
     },
-    isScalable: false
+    PINCH: {
+        name: {
+            long: "pinch"
+        },
+        matchString: new Set(["pinch"])
+    },
+    SPLASH: {
+        name: {
+            long: "splash"
+        },
+        matchString: new Set(["splash"])
+    },
+    DASH: {
+        name: {
+            long: "dash"
+        },
+        matchString: new Set(["dash"])
+    }
 };
-exports.Units = {
-    cup: exports.Cup,
-    c: exports.Cup,
-    tablespoon: exports.Tablespoon,
-    tbsp: exports.Tablespoon,
-    teaspoon: exports.Teaspoon,
-    tsp: exports.Teaspoon,
-    t: exports.Teaspoon,
-    oz: exports.Ounce,
-    ounce: exports.Ounce,
-    pound: exports.Pound,
-    lb: exports.Pound,
-    gallon: exports.Gallon,
-    pint: exports.Pint,
-    quart: exports.Quart,
-    q: exports.Quart,
-    gram: exports.Gram,
-    g: exports.Gram
-};
+exports.UNIT_COMPARISON = new Map();
+exports.UNIT_COMPARISON.set(exports.UNITS.TEASPOON.matchString, exports.UNITS.TEASPOON);
+exports.UNIT_COMPARISON.set(exports.UNITS.TABLESPOON.matchString, exports.UNITS.TABLESPOON);
+exports.UNIT_COMPARISON.set(exports.UNITS.OUNCE.matchString, exports.UNITS.OUNCE);
+exports.UNIT_COMPARISON.set(exports.UNITS.CUP.matchString, exports.UNITS.CUP);
+exports.UNIT_COMPARISON.set(exports.UNITS.PINT.matchString, exports.UNITS.PINT);
+exports.UNIT_COMPARISON.set(exports.UNITS.QUART.matchString, exports.UNITS.QUART);
+exports.UNIT_COMPARISON.set(exports.UNITS.POUND.matchString, exports.UNITS.POUND);
+exports.UNIT_COMPARISON.set(exports.UNITS.GALLON.matchString, exports.UNITS.GALLON);
+exports.UNIT_COMPARISON.set(exports.UNITS.GRAM.matchString, exports.UNITS.GRAM);
+exports.UNIT_COMPARISON.set(exports.UNITS.PINCH.matchString, exports.UNITS.PINCH);
+exports.UNIT_COMPARISON.set(exports.UNITS.SPLASH.matchString, exports.UNITS.SPLASH);
+exports.UNIT_COMPARISON.set(exports.UNITS.DASH.matchString, exports.UNITS.DASH);
 //# sourceMappingURL=units.js.map

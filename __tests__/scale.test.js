@@ -2,7 +2,7 @@ const { Ingredient } = require("../dist/types/ingredient");
 const { Recipe } = require("../dist/types/recipe");
 const { Units } = require("../dist/types/units");
 
-describe("It parses a recipe from a string and multiplies it by a constant", () => {
+describe.skip("It parses a recipe from a string and multiplies it by a constant", () => {
   const BASIC_BREAD = `
 1 package active dry yeast
 3 tablespoons sugar 

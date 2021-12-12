@@ -18,14 +18,14 @@ var Recipe = (function () {
     };
     Recipe.prototype._parseInput = function () {
         var parser = new parser_1.Parser();
-        parser.parse(this.input);
+        parser.parseRecipe(this.input);
         this.recipe = parser.ingredients;
     };
     Recipe.prototype.scaleRecipe = function () {
         var _this = this;
         var scaledRecipe = this.recipe.map(function (ingredient) {
             var _a, _b, _c;
-            var noScalableUnit = !(ingredient === null || ingredient === void 0 ? void 0 : ingredient.unit) || !((_a = ingredient === null || ingredient === void 0 ? void 0 : ingredient.unit) === null || _a === void 0 ? void 0 : _a.quantityInMl);
+            var noScalableUnit = !(ingredient === null || ingredient === void 0 ? void 0 : ingredient.unit) || !((_a = ingredient === null || ingredient === void 0 ? void 0 : ingredient.unit) === null || _a === void 0 ? void 0 : _a.mlInUnit);
             var ingredientNameOnly = !((_b = ingredient === null || ingredient === void 0 ? void 0 : ingredient.amount) === null || _b === void 0 ? void 0 : _b.amount);
             if (ingredientNameOnly)
                 return ingredient;
@@ -37,15 +37,13 @@ var Recipe = (function () {
                 console.log("THIS IS THE NEW INGREDIENT AFTER SET", ingredient);
                 return ingredient;
             }
-            var newAmountInMl = ingredient.amount.amount *
-                ingredient.unit.quantityInMl *
-                _this.constant;
+            var newAmountInMl = ingredient.amount.amount * ingredient.unit.mlInUnit * _this.constant;
             var newUnit = (0, format_1.getUnitFromMl)(newAmountInMl);
-            var newAmount = _this._getAmountForCurrentUnit(newAmountInMl, newUnit.quantityInMl);
+            var newAmount = _this._getAmountForCurrentUnit(newAmountInMl, newUnit.mlInUnit);
             console.log("THIS IS MYING BEFORE SET AMOUNT", newAmount);
             ingredient.setAmount(newAmount);
             console.log("THIS IS MYING AFTER SET AMOUNT", ingredient);
-            ingredient.setUnit(newUnit.name.long);
+            ingredient.setUnit(newUnit);
             return ingredient;
         });
         this.scaledRecipe = scaledRecipe;
