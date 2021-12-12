@@ -1,4 +1,4 @@
-import { UNITS, UnitType } from "../types/units";
+import { UNITS, UNIT_COMPARISON, UnitType } from "../types/units";
 import { MAXIMUM_SUPPORTED_ML } from "./constants";
 import { ERRORS } from "../types/errors";
 export function fractionToFloat(fraction: string, index: number): number {
@@ -52,4 +52,16 @@ export function getUnitFromMl(
     default:
       return UNITS.GALLON;
   }
+}
+
+export function getUnitFromString(input: string) {
+  let unit;
+  // Set does not match variable without toString conversion
+  UNIT_COMPARISON.forEach((value: any, key: any) => {
+    if (key.has(input.toString())) {
+      unit = value;
+    }
+  });
+
+  return unit;
 }

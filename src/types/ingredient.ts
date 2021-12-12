@@ -2,6 +2,7 @@ import { UNIT_COMPARISON, UnitType } from "./units";
 import { Amount } from "./amount";
 import { IngredientName } from "./ingredientName";
 import { ERRORS } from "./errors";
+import { getUnitFromString } from "../utils/format";
 
 export enum IngredientOptions {
   Amount = "amount",
@@ -16,23 +17,23 @@ export class Ingredient {
 
   sortCurrentWord(current: string): void {
     if (this._isDigit(current)) {
-      console.log("SETTING THIS AS DIGIT", current);
+      // console.log("SETTING THIS AS DIGIT", current);
       this.setAmount(current);
-      console.log("THIS IS THE AMOUNT AFTER SET", this.amount);
+      // console.log("THIS IS THE AMOUNT AFTER SET", this.amount);
     } else if (Boolean(this._getUnit(current))) {
-      console.log("SETTING THIS AS UNIT", current);
+      // console.log("SETTING THIS AS UNIT", current);
       const unit = this._getUnit(current);
       this.setUnit(unit);
-      console.log("THIS IS THE UNIT AFTER SET", this.unit);
+      // console.log("THIS IS THE UNIT AFTER SET", this.unit);
     } else if (Boolean(current)) {
       // Prevents undefined from being set as ingredient.
       // This shouldn't be happening in the first place.
       // Remove bool check when fixed
       this.setIngredientName(current);
-      console.log(
-        "THIS IS THE INGREDIENT NAME AFTER SET",
-        this.ingredient.name
-      );
+      // console.log(
+      //   "THIS IS THE INGREDIENT NAME AFTER SET",
+      //   this.ingredient.name
+      // );
     } else {
       // We do not actually want to throw here
       // this is temporary until error handling is proper
@@ -87,10 +88,12 @@ export class Ingredient {
     return Boolean(word.match(regex));
   }
 
-  private _getUnit(current: string): any {
+  // Not decalred as private for tests
+  _getUnit(current: string): any {
     // TODO: Handle Set Type
     const compare = this._formatBeforeComparison(current);
-    const unit = UNIT_COMPARISON.has((key: any) => key.contains(compare));
+    const unit = getUnitFromString(compare);
+    console.log("THIS IS MY UNIT", unit);
     return unit;
   }
 

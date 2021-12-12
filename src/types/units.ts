@@ -13,8 +13,8 @@ export const UNITS = {
   TEASPOON: {
     mlInUnit: 14.7868,
     name: {
-      long: "tablespoon",
-      short: "tbsp",
+      long: "teaspoon",
+      short: "tsp",
     },
     matchString: new Set(["t", "t.", "tsp", "teaspoon", "teaspoons"]),
   },

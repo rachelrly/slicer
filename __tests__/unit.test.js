@@ -1,8 +1,8 @@
-const { getUnitFromMl } = require("../dist/utils/format");
+const { getUnitFromMl, getUnitFromString } = require("../dist/utils/format");
 const { UNITS } = require("../dist/types/units");
 const { ERRORS } = require("../dist/types/errors");
 
-describe("Given an amount in ml", () => {
+describe.skip("Given an amount in ml", () => {
   test("it returns the next closest unit", () => {
     expect(getUnitFromMl(10).name.short).toBe(UNITS.TABLESPOON.name.short);
   });
@@ -29,5 +29,11 @@ describe("Given an amount in ml", () => {
 
   test("it throws when input is negative", () => {
     expect(() => getUnitFromMl(-1)).toThrow(ERRORS.AMOUNT.NEGATIVE_INPUT);
+  });
+});
+
+describe("Given a valid unit string input", () => {
+  test("it sorts `tsp` as TEASPOON", () => {
+    expect(getUnitFromString("tsp").name.short).toBe("tsp");
   });
 });

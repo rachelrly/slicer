@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.getUnitFromMl = exports.fractionToFloat = void 0;
+exports.getUnitFromString = exports.getUnitFromMl = exports.fractionToFloat = void 0;
 var units_1 = require("../types/units");
 var constants_1 = require("./constants");
 var errors_1 = require("../types/errors");
@@ -49,4 +49,14 @@ function getUnitFromMl(amount, includeNonStandardUnits) {
     }
 }
 exports.getUnitFromMl = getUnitFromMl;
+function getUnitFromString(input) {
+    var unit;
+    units_1.UNIT_COMPARISON.forEach(function (value, key) {
+        if (key.has(input.toString())) {
+            unit = value;
+        }
+    });
+    return unit;
+}
+exports.getUnitFromString = getUnitFromString;
 //# sourceMappingURL=format.js.map

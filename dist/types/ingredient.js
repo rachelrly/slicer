@@ -1,10 +1,10 @@
 "use strict";
 exports.__esModule = true;
 exports.Ingredient = exports.IngredientOptions = void 0;
-var units_1 = require("./units");
 var amount_1 = require("./amount");
 var ingredientName_1 = require("./ingredientName");
 var errors_1 = require("./errors");
+var format_1 = require("../utils/format");
 var IngredientOptions;
 (function (IngredientOptions) {
     IngredientOptions["Amount"] = "amount";
@@ -19,19 +19,14 @@ var Ingredient = (function () {
     }
     Ingredient.prototype.sortCurrentWord = function (current) {
         if (this._isDigit(current)) {
-            console.log("SETTING THIS AS DIGIT", current);
             this.setAmount(current);
-            console.log("THIS IS THE AMOUNT AFTER SET", this.amount);
         }
         else if (Boolean(this._getUnit(current))) {
-            console.log("SETTING THIS AS UNIT", current);
             var unit = this._getUnit(current);
             this.setUnit(unit);
-            console.log("THIS IS THE UNIT AFTER SET", this.unit);
         }
         else if (Boolean(current)) {
             this.setIngredientName(current);
-            console.log("THIS IS THE INGREDIENT NAME AFTER SET", this.ingredient.name);
         }
         else {
             throw new Error(errors_1.ERRORS.INGREDIENT.NO_VALID_PART);
@@ -73,7 +68,8 @@ var Ingredient = (function () {
     };
     Ingredient.prototype._getUnit = function (current) {
         var compare = this._formatBeforeComparison(current);
-        var unit = units_1.UNIT_COMPARISON.has(function (key) { return key.contains(compare); });
+        var unit = (0, format_1.getUnitFromString)(compare);
+        console.log("THIS IS MY UNIT", unit);
         return unit;
     };
     Ingredient.prototype._formatBeforeComparison = function (current) {
