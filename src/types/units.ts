@@ -1,112 +1,102 @@
 export interface UnitName {
   long: string;
-  short: string;
-}
+  short?: string;
+} // currently not being used in this file. Move?
 
 export interface Unit {
   readonly quantityInMl?: number;
   readonly name: UnitName;
   readonly isScalable: boolean;
-}
+} // currently not being used in this file. Move?
 
-export const Teaspoon = {
-  quantityInMl: 4.92892,
-  name: {
-    long: "teaspoon",
-    short: "tsp",
+export const UNITS = {
+  TEASPOON: {
+    quantityInMl: 14.7868,
+    name: {
+      long: "tablespoon",
+      short: "tbsp",
+    },
   },
-  isScalable: true,
-};
-
-export const Tablespoon = {
-  quantityInMl: 14.7868,
-  name: {
-    long: "tablespoon",
-    short: "tbsp",
+  TABLESPOON: {
+    quantityInMl: 14.7868,
+    name: {
+      long: "tablespoon",
+      short: "tbsp",
+    },
   },
-  isScalable: true,
-};
-
-export const Ounce = {
-  quantityInMl: 29.5735,
-  name: {
-    long: "ounce",
-    short: "oz",
+  OUNCE: {
+    quantityInMl: 29.5735,
+    name: {
+      long: "ounce",
+      short: "oz",
+    },
   },
-  isScalable: true,
-};
-
-export const Cup = {
-  quantityInMl: 236.588,
-  name: {
-    long: "cup",
-    short: "c",
+  CUP: {
+    quantityInMl: 236.588,
+    name: {
+      long: "cup",
+      short: "c",
+    },
   },
-  isScalable: true,
-};
-
-export const Pint = {
-  quantityInMl: 473.176,
-  name: {
-    long: "pint",
-    short: "p",
+  PINT: {
+    quantityInMl: 473.176,
+    name: {
+      long: "pint",
+    },
   },
-  isScalable: true,
-};
-
-export const Quart = {
-  quantityInMl: 946.353,
-  name: {
-    long: "quart",
-    short: "q",
+  QUART: {
+    quantityInMl: 946.353,
+    name: {
+      long: "quart",
+    },
   },
-  isScalable: true,
-};
-
-export const Gallon = {
-  quantityInMl: 3785.41,
-  name: {
-    long: "gallon",
-    short: "g",
+  POUND: {
+    name: {
+      long: "pound",
+      short: "lb",
+    },
   },
-  isScalable: true,
-};
-
-export const Pound = {
-  name: {
-    long: "pound",
-    short: "lb",
+  GALLON: {
+    quantityInMl: 3785.41,
+    name: {
+      long: "gallon",
+    },
   },
-  isScalable: false,
-};
-
-export const Gram = {
-  quantityInMl: 1,
-  name: {
-    long: "gram",
-    short: "g",
+  GRAM: {
+    quantityInMl: 1,
+    name: {
+      long: "gram",
+      short: "g",
+    },
   },
-  isScalable: false,
-};
-
-export const Units = {
-  cup: Cup,
-  c: Cup,
-  tablespoon: Tablespoon,
-  tbsp: Tablespoon,
-  teaspoon: Teaspoon,
-  tsp: Teaspoon,
-  t: Teaspoon,
-  oz: Ounce,
-  ounce: Ounce,
-  pound: Pound,
-  lb: Pound,
-  gallon: Gallon,
-  pint: Pint,
-  quart: Quart,
-  q: Quart,
-  gram: Gram,
-  g: Gram,
+  PINCH: {
+    name: {
+      long: "pinch",
+    },
+  },
+  SPLASH: {
+    name: {
+      long: "splash",
+    },
+  },
 } as const;
 
-export type UnitsType = keyof typeof Units;
+// The UNIT_COMPARISON map contains unit strings from recipes and maps them to the unit constant
+export const UNIT_COMPARISON = new Map();
+
+// Units that end in "." or "s" are parsed before comparison
+UNIT_COMPARISON.set(new Set(["t", "tsp", "teaspoon"]), UNITS.TEASPOON);
+UNIT_COMPARISON.set(new Set(["T", "tbsp", "tablespoon"]), UNITS.TABLESPOON);
+UNIT_COMPARISON.set(new Set(["o", "oz", "ounce"]), UNITS.OUNCE);
+UNIT_COMPARISON.set(new Set(["c", "C", "cup"]), UNITS.CUP);
+UNIT_COMPARISON.set(new Set(["p", "P", "pint"]), UNITS.PINT);
+UNIT_COMPARISON.set(new Set(["q", "Q", "quart"]), UNITS.QUART);
+UNIT_COMPARISON.set(new Set(["lb", "pound"]), UNITS.POUND);
+UNIT_COMPARISON.set(new Set(["G", "gallon"]), UNITS.GALLON);
+UNIT_COMPARISON.set(new Set(["g", "gram"]), UNITS.GRAM);
+UNIT_COMPARISON.set(new Set(["pinch"]), UNITS.PINCH);
+UNIT_COMPARISON.set(new Set(["splash"]), UNITS.SPLASH);
+
+export type UnitsType = keyof typeof UNITS;
+
+// TODO: if length is > 1, do compare .toLowerCase()
