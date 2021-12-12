@@ -1,7 +1,7 @@
 import { Ingredient } from "./ingredient";
 import { Parser } from "./parser";
 import { getUnitFromMl } from "../utils/format";
-import { Unit } from "./units";
+import { UnitType } from "./units";
 // holds input
 // controls scaling function
 //
@@ -24,15 +24,14 @@ export class Recipe {
 
   _parseInput() {
     const parser = new Parser();
-    parser.parse(this.input);
+    parser.parseRecipe(this.input);
     this.recipe = parser.ingredients;
   }
 
   scaleRecipe() {
     const scaledRecipe = this.recipe.map(
       (ingredient: Ingredient): Ingredient => {
-        const noScalableUnit =
-          !ingredient?.unit || !ingredient?.unit?.quantityInMl;
+        const noScalableUnit = !ingredient?.unit || !ingredient?.unit?.mlInUnit;
         const ingredientNameOnly = !ingredient?.amount?.amount;
         if (ingredientNameOnly) return ingredient;
         if (noScalableUnit) {
@@ -48,19 +47,17 @@ export class Recipe {
         }
 
         const newAmountInMl: number =
-          ingredient.amount.amount *
-          ingredient.unit.quantityInMl *
-          this.constant;
+          ingredient.amount.amount * ingredient.unit.mlInUnit * this.constant;
 
-        const newUnit: Unit = getUnitFromMl(newAmountInMl);
+        const newUnit: UnitType = getUnitFromMl(newAmountInMl);
         const newAmount = this._getAmountForCurrentUnit(
           newAmountInMl,
-          newUnit.quantityInMl
+          newUnit.mlInUnit
         );
         console.log("THIS IS MYING BEFORE SET AMOUNT", newAmount);
         ingredient.setAmount(newAmount);
         console.log("THIS IS MYING AFTER SET AMOUNT", ingredient);
-        ingredient.setUnit(newUnit.name.long);
+        ingredient.setUnit(newUnit);
         return ingredient;
       }
     );

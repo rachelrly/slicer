@@ -1,5 +1,6 @@
-import { UNITS } from "../types/units";
-
+import { UNITS, UnitType } from "../types/units";
+import { MAXIMUM_SUPPORTED_ML } from "./constants";
+import { ERRORS } from "../types/errors";
 export function fractionToFloat(fraction: string, index: number): number {
   const numerator = fraction.slice(0, index);
   const denominator = fraction.slice(index + 1);
@@ -10,36 +11,45 @@ export function fractionToFloat(fraction: string, index: number): number {
 export function getUnitFromMl(
   amount: number,
   includeNonStandardUnits = false
-): Unit {
+): UnitType {
   // nonstandard units are outside the traditional American recipe structure
 
-  if (amount > Gallon.quantityInMl * 20) {
-    throw Error("Cannot handle amounts over 20 gallons");
+  if (amount === 0) {
+    throw Error(ERRORS.AMOUNT.ZERO_INPUT);
+  }
+
+  if (amount > MAXIMUM_SUPPORTED_ML) {
+    throw Error(ERRORS.UNIT.UNREALISTIC_INPUT);
   }
 
   if (amount < 0) {
-    throw Error("Cannot have a negative amount of an ingredient");
+    throw Error(ERRORS.AMOUNT.NEGATIVE_INPUT);
   }
 
-  const mlDoubled = (unit: Unit) =>
-    unit.quantityInMl * 2 - unit.quantityInMl / 6;
+  function _getUnitBreakpoint(mlInUnit: number) {
+    return mlInUnit * 2 - mlInUnit / 6;
+  }
 
   switch (true) {
-    case amount < mlDoubled(Gram) && includeNonStandardUnits:
-      return Gram;
-    case amount < mlDoubled(Teaspoon):
-      return Teaspoon;
-    case amount < mlDoubled(Tablespoon):
-      return Tablespoon;
-    case amount < mlDoubled(Ounce) && includeNonStandardUnits:
-      return Ounce;
-    case amount < mlDoubled(Cup):
-      return Cup;
-    case amount < mlDoubled(Pint) && includeNonStandardUnits:
-      return Pint;
-    case amount < mlDoubled(Quart) && includeNonStandardUnits:
-      return Quart;
+    case amount < _getUnitBreakpoint(UNITS.GRAM.mlInUnit) &&
+      includeNonStandardUnits:
+      return UNITS.GRAM;
+    case amount < _getUnitBreakpoint(UNITS.TEASPOON.mlInUnit):
+      return UNITS.TEASPOON;
+    case amount < _getUnitBreakpoint(UNITS.TEASPOON.mlInUnit):
+      return UNITS.TABLESPOON;
+    case amount < _getUnitBreakpoint(UNITS.OUNCE.mlInUnit) &&
+      includeNonStandardUnits:
+      return UNITS.OUNCE;
+    case amount < _getUnitBreakpoint(UNITS.CUP.mlInUnit):
+      return UNITS.CUP;
+    case amount < _getUnitBreakpoint(UNITS.PINT.mlInUnit) &&
+      includeNonStandardUnits:
+      return UNITS.PINT;
+    case amount < _getUnitBreakpoint(UNITS.QUART.mlInUnit) &&
+      includeNonStandardUnits:
+      return UNITS.QUART;
     default:
-      return Gallon;
+      return UNITS.GALLON;
   }
 }
