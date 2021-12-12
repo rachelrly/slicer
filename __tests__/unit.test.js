@@ -2,7 +2,7 @@ const { getUnitFromMl, getUnitFromString } = require("../dist/utils/format");
 const { UNITS } = require("../dist/types/units");
 const { ERRORS } = require("../dist/types/errors");
 
-describe.skip("Given an amount in ml", () => {
+describe("Given an amount in ml", () => {
   test("it returns the next closest unit", () => {
     expect(getUnitFromMl(10).name.short).toBe(UNITS.TABLESPOON.name.short);
   });

@@ -3,7 +3,7 @@ exports.__esModule = true;
 exports.UNIT_COMPARISON = exports.UNITS = void 0;
 exports.UNITS = {
     TEASPOON: {
-        mlInUnit: 14.7868,
+        mlInUnit: 4.92892,
         name: {
             long: "teaspoon",
             short: "tsp"

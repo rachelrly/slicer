@@ -27,26 +27,26 @@ export function getUnitFromMl(
   }
 
   function _getUnitBreakpoint(mlInUnit: number) {
-    return mlInUnit * 2 - mlInUnit / 6;
+    return mlInUnit / 2 - mlInUnit * 0.1;
   }
 
   switch (true) {
-    case amount < _getUnitBreakpoint(UNITS.GRAM.mlInUnit) &&
+    case amount < _getUnitBreakpoint(UNITS.TEASPOON.mlInUnit) &&
       includeNonStandardUnits:
       return UNITS.GRAM;
-    case amount < _getUnitBreakpoint(UNITS.TEASPOON.mlInUnit):
+    case amount < _getUnitBreakpoint(UNITS.TABLESPOON.mlInUnit):
       return UNITS.TEASPOON;
-    case amount < _getUnitBreakpoint(UNITS.TEASPOON.mlInUnit):
+    case amount < _getUnitBreakpoint(UNITS.OUNCE.mlInUnit):
       return UNITS.TABLESPOON;
-    case amount < _getUnitBreakpoint(UNITS.OUNCE.mlInUnit) &&
+    case amount < _getUnitBreakpoint(UNITS.CUP.mlInUnit) &&
       includeNonStandardUnits:
       return UNITS.OUNCE;
-    case amount < _getUnitBreakpoint(UNITS.CUP.mlInUnit):
+    case amount < _getUnitBreakpoint(UNITS.PINT.mlInUnit):
       return UNITS.CUP;
-    case amount < _getUnitBreakpoint(UNITS.PINT.mlInUnit) &&
+    case amount < _getUnitBreakpoint(UNITS.QUART.mlInUnit) &&
       includeNonStandardUnits:
       return UNITS.PINT;
-    case amount < _getUnitBreakpoint(UNITS.QUART.mlInUnit) &&
+    case amount < _getUnitBreakpoint(UNITS.GALLON.mlInUnit) &&
       includeNonStandardUnits:
       return UNITS.QUART;
     default:
