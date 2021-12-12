@@ -2,20 +2,23 @@ const { Ingredient } = require("../dist/types/ingredient");
 const { UNITS } = require("../dist/types/units");
 
 describe("Ingredient class sorts, formats, and filters ingredient input", () => {
-  describe("Given valid input for this.amount", () => {
-    test("it sorts an integer as amount", () => {
+  describe("Given valid input for amount", () => {
+    test("it sorts an integer input as amount", () => {
       const TestIngredient = new Ingredient();
-      expect(TestIngredient.sort("1")).toBe("amount");
+      TestIngredient.sortCurrentWord("1");
+      expect(TestIngredient.amount.amount).toBe(1);
     });
 
-    test("it sorts fraction as amount", () => {
+    test("it formats fraction input as float", () => {
       const TestIngredient = new Ingredient();
-      expect(TestIngredient.sort("1/2")).toBe("amount");
+      TestIngredient.sortCurrentWord("1/2");
+      expect(TestIngredient.amount.amount).toBe(0.5);
     });
 
-    test("it converts to decimal", () => {
+    test("it preserves float input as float", () => {
       const TestIngredient = new Ingredient();
-      expect(TestIngredient.sort("1.5")).toBe("amount");
+      TestIngredient.sortCurrentWord("1.5");
+      expect(TestIngredient.amount.amount).toBe(1.5);
     });
 
     test("it sums repeated numeric input", () => {
@@ -30,7 +33,7 @@ describe("Ingredient class sorts, formats, and filters ingredient input", () => 
     const TestIngredient = new Ingredient();
 
     test("it sets the ingredient's unit to the correct unit", () => {
-      expect(TestIngredient.sort("tsp").unit.name.short).toBe(
+      expect(TestIngredient.sortCurrentWord("tsp").unit.name.short).toBe(
         UNITS.TEASPOON.name.short
       );
     });
@@ -39,13 +42,13 @@ describe("Ingredient class sorts, formats, and filters ingredient input", () => 
   describe("Given a string as ingredient name", () => {
     //TODO: add sad path for "undefined"
     const TestIngredient = new Ingredient();
+    TestIngredient.sortCurrentWord("salt");
 
-    test("it set ingredient name as ingredient", () => {
-      expect(TestIngredient.sort("salt")).toBe("ingredient");
+    test("it set string input that is not an amount or unit as ingredient name", () => {
+      expect(TestIngredient.ingredient.name).toBe("salt");
     });
 
     test("it concatinates with spaces if ingredient name is already present", () => {
-      TestIngredient.setIngredientName("salt");
       TestIngredient.setIngredientName("and");
       TestIngredient.setIngredientName("pepper");
       expect(TestIngredient.ingredient.name).toBe("salt and pepper");
@@ -62,6 +65,7 @@ describe("Ingredient class sorts, formats, and filters ingredient input", () => 
     });
 
     test("it is a complete ingredient", () => {
+      TestIngredient.setIngredientName("C");
       expect(TestIngredient.isCompleteIngredient()).toBe(true);
     });
 
