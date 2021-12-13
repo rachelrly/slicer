@@ -18,7 +18,7 @@ var Ingredient = (function () {
         this.ingredient = new ingredientName_1.IngredientName();
     }
     Ingredient.prototype.sortCurrentWord = function (current) {
-        if (this._isDigit(current)) {
+        if (this.isDigit(current)) {
             this.setAmount(current);
         }
         else if (Boolean(this._getUnit(current))) {
@@ -62,14 +62,13 @@ var Ingredient = (function () {
         else
             return false;
     };
-    Ingredient.prototype._isDigit = function (word) {
+    Ingredient.prototype.isDigit = function (word) {
         var regex = /\d/;
         return Boolean(word.match(regex));
     };
     Ingredient.prototype._getUnit = function (current) {
         var compare = this._formatBeforeComparison(current);
         var unit = (0, format_1.getUnitFromString)(compare);
-        console.log("THIS IS MY UNIT", unit);
         return unit;
     };
     Ingredient.prototype._formatBeforeComparison = function (current) {

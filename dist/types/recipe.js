@@ -31,18 +31,13 @@ var Recipe = (function () {
                 return ingredient;
             if (noScalableUnit) {
                 var newAmount_1 = _this._scaleAmountByConstant((_c = ingredient === null || ingredient === void 0 ? void 0 : ingredient.amount) === null || _c === void 0 ? void 0 : _c.amount, _this.constant);
-                console.log("THIS IS THE NEW AMOUNT I AM SETTING", newAmount_1);
-                console.log("THIS IS THE OLD AMOUNT", ingredient);
                 ingredient.setAmount(newAmount_1);
-                console.log("THIS IS THE NEW INGREDIENT AFTER SET", ingredient);
                 return ingredient;
             }
             var newAmountInMl = ingredient.amount.amount * ingredient.unit.mlInUnit * _this.constant;
             var newUnit = (0, format_1.getUnitFromMl)(newAmountInMl);
             var newAmount = _this._getAmountForCurrentUnit(newAmountInMl, newUnit.mlInUnit);
-            console.log("THIS IS MYING BEFORE SET AMOUNT", newAmount);
             ingredient.setAmount(newAmount);
-            console.log("THIS IS MYING AFTER SET AMOUNT", ingredient);
             ingredient.setUnit(newUnit);
             return ingredient;
         });

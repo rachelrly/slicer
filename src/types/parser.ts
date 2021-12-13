@@ -15,7 +15,9 @@ export class Parser {
           this.currentIngredient.sortCurrentWord(this.currentWord);
           this.currentWord = "";
           const isValid = this.currentIngredient.isValidIngredient();
-          if (isValid) {
+          const nextIsDigit =
+            input[i + 2] && this.currentIngredient.isDigit(input[i + 2]);
+          if (isValid && nextIsDigit) {
             // sets new this.currentIngredient
             this._addToIngredients();
           }
@@ -39,7 +41,7 @@ export class Parser {
     }
 
     function _isFinalChar(index: number, inputLength: number) {
-      return inputLength === index;
+      return inputLength === index + 1;
     }
   }
 

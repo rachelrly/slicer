@@ -1,15 +1,20 @@
 export interface UnitName {
   long: string;
   short?: string;
-} // currently not being used in this file. Move?
+}
 
 export interface UnitType {
-  readonly mlInUnit?: number;
   readonly name: UnitName;
-  readonly matchString: any;
-} // currently not being used in this file. Move?
+  readonly matchString: any; // For recipe input
+  mlInUnit?: number;
+  readonly notStandard?: boolean; // This only pertains to scalable units
+}
 
-export const UNITS = {
+type UnitsType = {
+  [key: string]: UnitType;
+};
+
+export const UNITS: UnitsType = {
   TEASPOON: {
     mlInUnit: 4.92892,
     name: {
@@ -33,6 +38,7 @@ export const UNITS = {
       short: "oz",
     },
     matchString: new Set(["o", "oz", "oz.", "ozs", "ounce", "ounces"]),
+    notStandard: true,
   },
   CUP: {
     mlInUnit: 236.588,
@@ -48,6 +54,7 @@ export const UNITS = {
       long: "pint",
     },
     matchString: new Set(["p", "p.", "P", "pint", "pints"]),
+    notStandard: true,
   },
   QUART: {
     mlInUnit: 946.353,
@@ -55,6 +62,7 @@ export const UNITS = {
       long: "quart",
     },
     matchString: new Set(["q", "q.", "Q", "quart", "quarts"]),
+    notStandard: true,
   },
   POUND: {
     name: {
@@ -96,6 +104,4 @@ export const UNITS = {
     },
     matchString: new Set(["dash"]),
   },
-} as const;
-
-export type UnitsType = keyof typeof UNITS;
+};

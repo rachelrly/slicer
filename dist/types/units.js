@@ -24,7 +24,8 @@ exports.UNITS = {
             long: "ounce",
             short: "oz"
         },
-        matchString: new Set(["o", "oz", "oz.", "ozs", "ounce", "ounces"])
+        matchString: new Set(["o", "oz", "oz.", "ozs", "ounce", "ounces"]),
+        notStandard: true
     },
     CUP: {
         mlInUnit: 236.588,
@@ -39,14 +40,16 @@ exports.UNITS = {
         name: {
             long: "pint"
         },
-        matchString: new Set(["p", "p.", "P", "pint", "pints"])
+        matchString: new Set(["p", "p.", "P", "pint", "pints"]),
+        notStandard: true
     },
     QUART: {
         mlInUnit: 946.353,
         name: {
             long: "quart"
         },
-        matchString: new Set(["q", "q.", "Q", "quart", "quarts"])
+        matchString: new Set(["q", "q.", "Q", "quart", "quarts"]),
+        notStandard: true
     },
     POUND: {
         name: {

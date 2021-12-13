@@ -16,15 +16,13 @@ export class Ingredient {
   ingredient? = new IngredientName();
 
   sortCurrentWord(current: string): void {
-    if (this._isDigit(current)) {
+    if (this.isDigit(current)) {
       // console.log("SETTING THIS AS DIGIT", current);
       this.setAmount(current);
       // console.log("THIS IS THE AMOUNT AFTER SET", this.amount);
     } else if (Boolean(this._getUnit(current))) {
-      // console.log("SETTING THIS AS UNIT", current);
       const unit = this._getUnit(current);
       this.setUnit(unit);
-      // console.log("THIS IS THE UNIT AFTER SET", this.unit);
     } else if (Boolean(current)) {
       // Prevents undefined from being set as ingredient.
       // This shouldn't be happening in the first place.
@@ -83,7 +81,7 @@ export class Ingredient {
     } else return false;
   }
 
-  private _isDigit(word: string): boolean {
+  isDigit(word: string): boolean {
     const regex = /\d/;
     return Boolean(word.match(regex));
   }
@@ -93,7 +91,6 @@ export class Ingredient {
     // TODO: Handle Set Type
     const compare = this._formatBeforeComparison(current);
     const unit = getUnitFromString(compare);
-    console.log("THIS IS MY UNIT", unit);
     return unit;
   }
 

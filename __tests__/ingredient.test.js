@@ -31,11 +31,9 @@ describe("Ingredient class sorts, formats, and filters ingredient input", () => 
 
   describe("Given a valid unit string as input", () => {
     const TestIngredient = new Ingredient();
-
+    TestIngredient.sortCurrentWord("tsp");
     test("it sets the ingredient's unit to the correct unit", () => {
-      expect(TestIngredient.sortCurrentWord("tsp").unit.name.short).toBe(
-        UNITS.TEASPOON.name.short
-      );
+      expect(TestIngredient.unit.name.short).toBe(UNITS.TEASPOON.name.short);
     });
   });
 
@@ -65,13 +63,11 @@ describe("Ingredient class sorts, formats, and filters ingredient input", () => 
     });
 
     test("it is a complete ingredient", () => {
-      TestIngredient.setIngredientName("C");
+      TestIngredient.sortCurrentWord("C");
       expect(TestIngredient.isCompleteIngredient()).toBe(true);
     });
 
     test("it sorts and sets all parts correctly", () => {
-      TestIngredient.setUnit("cup");
-
       expect(TestIngredient.amount.amount).toBe(1);
       expect(TestIngredient.unit.name.long).toBe("cup");
       expect(TestIngredient.ingredient.name).toBe("water");
@@ -82,7 +78,6 @@ describe("Ingredient class sorts, formats, and filters ingredient input", () => 
     const TestIngredient = new Ingredient();
     TestIngredient.setAmount("1");
     TestIngredient.setUnit("cup");
-    TestIngredient.setIngredientName("water");
     test("it is not a complete ingredient", () => {
       expect(TestIngredient.isCompleteIngredient()).toBe(false);
     });

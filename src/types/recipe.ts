@@ -39,10 +39,7 @@ export class Recipe {
             ingredient?.amount?.amount,
             this.constant
           );
-          console.log("THIS IS THE NEW AMOUNT I AM SETTING", newAmount);
-          console.log("THIS IS THE OLD AMOUNT", ingredient);
           ingredient.setAmount(newAmount);
-          console.log("THIS IS THE NEW INGREDIENT AFTER SET", ingredient);
           return ingredient;
         }
 
@@ -54,9 +51,7 @@ export class Recipe {
           newAmountInMl,
           newUnit.mlInUnit
         );
-        console.log("THIS IS MYING BEFORE SET AMOUNT", newAmount);
         ingredient.setAmount(newAmount);
-        console.log("THIS IS MYING AFTER SET AMOUNT", ingredient);
         ingredient.setUnit(newUnit);
         return ingredient;
       }

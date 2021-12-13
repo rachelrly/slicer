@@ -11,8 +11,8 @@ function fractionToFloat(fraction, index) {
     return total;
 }
 exports.fractionToFloat = fractionToFloat;
-function getUnitFromMl(amount, includeNonStandardUnits) {
-    if (includeNonStandardUnits === void 0) { includeNonStandardUnits = false; }
+function getUnitFromMl(amount, nonstandardUnits) {
+    if (nonstandardUnits === void 0) { nonstandardUnits = false; }
     if (amount === 0) {
         throw Error(errors_1.ERRORS.AMOUNT.ZERO_INPUT);
     }
@@ -23,29 +23,23 @@ function getUnitFromMl(amount, includeNonStandardUnits) {
         throw Error(errors_1.ERRORS.AMOUNT.NEGATIVE_INPUT);
     }
     function _getUnitBreakpoint(mlInUnit) {
-        return mlInUnit / 2 - mlInUnit * 0.1;
+        var offset = mlInUnit * 0.1;
+        var doubled = mlInUnit * 2;
+        return doubled - offset;
     }
-    switch (true) {
-        case amount < _getUnitBreakpoint(units_1.UNITS.TEASPOON.mlInUnit) &&
-            includeNonStandardUnits:
-            return units_1.UNITS.GRAM;
-        case amount < _getUnitBreakpoint(units_1.UNITS.TABLESPOON.mlInUnit):
-            return units_1.UNITS.TEASPOON;
-        case amount < _getUnitBreakpoint(units_1.UNITS.OUNCE.mlInUnit):
-            return units_1.UNITS.TABLESPOON;
-        case amount < _getUnitBreakpoint(units_1.UNITS.CUP.mlInUnit) &&
-            includeNonStandardUnits:
-            return units_1.UNITS.OUNCE;
-        case amount < _getUnitBreakpoint(units_1.UNITS.PINT.mlInUnit):
-            return units_1.UNITS.CUP;
-        case amount < _getUnitBreakpoint(units_1.UNITS.QUART.mlInUnit) &&
-            includeNonStandardUnits:
-            return units_1.UNITS.PINT;
-        case amount < _getUnitBreakpoint(units_1.UNITS.GALLON.mlInUnit) &&
-            includeNonStandardUnits:
-            return units_1.UNITS.QUART;
-        default:
-            return units_1.UNITS.GALLON;
+    for (var _i = 0, _a = Object.values(units_1.UNITS); _i < _a.length; _i++) {
+        var value = _a[_i];
+        var ml = value === null || value === void 0 ? void 0 : value.mlInUnit;
+        if (Boolean(ml)) {
+            if (amount < _getUnitBreakpoint(ml)) {
+                var isIncluded = !(value === null || value === void 0 ? void 0 : value.notStandard);
+                if (isIncluded)
+                    return value;
+                return;
+            }
+        }
+        else
+            return value;
     }
 }
 exports.getUnitFromMl = getUnitFromMl;

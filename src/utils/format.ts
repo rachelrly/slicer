@@ -10,10 +10,8 @@ export function fractionToFloat(fraction: string, index: number): number {
 
 export function getUnitFromMl(
   amount: number,
-  includeNonStandardUnits = false
+  nonstandardUnits = false // Not tsp, tbsp, cup
 ): UnitType {
-  // nonstandard units are outside the traditional American recipe structure
-
   if (amount === 0) {
     throw Error(ERRORS.AMOUNT.ZERO_INPUT);
   }
@@ -28,30 +26,22 @@ export function getUnitFromMl(
 
   function _getUnitBreakpoint(mlInUnit: number) {
     // subtraction prevents scale up at exactly 1/2 of next unit
-    return mlInUnit / 2 - mlInUnit * 0.1;
+    const offset = mlInUnit * 0.1;
+    const doubled = mlInUnit * 2;
+    return doubled - offset;
   }
 
-  switch (true) {
-    case amount < _getUnitBreakpoint(UNITS.TEASPOON.mlInUnit) &&
-      includeNonStandardUnits:
-      return UNITS.GRAM;
-    case amount < _getUnitBreakpoint(UNITS.TABLESPOON.mlInUnit):
-      return UNITS.TEASPOON;
-    case amount < _getUnitBreakpoint(UNITS.OUNCE.mlInUnit):
-      return UNITS.TABLESPOON;
-    case amount < _getUnitBreakpoint(UNITS.CUP.mlInUnit) &&
-      includeNonStandardUnits:
-      return UNITS.OUNCE;
-    case amount < _getUnitBreakpoint(UNITS.PINT.mlInUnit):
-      return UNITS.CUP;
-    case amount < _getUnitBreakpoint(UNITS.QUART.mlInUnit) &&
-      includeNonStandardUnits:
-      return UNITS.PINT;
-    case amount < _getUnitBreakpoint(UNITS.GALLON.mlInUnit) &&
-      includeNonStandardUnits:
-      return UNITS.QUART;
-    default:
-      return UNITS.GALLON;
+  for (const value of Object.values(UNITS)) {
+    // this should be compared to the next unit, not the current unit
+    const ml = value?.mlInUnit;
+    if (Boolean(ml)) {
+      if (amount < _getUnitBreakpoint(ml)) {
+        // not handling nonstandard units for testing
+        const isIncluded = !value?.notStandard;
+        if (isIncluded) return value;
+        return;
+      }
+    } else return value;
   }
 }
 

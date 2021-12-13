@@ -18,7 +18,7 @@ describe("Given an array with the most simple complete ingredient string", () =>
   test("it parses ingredient parts correctly", () => {
     expect(TestParser.ingredients[0].amount.amount).toBe(3);
     expect(TestParser.ingredients[0].unit.name.short).toBe(
-      Units.tablespoon.name.short
+      UNITS.TABLESPOON.name.short
     );
     expect(TestParser.ingredients[0].ingredient.name).toBe("sugar");
   });
@@ -41,7 +41,7 @@ describe("Given a full recipe", () => {
     const secondIngredient = TestParser.ingredients[1];
 
     expect(firstIngredient.amount.amount).toBe(1);
-    expect(firstIngredient.unit).toBeNull();
+    expect(firstIngredient.unit).toBeUndefined();
     expect(firstIngredient.ingredient.name).toBe("package active dry yeast");
 
     expect(secondIngredient.amount.amount).toBe(3);

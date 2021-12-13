@@ -25,7 +25,8 @@ var Parser = (function () {
                     this.currentIngredient.sortCurrentWord(this.currentWord);
                     this.currentWord = "";
                     var isValid_1 = this.currentIngredient.isValidIngredient();
-                    if (isValid_1) {
+                    var nextIsDigit = input[i + 2] && this.currentIngredient.isDigit(input[i + 2]);
+                    if (isValid_1 && nextIsDigit) {
                         this._addToIngredients();
                     }
                 }
@@ -48,7 +49,7 @@ var Parser = (function () {
             return false;
         }
         function _isFinalChar(index, inputLength) {
-            return inputLength === index;
+            return inputLength === index + 1;
         }
     };
     Parser.prototype._addToIngredients = function () {
