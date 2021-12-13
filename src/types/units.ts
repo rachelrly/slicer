@@ -98,21 +98,4 @@ export const UNITS = {
   },
 } as const;
 
-// The UNIT_COMPARISON map contains unit strings from recipes and maps them to the unit constant
-export const UNIT_COMPARISON = new Map();
-
-// TODO: Remove UNITS[x].matchString from unit returned since it is not being used
-UNIT_COMPARISON.set(UNITS.TEASPOON.matchString, UNITS.TEASPOON);
-UNIT_COMPARISON.set(UNITS.TABLESPOON.matchString, UNITS.TABLESPOON);
-UNIT_COMPARISON.set(UNITS.OUNCE.matchString, UNITS.OUNCE);
-UNIT_COMPARISON.set(UNITS.CUP.matchString, UNITS.CUP);
-UNIT_COMPARISON.set(UNITS.PINT.matchString, UNITS.PINT);
-UNIT_COMPARISON.set(UNITS.QUART.matchString, UNITS.QUART);
-UNIT_COMPARISON.set(UNITS.POUND.matchString, UNITS.POUND);
-UNIT_COMPARISON.set(UNITS.GALLON.matchString, UNITS.GALLON);
-UNIT_COMPARISON.set(UNITS.GRAM.matchString, UNITS.GRAM);
-UNIT_COMPARISON.set(UNITS.PINCH.matchString, UNITS.PINCH);
-UNIT_COMPARISON.set(UNITS.SPLASH.matchString, UNITS.SPLASH);
-UNIT_COMPARISON.set(UNITS.DASH.matchString, UNITS.DASH);
-
 export type UnitsType = keyof typeof UNITS;

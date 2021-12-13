@@ -1,4 +1,4 @@
-import { UNIT_COMPARISON, UnitType } from "./units";
+import { UnitType } from "./units";
 import { Amount } from "./amount";
 import { IngredientName } from "./ingredientName";
 import { ERRORS } from "./errors";

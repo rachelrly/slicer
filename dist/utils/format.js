@@ -51,12 +51,13 @@ function getUnitFromMl(amount, includeNonStandardUnits) {
 exports.getUnitFromMl = getUnitFromMl;
 function getUnitFromString(input) {
     var unit;
-    units_1.UNIT_COMPARISON.forEach(function (value, key) {
-        if (key.has(input.toString())) {
-            unit = value;
+    for (var _i = 0, _a = Object.values(units_1.UNITS); _i < _a.length; _i++) {
+        var value = _a[_i];
+        var matchString = value.matchString;
+        if (matchString.has(input.toString())) {
+            return value;
         }
-    });
-    return unit;
+    }
 }
 exports.getUnitFromString = getUnitFromString;
 //# sourceMappingURL=format.js.map

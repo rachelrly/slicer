@@ -1,4 +1,4 @@
-import { UNITS, UNIT_COMPARISON, UnitType } from "../types/units";
+import { UNITS, UnitType } from "../types/units";
 import { MAXIMUM_SUPPORTED_ML } from "./constants";
 import { ERRORS } from "../types/errors";
 export function fractionToFloat(fraction: string, index: number): number {
@@ -55,13 +55,11 @@ export function getUnitFromMl(
 }
 
 export function getUnitFromString(input: string) {
-  let unit;
   // Set does not match variable without toString conversion
-  UNIT_COMPARISON.forEach((value: any, key: any) => {
-    if (key.has(input.toString())) {
-      unit = value;
+  for (const value of Object.values(UNITS)) {
+    const { matchString } = value;
+    if (matchString.has(input.toString())) {
+      return value;
     }
-  });
-
-  return unit;
+  }
 }
