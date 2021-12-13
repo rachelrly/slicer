@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.UNIT_COMPARISON = exports.UNITS = void 0;
+exports.UNITS = void 0;
 exports.UNITS = {
     TEASPOON: {
         mlInUnit: 4.92892,
@@ -89,17 +89,4 @@ exports.UNITS = {
         matchString: new Set(["dash"])
     }
 };
-exports.UNIT_COMPARISON = new Map();
-exports.UNIT_COMPARISON.set(exports.UNITS.TEASPOON.matchString, exports.UNITS.TEASPOON);
-exports.UNIT_COMPARISON.set(exports.UNITS.TABLESPOON.matchString, exports.UNITS.TABLESPOON);
-exports.UNIT_COMPARISON.set(exports.UNITS.OUNCE.matchString, exports.UNITS.OUNCE);
-exports.UNIT_COMPARISON.set(exports.UNITS.CUP.matchString, exports.UNITS.CUP);
-exports.UNIT_COMPARISON.set(exports.UNITS.PINT.matchString, exports.UNITS.PINT);
-exports.UNIT_COMPARISON.set(exports.UNITS.QUART.matchString, exports.UNITS.QUART);
-exports.UNIT_COMPARISON.set(exports.UNITS.POUND.matchString, exports.UNITS.POUND);
-exports.UNIT_COMPARISON.set(exports.UNITS.GALLON.matchString, exports.UNITS.GALLON);
-exports.UNIT_COMPARISON.set(exports.UNITS.GRAM.matchString, exports.UNITS.GRAM);
-exports.UNIT_COMPARISON.set(exports.UNITS.PINCH.matchString, exports.UNITS.PINCH);
-exports.UNIT_COMPARISON.set(exports.UNITS.SPLASH.matchString, exports.UNITS.SPLASH);
-exports.UNIT_COMPARISON.set(exports.UNITS.DASH.matchString, exports.UNITS.DASH);
 //# sourceMappingURL=units.js.map

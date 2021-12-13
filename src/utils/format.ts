@@ -27,6 +27,7 @@ export function getUnitFromMl(
   }
 
   function _getUnitBreakpoint(mlInUnit: number) {
+    // subtraction prevents scale up at exactly 1/2 of next unit
     return mlInUnit / 2 - mlInUnit * 0.1;
   }
 

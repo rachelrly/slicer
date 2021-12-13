@@ -6,7 +6,7 @@ var IngredientName = (function () {
         this.name = undefined;
     }
     IngredientName.prototype.set = function (current) {
-        if (Boolean(this.name)) {
+        if (this.name === undefined) {
             this.name = current;
         }
         else {
