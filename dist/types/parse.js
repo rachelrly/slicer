@@ -10,7 +10,8 @@ function parse(recipe) {
         ingredients.push(current);
         current = new ingredient_1.Ingredient();
     }
-    var rawWords = recipe.split(constants_1.BREAK_ON_CHAR);
+    var rawWords = recipe.split(constants_1.BREAK_ON_CHAR).filter(function (word) { return Boolean(word); });
+    console.log("THESE RAW WORDS", rawWords);
     rawWords.forEach(function (word, i) {
         var _a;
         if (!word)

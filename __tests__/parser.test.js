@@ -1,13 +1,14 @@
 const { parse } = require("../dist/types/parse");
 const { UNITS } = require("../dist/types/units");
+const { BREAK_ON_CHAR } = require("../dist/utils/constants");
 
 const BASIC_BREAD = `
-1 package active dry yeast
 3 tablespoons sugar 
 2-1/4 cups warm water
 1 tablespoon salt
 6-1/4 cups bread flour
 2 tablespoons canola oil
+1 package active dry yeast
 `;
 
 describe.skip("Given an array with the most simple complete ingredient string", () => {

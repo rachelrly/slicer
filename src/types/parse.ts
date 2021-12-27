@@ -21,12 +21,12 @@ export function parse(recipe: string) {
   }
   // Could lose important data by treating all break chars equally.
   // Give line breaks higher prescedence in sorting??
-  const rawWords = recipe.split(BREAK_ON_CHAR);
+  const rawWords = recipe.split(BREAK_ON_CHAR).filter((word) => Boolean(word));
+
   rawWords.forEach((word: string, i) => {
-    if (!word) return;
     try {
       current.sort(word);
-      let nextWord = i + 2 === rawWords.length ? null : rawWords[i + 1];
+      let nextWord = i + 1 === rawWords.length ? null : rawWords[i + 1];
       const nextIsDigit = Boolean(nextWord) && current.isDigit(nextWord);
       const nextIsUnit = false; // TODO: Define me!!!!
       if (nextIsDigit || nextIsUnit || nextWord === null) {
