@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.Recipe = void 0;
-var parser_1 = require("./parser");
+var parse_1 = require("./parse");
 var format_1 = require("../utils/format");
 var Recipe = (function () {
     function Recipe() {
@@ -9,17 +9,11 @@ var Recipe = (function () {
         this.scaledRecipe = [];
         this.constant = 1;
     }
-    Recipe.prototype.setInput = function (input) {
-        this.input = input;
-        this._parseInput();
-    };
     Recipe.prototype.setConstant = function (constant) {
         this.constant = constant;
     };
-    Recipe.prototype._parseInput = function () {
-        var parser = new parser_1.Parser();
-        parser.parseRecipe(this.input);
-        this.recipe = parser.ingredients;
+    Recipe.prototype._parseRecipeString = function (input) {
+        this.recipe = (0, parse_1.parse)(input);
     };
     Recipe.prototype.scaleRecipe = function () {
         var _this = this;

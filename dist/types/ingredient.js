@@ -17,6 +17,21 @@ var Ingredient = (function () {
         this.unit = undefined;
         this.ingredient = new ingredientName_1.IngredientName();
     }
+    Ingredient.prototype.sortCurrent = function (current) {
+        if (this.isDigit(current)) {
+            this.setAmount(current);
+        }
+        else if (Boolean(this._getUnit(current))) {
+            var unit = this._getUnit(current);
+            this.setUnit(unit);
+        }
+        else if (Boolean(current)) {
+            this.setIngredientName(current);
+        }
+        else {
+            throw new Error(errors_1.ERRORS.INGREDIENT.NO_VALID_PART);
+        }
+    };
     Ingredient.prototype.sortCurrentWord = function (current) {
         if (this.isDigit(current)) {
             this.setAmount(current);

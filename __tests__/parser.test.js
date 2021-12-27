@@ -1,4 +1,4 @@
-const { Parser } = require("../dist/types/parser");
+const { parse } = require("../dist/types/parse");
 const { UNITS } = require("../dist/types/units");
 
 const BASIC_BREAD = `
@@ -12,33 +12,29 @@ const BASIC_BREAD = `
 
 describe("Given an array with the most simple complete ingredient string", () => {
   const INPUT = "3 tablespoons sugar";
-  const TestParser = new Parser();
-  TestParser.parseRecipe(INPUT);
+  const recipe = parse(INPUT);
 
   test("it parses ingredient parts correctly", () => {
-    expect(TestParser.ingredients[0].amount.amount).toBe(3);
-    expect(TestParser.ingredients[0].unit.name.short).toBe(
-      UNITS.TABLESPOON.name.short
-    );
-    expect(TestParser.ingredients[0].ingredient.name).toBe("sugar");
+    expect(recipe[0].amount.amount).toBe(3);
+    expect(recipe[0].unit.name.short).toBe(UNITS.TABLESPOON.name.short);
+    expect(recipe[0].ingredient.name).toBe("sugar");
   });
 
   test("it returns an array with one ingredient", () => {
-    expect(TestParser.ingredients?.length).toBe(1);
+    expect(recipe?.length).toBe(1);
   });
 });
 
 describe("Given a full recipe", () => {
-  const TestParser = new Parser();
+  const recipe = parse(BASIC_BREAD);
 
   test("it returns an array of the correct length", () => {
-    TestParser.parseRecipe(BASIC_BREAD);
-    expect(TestParser.ingredients?.length).toBe(6);
+    expect(recipe.ingredients?.length).toBe(6);
   });
 
   test("it parses the first two ingredients correctly and in order", () => {
-    const firstIngredient = TestParser.ingredients[0];
-    const secondIngredient = TestParser.ingredients[1];
+    const firstIngredient = recipe.ingredients[0];
+    const secondIngredient = recipe.ingredients[1];
 
     expect(firstIngredient.amount.amount).toBe(1);
     expect(firstIngredient.unit).toBeUndefined();

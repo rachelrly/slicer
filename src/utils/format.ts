@@ -1,6 +1,7 @@
 import { UNITS, UnitType } from "../types/units";
 import { MAXIMUM_SUPPORTED_ML } from "./constants";
 import { ERRORS } from "../types/errors";
+
 export function fractionToFloat(fraction: string, index: number): number {
   const numerator = fraction.slice(0, index);
   const denominator = fraction.slice(index + 1);

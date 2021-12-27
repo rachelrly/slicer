@@ -1,10 +1,7 @@
 import { Ingredient } from "./ingredient";
-import { Parser } from "./parser";
+import { parse } from "./parse";
 import { getUnitFromMl } from "../utils/format";
 import { UnitType } from "./units";
-// holds input
-// controls scaling function
-//
 
 export class Recipe {
   input: string; //instantiate when created
@@ -12,20 +9,12 @@ export class Recipe {
   scaledRecipe: Ingredient[] = [];
   constant: number = 1;
 
-  //todo: call scale recupe when input is created
-  setInput(input: string) {
-    this.input = input;
-    this._parseInput();
-  }
-
   setConstant(constant: number) {
     this.constant = constant;
   }
 
-  _parseInput() {
-    const parser = new Parser();
-    parser.parseRecipe(this.input);
-    this.recipe = parser.ingredients;
+  _parseRecipeString(input: string) {
+    this.recipe = parse(input);
   }
 
   scaleRecipe() {
