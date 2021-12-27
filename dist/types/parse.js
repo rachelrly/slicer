@@ -7,11 +7,8 @@ function parse(recipe) {
     var ingredients = [];
     var current = new ingredient_1.Ingredient();
     function _addIngredient() {
-        console.log("ADDING VALID INGREDIENT TO ARRAY", current);
         ingredients.push(current);
-        console.log("I ADDED TO INGREDIENTS", ingredients);
         current = new ingredient_1.Ingredient();
-        console.log("AFTER ADDING NEW THIS IS INGREDIENT", ingredients);
     }
     var rawWords = recipe.split(constants_1.BREAK_ON_CHAR);
     rawWords.forEach(function (word, i) {

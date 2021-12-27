@@ -2,7 +2,7 @@ const { getUnitFromMl, getUnitFromString } = require("../dist/utils/format");
 const { UNITS } = require("../dist/types/units");
 const { ERRORS } = require("../dist/types/errors");
 
-describe("Given an amount in ml", () => {
+describe.skip("Given an amount in ml", () => {
   test("it returns the a valid unit when it is not too high", () => {
     expect(getUnitFromMl(10)).toBeTruthy;
     expect(getUnitFromMl(50)).toBeTruthy;

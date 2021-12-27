@@ -18,17 +18,21 @@ var Ingredient = (function () {
         this.ingredient = new ingredientName_1.IngredientName();
     }
     Ingredient.prototype.sort = function (current) {
+        console.log("ATTEMPTING TO SORT INGREDIENT", { current: current });
         if (this.isDigit(current)) {
-            if (this.unit || this.ingredient) {
-                throw new Error(errors_1.ERRORS.PARSE.HAS_DATA);
+            if (Boolean(this.unit) || Boolean(this.ingredient.name)) {
+                throw new Error(errors_1.ERRORS.AMOUNT.HAS_DATA);
             }
             else {
                 this.setAmount(current);
             }
         }
         else if (Boolean(this._getUnit(current))) {
-            if (this.unit || this.ingredient) {
-                throw new Error(errors_1.ERRORS.PARSE.HAS_DATA);
+            if (Boolean(this.ingredient.name)) {
+                throw new Error(errors_1.ERRORS.UNIT.HAS_DATA);
+            }
+            else if (Boolean(this.unit)) {
+                throw new Error(errors_1.ERRORS.UNIT.HAS_UNIT);
             }
             else {
                 this.setUnit(this._getUnit(current));
@@ -71,8 +75,7 @@ var Ingredient = (function () {
     };
     Ingredient.prototype._getUnit = function (current) {
         var compare = this._formatBeforeComparison(current);
-        var unit = (0, format_1.getUnitFromString)(compare);
-        return unit;
+        return (0, format_1.getUnitFromString)(compare);
     };
     Ingredient.prototype._formatBeforeComparison = function (current) {
         var shouldChangeCase = current.length > 1;

@@ -10,7 +10,7 @@ const BASIC_BREAD = `
 2 tablespoons canola oil
 `;
 
-describe("Given an array with the most simple complete ingredient string", () => {
+describe.skip("Given an array with the most simple complete ingredient string", () => {
   const INPUT = "3 tablespoons sugar";
   const recipe = parse(INPUT);
 
@@ -25,7 +25,7 @@ describe("Given an array with the most simple complete ingredient string", () =>
   });
 });
 
-describe("Given a full recipe", () => {
+describe.skip("Given a full recipe", () => {
   const recipe = parse(BASIC_BREAD);
 
   test("it returns an array of the correct length", () => {

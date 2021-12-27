@@ -1,35 +1,36 @@
 const { Ingredient } = require("../dist/types/ingredient");
 const { UNITS } = require("../dist/types/units");
 
-describe("Ingredient class sorts, formats, and filters ingredient input", () => {
-  describe("Given valid input for amount", () => {
-    test("it sorts an integer input as amount", () => {
+describe.only("Ingredient class sorts, formats, and filters ingredient input", () => {
+  describe.only("Given a valid amount", () => {
+    test("it sorts an integer value (1)", () => {
       const TestIngredient = new Ingredient();
       TestIngredient.sort("1");
       expect(TestIngredient.amount.amount).toBe(1);
     });
 
-    test("it formats fraction input as float", () => {
+    test("it sorts fraction value (1/2)", () => {
       const TestIngredient = new Ingredient();
       TestIngredient.sort("1/2");
       expect(TestIngredient.amount.amount).toBe(0.5);
     });
 
-    test("it preserves float input as float", () => {
+    test("it sorts float value (1.5)", () => {
       const TestIngredient = new Ingredient();
       TestIngredient.sort("1.5");
       expect(TestIngredient.amount.amount).toBe(1.5);
     });
 
-    test("it sums repeated numeric input", () => {
+    test("it sums repeated input", () => {
       const TestIngredient = new Ingredient();
-      TestIngredient.setAmount("1");
-      TestIngredient.setAmount("2");
+      TestIngredient.sort("1");
+      TestIngredient.sort("1/2");
+      TestIngredient.sort("1.5");
       expect(TestIngredient.amount.amount).toBe(3);
     });
   });
 
-  describe("Given a valid unit string as input", () => {
+  describe.skip("Given a valid unit string as input", () => {
     const TestIngredient = new Ingredient();
     TestIngredient.sort("tsp");
     test("it sets the ingredient's unit to the correct unit", () => {
@@ -37,7 +38,7 @@ describe("Ingredient class sorts, formats, and filters ingredient input", () => 
     });
   });
 
-  describe("Given a string as ingredient name", () => {
+  describe.skip("Given a string as ingredient name", () => {
     //TODO: add sad path for "undefined"
     const TestIngredient = new Ingredient();
     TestIngredient.sort("salt");

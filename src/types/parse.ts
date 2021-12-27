@@ -16,11 +16,8 @@ export function parse(recipe: string) {
   let current: Ingredient = new Ingredient();
 
   function _addIngredient() {
-    console.log("ADDING VALID INGREDIENT TO ARRAY", current);
     ingredients.push(current);
-    console.log("I ADDED TO INGREDIENTS", ingredients);
     current = new Ingredient();
-    console.log("AFTER ADDING NEW THIS IS INGREDIENT", ingredients);
   }
   // Could lose important data by treating all break chars equally.
   // Give line breaks higher prescedence in sorting??

@@ -6,7 +6,6 @@ export class Amount {
   set(number: string) {
     const float: number = this._toFloat(number);
     const newAmount = this.amount + float;
-    console.log("SETTING AMOUNT FROM AMOUNT CLASS", { newAmount });
     this.amount = newAmount;
   }
 

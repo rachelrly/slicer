@@ -37,18 +37,11 @@ describe.skip("It parses a recipe from a string and multiplies it by a constant"
     const TestRecipe = new Recipe();
     TestRecipe.setInput(BASIC_BREAD);
     TestRecipe.setConstant(2);
-    console.log("THIS IS CONSTANT SANITY CHECK", TestRecipe.constant);
     TestRecipe.scaleRecipe();
     const recipe = TestRecipe.recipe;
     const newRecipe = TestRecipe.scaledRecipe;
 
     recipe.forEach((ingredient, index) => {
-      console.log(
-        index,
-        "AT THIS INGREDIENT, AT THIS INDEX",
-        ingredient,
-        newRecipe[index]
-      );
       expect(ingredient.amount.amount).toBe(newRecipe[index].amount.amount * 2);
     });
   });

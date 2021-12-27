@@ -12,14 +12,14 @@ exports.ERRORS = {
         NO_VALID_PART: "Input is not a valid amount, unit, or ingredient name."
     },
     UNIT: {
-        UNREALISTIC_INPUT: "Amounts over 20 gallons (xx ml) cannot be scaled."
+        UNREALISTIC_INPUT: "Amounts over 20 gallons (xx ml) cannot be scaled.",
+        HAS_DATA: "This ingredeient already has a ingredient name or unit. Units must be added before an ingredeint name.",
+        HAS_UNIT: "This ingredient already has a unit. Units may not be overwritten."
     },
     AMOUNT: {
         NEGATIVE_INPUT: "Ingredients cannot have a negative amount.",
-        ZERO_INPUT: "Ingredients with an amount of '0' are not scalable."
-    },
-    PARSE: {
-        HAS_DATA: "This ingredeient has data. Please make a new ingredient."
+        ZERO_INPUT: "Ingredients with an amount of '0' are not scalable.",
+        HAS_DATA: "This ingredeient already has a unit or ingredient name. Amounts must be added first."
     }
 };
 //# sourceMappingURL=errors.js.map

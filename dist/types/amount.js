@@ -9,7 +9,6 @@ var Amount = (function () {
     Amount.prototype.set = function (number) {
         var float = this._toFloat(number);
         var newAmount = this.amount + float;
-        console.log("SETTING AMOUNT FROM AMOUNT CLASS", { newAmount: newAmount });
         this.amount = newAmount;
     };
     Amount.prototype._toFloat = function (amount) {
