@@ -15,4 +15,7 @@ export const ERRORS = {
     NEGATIVE_INPUT: "Ingredients cannot have a negative amount.",
     ZERO_INPUT: "Ingredients with an amount of '0' are not scalable.",
   },
+  PARSE: {
+    HAS_DATA: "This ingredeient has data. Please make a new ingredient.",
+  },
 } as const;

@@ -13,32 +13,29 @@ var IngredientOptions;
 })(IngredientOptions = exports.IngredientOptions || (exports.IngredientOptions = {}));
 var Ingredient = (function () {
     function Ingredient() {
-        console.log("------------------------------------------------------");
-        console.log("THIS IS A NEW GODDAMN MOTHERFUCKING INGREDIENT");
-        console.log("------------------------------------------------------");
         this.amount = new amount_1.Amount();
         this.unit = undefined;
         this.ingredient = new ingredientName_1.IngredientName();
     }
     Ingredient.prototype.sortCurrent = function (current) {
-        console.log("SORTING THIS WORD FROM INGREDIENT CLASS", {
-            amount: this.amount,
-            unit: this.unit,
-            ing: this.ingredient,
-            current: current
-        });
         if (this.isDigit(current)) {
-            this.setAmount(current);
+            if (this.unit || this.ingredient) {
+                throw new Error(errors_1.ERRORS.PARSE.HAS_DATA);
+            }
+            else {
+                this.setAmount(current);
+            }
         }
         else if (Boolean(this._getUnit(current))) {
-            var unit = this._getUnit(current);
-            this.setUnit(unit);
-        }
-        else if (Boolean(current)) {
-            this.setIngredientName(current);
+            if (this.unit || this.ingredient) {
+                throw new Error(errors_1.ERRORS.PARSE.HAS_DATA);
+            }
+            else {
+                this.setUnit(this._getUnit(current));
+            }
         }
         else {
-            throw new Error(errors_1.ERRORS.INGREDIENT.NO_VALID_PART);
+            this.setIngredientName(current);
         }
     };
     Ingredient.prototype.sortCurrentWord = function (current) {

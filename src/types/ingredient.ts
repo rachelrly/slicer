@@ -26,26 +26,20 @@ export class Ingredient {
   // parser.reduce into smaller list???
 
   sortCurrent(current: string): void {
-    console.log("SORTING THIS WORD FROM INGREDIENT CLASS", {
-      amount: this.amount,
-      unit: this.unit,
-      ing: this.ingredient,
-      current,
-    });
     if (this.isDigit(current)) {
-      this.setAmount(current);
+      if (this.unit || this.ingredient) {
+        throw new Error(ERRORS.PARSE.HAS_DATA);
+      } else {
+        this.setAmount(current);
+      }
     } else if (Boolean(this._getUnit(current))) {
-      const unit = this._getUnit(current);
-      this.setUnit(unit);
-    } else if (Boolean(current)) {
-      // Prevents undefined from being set as ingredient.
-      // This shouldn't be happening in the first place.
-      // Remove bool check when fixed
-      this.setIngredientName(current);
+      if (this.unit || this.ingredient) {
+        throw new Error(ERRORS.PARSE.HAS_DATA);
+      } else {
+        this.setUnit(this._getUnit(current));
+      }
     } else {
-      // We do not actually want to throw here
-      // this is temporary until error handling is proper
-      throw new Error(ERRORS.INGREDIENT.NO_VALID_PART);
+      this.setIngredientName(current);
     }
   }
 
