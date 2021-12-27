@@ -1,94 +1,95 @@
 "use strict";
 exports.__esModule = true;
-exports.Units = void 0;
-var Teaspoon = {
-    quantityInMl: 4.92892,
-    name: {
-        long: "teaspoon",
-        short: "tsp"
+exports.UNITS = void 0;
+exports.UNITS = {
+    TEASPOON: {
+        mlInUnit: 4.92892,
+        name: {
+            long: "teaspoon",
+            short: "tsp"
+        },
+        matchString: new Set(["t", "t.", "tsp", "teaspoon", "teaspoons"])
     },
-    isScalable: true
-};
-var Tablespoon = {
-    quantityInMl: 14.7868,
-    name: {
-        long: "tablespoon",
-        short: "tbsp"
+    TABLESPOON: {
+        mlInUnit: 14.7868,
+        name: {
+            long: "tablespoon",
+            short: "tbsp"
+        },
+        matchString: new Set(["T", "tbsp", "tbsp.", "tablespoon", "tablespoons"])
     },
-    isScalable: true
-};
-var Ounce = {
-    quantityInMl: 29.5735,
-    name: {
-        long: "ounce",
-        short: "oz"
+    OUNCE: {
+        mlInUnit: 29.5735,
+        name: {
+            long: "ounce",
+            short: "oz"
+        },
+        matchString: new Set(["o", "oz", "oz.", "ozs", "ounce", "ounces"]),
+        notStandard: true
     },
-    isScalable: true
-};
-var Cup = {
-    quantityInMl: 236.588,
-    name: {
-        long: "cup",
-        short: "c"
+    CUP: {
+        mlInUnit: 236.588,
+        name: {
+            long: "cup",
+            short: "c"
+        },
+        matchString: new Set(["c", "c.", "cs", "C", "Cs", "cup", "cups"])
     },
-    isScalable: true
-};
-var Pint = {
-    quantityInMl: 473.176,
-    name: {
-        long: "pint",
-        short: "p"
+    PINT: {
+        mlInUnit: 473.176,
+        name: {
+            long: "pint"
+        },
+        matchString: new Set(["p", "p.", "P", "pint", "pints"]),
+        notStandard: true
     },
-    isScalable: true
-};
-var Quart = {
-    quantityInMl: 946.353,
-    name: {
-        long: "quart",
-        short: "q"
+    QUART: {
+        mlInUnit: 946.353,
+        name: {
+            long: "quart"
+        },
+        matchString: new Set(["q", "q.", "Q", "quart", "quarts"]),
+        notStandard: true
     },
-    isScalable: true
-};
-var Gallon = {
-    quantityInMl: 3785.41,
-    name: {
-        long: "gallon",
-        short: "g"
+    POUND: {
+        name: {
+            long: "pound",
+            short: "lb"
+        },
+        matchString: new Set(["lb", "lb.", "lbs", "lbs.", "pound", "pounds"])
     },
-    isScalable: true
-};
-var Pound = {
-    name: {
-        long: "pound",
-        short: "lb"
+    GALLON: {
+        mlInUnit: 3785.41,
+        name: {
+            long: "gallon"
+        },
+        matchString: new Set(["G", "G.", "Gs", "gallon", "gallons"])
     },
-    isScalable: false
-};
-var Gram = {
-    quantityInMl: 1,
-    name: {
-        long: "gram",
-        short: "g"
+    GRAM: {
+        mlInUnit: 1,
+        name: {
+            long: "gram",
+            short: "g"
+        },
+        matchString: new Set(["g", "g.", "gram", "grams"])
     },
-    isScalable: false
-};
-exports.Units = {
-    cup: Cup,
-    c: Cup,
-    tablespoon: Tablespoon,
-    tbsp: Tablespoon,
-    teaspoon: Teaspoon,
-    tsp: Teaspoon,
-    t: Teaspoon,
-    oz: Ounce,
-    ounce: Ounce,
-    pound: Pound,
-    lb: Pound,
-    gallon: Gallon,
-    pint: Pint,
-    quart: Quart,
-    q: Quart,
-    gram: Gram,
-    g: Gram
+    PINCH: {
+        name: {
+            long: "pinch"
+        },
+        matchString: new Set(["pinch"])
+    },
+    SPLASH: {
+        name: {
+            long: "splash"
+        },
+        matchString: new Set(["splash"])
+    },
+    DASH: {
+        name: {
+            long: "dash"
+        },
+        matchString: new Set(["dash"])
+    }
 };
 //# sourceMappingURL=units.js.map

@@ -3,10 +3,10 @@ exports.__esModule = true;
 exports.IngredientName = void 0;
 var IngredientName = (function () {
     function IngredientName() {
-        this.name = "";
+        this.name = undefined;
     }
     IngredientName.prototype.set = function (current) {
-        if (!this.name) {
+        if (this.name === undefined) {
             this.name = current;
         }
         else {

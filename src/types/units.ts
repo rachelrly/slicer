@@ -1,112 +1,107 @@
 export interface UnitName {
   long: string;
-  short: string;
+  short?: string;
 }
 
-export interface Unit {
-  readonly quantityInMl?: number;
+export interface UnitType {
   readonly name: UnitName;
-  readonly isScalable: boolean;
+  readonly matchString: any; // For recipe input
+  mlInUnit?: number;
+  readonly notStandard?: boolean; // This only pertains to scalable units
 }
 
-const Teaspoon = {
-  quantityInMl: 4.92892,
-  name: {
-    long: "teaspoon",
-    short: "tsp",
-  },
-  isScalable: true,
+type UnitsType = {
+  [key: string]: UnitType;
 };
 
-const Tablespoon = {
-  quantityInMl: 14.7868,
-  name: {
-    long: "tablespoon",
-    short: "tbsp",
+export const UNITS: UnitsType = {
+  TEASPOON: {
+    mlInUnit: 4.92892,
+    name: {
+      long: "teaspoon",
+      short: "tsp",
+    },
+    matchString: new Set(["t", "t.", "tsp", "teaspoon", "teaspoons"]),
   },
-  isScalable: true,
-};
-
-const Ounce = {
-  quantityInMl: 29.5735,
-  name: {
-    long: "ounce",
-    short: "oz",
+  TABLESPOON: {
+    mlInUnit: 14.7868,
+    name: {
+      long: "tablespoon",
+      short: "tbsp",
+    },
+    matchString: new Set(["T", "tbsp", "tbsp.", "tablespoon", "tablespoons"]),
   },
-  isScalable: true,
-};
-
-const Cup = {
-  quantityInMl: 236.588,
-  name: {
-    long: "cup",
-    short: "c",
+  OUNCE: {
+    mlInUnit: 29.5735,
+    name: {
+      long: "ounce",
+      short: "oz",
+    },
+    matchString: new Set(["o", "oz", "oz.", "ozs", "ounce", "ounces"]),
+    notStandard: true,
   },
-  isScalable: true,
-};
-
-const Pint = {
-  quantityInMl: 473.176,
-  name: {
-    long: "pint",
-    short: "p",
+  CUP: {
+    mlInUnit: 236.588,
+    name: {
+      long: "cup",
+      short: "c",
+    },
+    matchString: new Set(["c", "c.", "cs", "C", "Cs", "cup", "cups"]),
   },
-  isScalable: true,
-};
-
-const Quart = {
-  quantityInMl: 946.353,
-  name: {
-    long: "quart",
-    short: "q",
+  PINT: {
+    mlInUnit: 473.176,
+    name: {
+      long: "pint",
+    },
+    matchString: new Set(["p", "p.", "P", "pint", "pints"]),
+    notStandard: true,
   },
-  isScalable: true,
-};
-
-const Gallon = {
-  quantityInMl: 3785.41,
-  name: {
-    long: "gallon",
-    short: "g",
+  QUART: {
+    mlInUnit: 946.353,
+    name: {
+      long: "quart",
+    },
+    matchString: new Set(["q", "q.", "Q", "quart", "quarts"]),
+    notStandard: true,
   },
-  isScalable: true,
-};
-
-const Pound = {
-  name: {
-    long: "pound",
-    short: "lb",
+  POUND: {
+    name: {
+      long: "pound",
+      short: "lb",
+    },
+    matchString: new Set(["lb", "lb.", "lbs", "lbs.", "pound", "pounds"]),
   },
-  isScalable: false,
-};
-
-const Gram = {
-  quantityInMl: 1,
-  name: {
-    long: "gram",
-    short: "g",
+  GALLON: {
+    mlInUnit: 3785.41,
+    name: {
+      long: "gallon",
+    },
+    matchString: new Set(["G", "G.", "Gs", "gallon", "gallons"]),
   },
-  isScalable: false,
+  GRAM: {
+    mlInUnit: 1,
+    name: {
+      long: "gram",
+      short: "g",
+    },
+    matchString: new Set(["g", "g.", "gram", "grams"]),
+  },
+  PINCH: {
+    name: {
+      long: "pinch",
+    },
+    matchString: new Set(["pinch"]),
+  },
+  SPLASH: {
+    name: {
+      long: "splash",
+    },
+    matchString: new Set(["splash"]),
+  },
+  DASH: {
+    name: {
+      long: "dash",
+    },
+    matchString: new Set(["dash"]),
+  },
 };
-
-export const Units = {
-  cup: Cup,
-  c: Cup,
-  tablespoon: Tablespoon,
-  tbsp: Tablespoon,
-  teaspoon: Teaspoon,
-  tsp: Teaspoon,
-  t: Teaspoon,
-  oz: Ounce,
-  ounce: Ounce,
-  pound: Pound,
-  lb: Pound,
-  gallon: Gallon,
-  pint: Pint,
-  quart: Quart,
-  q: Quart,
-  gram: Gram,
-  g: Gram,
-} as const;
-
-export type UnitsType = keyof typeof Units;

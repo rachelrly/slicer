@@ -1,85 +1,72 @@
 const { Ingredient } = require("../dist/types/ingredient");
+const { UNITS } = require("../dist/types/units");
 
 describe("Ingredient class sorts, formats, and filters ingredient input", () => {
-  describe("correctly handles amount input", () => {
-    test("sorts integer as amount", () => {
+  describe("Given a valid amount", () => {
+    test("it sorts an integer value (1)", () => {
       const TestIngredient = new Ingredient();
-      expect(TestIngredient.sort("1")).toBe("amount");
+      TestIngredient.sort("1");
+      expect(TestIngredient.amount.amount).toBe(1);
     });
 
-    test("sorts fraction as amount", () => {
+    test("it sorts fraction value (1/2)", () => {
       const TestIngredient = new Ingredient();
-      expect(TestIngredient.sort("1/2")).toBe("amount");
+      TestIngredient.sort("1/2");
+      expect(TestIngredient.amount.amount).toBe(0.5);
     });
 
-    test("sorts fraction and converts to decimal", () => {
+    test("it sorts float value (1.5)", () => {
       const TestIngredient = new Ingredient();
-      expect(TestIngredient.sort("1.5")).toBe("amount");
+      TestIngredient.sort("1.5");
+      expect(TestIngredient.amount.amount).toBe(1.5);
     });
 
-    test("sums input with repeated numeric input", () => {
+    test("it sums repeated input", () => {
       const TestIngredient = new Ingredient();
-      TestIngredient.setAmount("1");
-      TestIngredient.setAmount("2");
+      TestIngredient.sort("1");
+      TestIngredient.sort("1/2");
+      TestIngredient.sort("1.5");
       expect(TestIngredient.amount.amount).toBe(3);
     });
   });
 
-  describe("correctly handles unit input in isolation", () => {
+  describe("Given a valid unit string as input", () => {
     const TestIngredient = new Ingredient();
-
-    test("sorts short unit as unit", () => {
-      expect(TestIngredient.sort("tsp")).toBe("unit");
-    });
-
-    test("sorts plural unit as unit", () => {
-      expect(TestIngredient.sort("tsps")).toBe("unit");
-    });
-
-    test("sorts unit ending with period as unit", () => {
-      expect(TestIngredient.sort("tsp.")).toBe("unit");
+    TestIngredient.sort("tsp");
+    test("it sets the ingredient's unit to the correct unit", () => {
+      expect(TestIngredient.unit).toMatchObject(UNITS.TEASPOON);
     });
   });
 
-  describe("correctly handles ingredient name input in isolation", () => {
-    //TODO: add sad path for "undefined"
+  describe("Given a string as ingredient name", () => {
     const TestIngredient = new Ingredient();
+    TestIngredient.sort("salt");
 
-    test("sorts ingredient name as ingredient", () => {
-      expect(TestIngredient.sort("salt")).toBe("ingredient");
+    test("it set string input that is not an amount or unit as ingredient name", () => {
+      expect(TestIngredient.ingredient.name).toBe("salt");
     });
 
-    test("concatinates repeated ingredient input seperated by spaces", () => {
-      TestIngredient.setIngredient("salt");
-      TestIngredient.setIngredient("and");
-      TestIngredient.setIngredient("pepper");
+    test("it concatinates with spaces if ingredient name is already present", () => {
+      TestIngredient.setIngredientName("and");
+      TestIngredient.setIngredientName("pepper");
       expect(TestIngredient.ingredient.name).toBe("salt and pepper");
     });
   });
 
-  describe("given a valid amount, unit, and ingredient name, it fills an ingredient", () => {
+  describe("Given a valid amount, unit, and ingredient name", () => {
     const TestIngredient = new Ingredient();
+    TestIngredient.sort("1");
+    TestIngredient.sort("cup");
+    TestIngredient.sort("water");
 
-    test("given valid ingredient without unit, returns valid unit is true", () => {
-      TestIngredient.setAmount("1");
-      TestIngredient.setIngredient("water");
-      expect(TestIngredient.isValidIngredient()).toBe(true);
+    test("it is a valid ingredient", () => {
+      expect(TestIngredient.validate()).toBe(true);
     });
 
-    test("given incomplete input, returns false for isCompleteInput()", () => {
-      expect(TestIngredient.isCompleteIngredient()).toBe(false);
-    });
-
-    test("given valid three part input sorts all three parts correctly", () => {
-      TestIngredient.setUnit("cup");
-
+    test("it sorts and sets all parts correctly", () => {
       expect(TestIngredient.amount.amount).toBe(1);
-      expect(TestIngredient.unit.name.long).toBe("cup");
+      expect(TestIngredient.unit).toMatchObject(UNITS.CUP);
       expect(TestIngredient.ingredient.name).toBe("water");
-    });
-
-    test("given all parts, isCompleteInput() returns true", () => {
-      expect(TestIngredient.isCompleteIngredient()).toBe(true);
     });
   });
 });

@@ -1,48 +1,99 @@
-const { Parser } = require("../dist/types/parser");
-const { Units } = require("../dist/types/units");
+const { parse } = require("../dist/types/parse");
+const { UNITS } = require("../dist/types/units");
 
 const BASIC_BREAD = `
 1 package active dry yeast
-3 tablespoons sugar 
 2-1/4 cups warm water
 1 tablespoon salt
 6-1/4 cups bread flour
 2 tablespoons canola oil
+3 tablespoons sugar
 `;
 
-describe("Parser class parses a single ingredient correctly and adds to list", () => {
-  const INPUT = "3 tablespoons sugar";
-  const TestParser = new Parser();
-  TestParser.parse(INPUT);
+const PANCAKES = `1 cup milk
+1/2 cup sour cream
+1/4 cup granulated sugar
+2 large eggs
+1 teaspoon vanilla extract
+1 1/2 cups all purpose flour
+2 teaspoons baking powder
+1 teaspoon salt
+Butter for greasing the pan`;
 
-  test("Given a single ingredient, it parses correctly and returns an array with one Ingredient", () => {
-    expect(TestParser.ingredients?.length).toBe(1);
-    expect(TestParser.ingredients[0].amount.amount).toBe(3);
-    expect(TestParser.ingredients[0].unit.name.short).toBe(
-      Units.tablespoon.name.short
-    );
-    expect(TestParser.ingredients[0].ingredient.name).toBe("sugar");
+describe("Given an array with the most simple complete ingredient string", () => {
+  const INPUT = "3 tablespoons sugar";
+  const recipe = parse(INPUT);
+
+  test("it parses ingredient parts correctly", () => {
+    expect(recipe[0].amount.amount).toBe(3);
+    expect(recipe[0].unit).toMatchObject(UNITS.TABLESPOON);
+    expect(recipe[0].ingredient.name).toBe("sugar");
+  });
+
+  test("it returns an array with one ingredient", () => {
+    expect(recipe?.length).toBe(1);
   });
 });
 
-describe("Parser class parses input data correctly", () => {
-  const TestParser = new Parser();
+describe("Given a full recipe", () => {
+  const recipe = parse(BASIC_BREAD);
 
-  test("given valid input with a given number of ingredients, it returns an array of ingredients with that length", () => {
-    TestParser.parse(BASIC_BREAD);
-    expect(TestParser.ingredients?.length).toBe(6);
+  test("it returns an array of the correct length", () => {
+    expect(recipe.length).toBe(6);
   });
 
-  test("given a valid recipe input, it parses ingredients correctly and in order", () => {
-    const firstIngredient = TestParser.ingredients[0];
-    const secondIngredient = TestParser.ingredients[1];
+  test("it parses the first ingredient correctly", () => {
+    const firstIngredient = recipe[5];
 
-    expect(firstIngredient.amount.amount).toBe(1);
-    expect(firstIngredient.unit).toBeNull();
-    expect(firstIngredient.ingredient.name).toBe("package active dry yeast");
+    expect(firstIngredient.amount.amount).toBe(3);
+    expect(firstIngredient.unit).toMatchObject(UNITS.TABLESPOON);
+    expect(firstIngredient.ingredient.name).toBe("sugar");
+  });
 
-    expect(secondIngredient.amount.amount).toBe(3);
-    expect(secondIngredient.unit.name.short).toBe(Units.tablespoon.name.short);
-    expect(secondIngredient.ingredient.name).toBe("sugar");
+  test("it parses the second ingredient correctly", () => {
+    const secondIngredient = recipe[1];
+
+    expect(secondIngredient.amount.amount).toBe(2.25);
+    expect(secondIngredient.unit).toMatchObject(UNITS.CUP);
+    expect(secondIngredient.ingredient.name).toBe("warm water");
+  });
+
+  test("it parses the third ingredient correctly", () => {
+    const thirdIngredient = recipe[2];
+
+    expect(thirdIngredient.amount.amount).toBe(1);
+    expect(thirdIngredient.unit).toMatchObject(UNITS.TABLESPOON);
+    expect(thirdIngredient.ingredient.name).toBe("salt");
+  });
+
+  test("it parses the fourth ingredient correctly", () => {
+    const fourthIngredient = recipe[3];
+
+    expect(fourthIngredient.amount.amount).toBe(6.25);
+    expect(fourthIngredient.unit).toMatchObject(UNITS.CUP);
+    expect(fourthIngredient.ingredient.name).toBe("bread flour");
+  });
+
+  test("it parses the fifth ingredient correctly", () => {
+    const fifthIngredient = recipe[4];
+
+    expect(fifthIngredient.amount.amount).toBe(2);
+    expect(fifthIngredient.unit).toMatchObject(UNITS.TABLESPOON);
+    expect(fifthIngredient.ingredient.name).toBe("canola oil");
+  });
+
+  test("it parses the sixth ingredient correctly", () => {
+    const sixthIngredient = recipe[0];
+
+    expect(sixthIngredient.amount.amount).toBe(1);
+    expect(sixthIngredient.unit).toBeUndefined();
+    expect(sixthIngredient.ingredient.name).toBe("package active dry yeast");
+  });
+
+  describe("Given recipes with complex units", () => {
+    const pancakes = parse(PANCAKES);
+    test("it returns an array with expected length", () => {
+      expect(pancakes.length).toBe(8);
+    });
   });
 });
