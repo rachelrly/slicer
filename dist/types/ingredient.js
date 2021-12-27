@@ -18,7 +18,6 @@ var Ingredient = (function () {
         this.ingredient = new ingredientName_1.IngredientName();
     }
     Ingredient.prototype.sort = function (current) {
-        console.log("ATTEMPTING TO SORT INGREDIENT", { current: current });
         if (this.isDigit(current)) {
             if (Boolean(this.unit) || Boolean(this.ingredient.name)) {
                 throw new Error(errors_1.ERRORS.AMOUNT.HAS_DATA);
