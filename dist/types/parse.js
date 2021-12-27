@@ -11,14 +11,11 @@ function parse(recipe) {
         current = new ingredient_1.Ingredient();
     }
     var rawWords = recipe.split(constants_1.BREAK_ON_CHAR).filter(function (word) { return Boolean(word); });
-    console.log("THESE RAW WORDS", rawWords);
     rawWords.forEach(function (word, i) {
         var _a;
-        if (!word)
-            return;
         try {
             current.sort(word);
-            var nextWord = i + 2 === rawWords.length ? null : rawWords[i + 1];
+            var nextWord = i + 1 === rawWords.length ? null : rawWords[i + 1];
             var nextIsDigit = Boolean(nextWord) && current.isDigit(nextWord);
             var nextIsUnit = false;
             if (nextIsDigit || nextIsUnit || nextWord === null) {

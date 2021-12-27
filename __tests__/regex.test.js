@@ -1,8 +1,6 @@
-const { BREAK_ON_CHAR } = require("../dist/utils/constants");
+const { BREAK_ON_CHAR, DIGIT } = require("../dist/utils/constants");
 
 describe("Given BREAK_ON_CHAR regex", () => {
-  // return two items with \n
-  // return two items with " "
   test("it splits by spaces", () => {
     const space = "String with spaces";
     expect(BREAK_ON_CHAR.test(space)).toBeTruthy();
@@ -24,5 +22,26 @@ describe("Given BREAK_ON_CHAR regex", () => {
     expect(
       multiline.split(BREAK_ON_CHAR).filter((word) => Boolean(word)).length
     ).toBe(3);
+  });
+});
+
+describe("Given DIGIT regex", () => {
+  test("it recognizes digit as digit", () => {
+    expect(DIGIT.test("10")).toBeTruthy();
+    expect(DIGIT.test("www")).toBeFalsy();
+  });
+
+  test("it recognizes decimal as digit", () => {
+    expect(DIGIT.test("1.1")).toBeTruthy();
+    // expect(DIGIT.test("1..1")).toBeFalsy();
+  });
+
+  test("it recognizes fraction as digit", () => {
+    expect(DIGIT.test("1/2")).toBeTruthy();
+  });
+
+  test("it recognizes mixed numeric and alphabetical characters as not a digit", () => {
+    expect(DIGIT.test("x.1")).toBeFalsy();
+    expect(DIGIT.test("x/2")).toBeFalsy();
   });
 });
