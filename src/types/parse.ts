@@ -3,12 +3,6 @@ import { Amount } from "./amount";
 import { UnitType } from "./units";
 import { BREAK_ON_CHAR } from "../utils/constants";
 
-export interface IngredientType {
-  amount?: Amount;
-  unit?: UnitType;
-  ingredient?: string;
-}
-
 /**
  *
  * @param recipe In the following format:
@@ -16,11 +10,9 @@ export interface IngredientType {
  *    1 egg
  *    1 1/2 tsp water `
  */
-
 export function parse(recipe: string) {
   const ingredients: Ingredient[] = [];
   let current: Ingredient = new Ingredient();
-  let next: Ingredient = new Ingredient();
 
   function _addIngredient() {
     ingredients.push(current);
@@ -31,9 +23,8 @@ export function parse(recipe: string) {
   const rawWords = recipe.split(BREAK_ON_CHAR);
   rawWords.forEach((word: string, i) => {
     current.sortCurrent(word);
-
     let nextWord = i <= rawWords.length - 1 ? null : rawWords[i + 1];
-    const nextIsDigit = Boolean(nextWord) && next.isDigit(nextWord);
+    const nextIsDigit = Boolean(nextWord) && current.isDigit(nextWord);
     const nextIsUnit = false; // DEFINE LATER
     if (nextIsDigit || nextIsUnit || !nextWord) _addIngredient();
   });
