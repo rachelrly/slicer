@@ -19,7 +19,7 @@ function parse(recipe) {
         if (!word)
             return;
         try {
-            current.sortCurrent(word);
+            current.sort(word);
             var nextWord = i + 2 === rawWords.length ? null : rawWords[i + 1];
             var nextIsDigit = Boolean(nextWord) && current.isDigit(nextWord);
             var nextIsUnit = false;

@@ -21,11 +21,7 @@ export class Ingredient {
     this.ingredient = new IngredientName();
   }
 
-  // gets current and processes
-  // remember to re set items in parent because of prototype bs
-  // parser.reduce into smaller list???
-
-  sortCurrent(current: string): void {
+  sort(current: string): void {
     if (this.isDigit(current)) {
       if (this.unit || this.ingredient) {
         throw new Error(ERRORS.PARSE.HAS_DATA);
@@ -40,24 +36,6 @@ export class Ingredient {
       }
     } else {
       this.setIngredientName(current);
-    }
-  }
-
-  sortCurrentWord(current: string): void {
-    if (this.isDigit(current)) {
-      this.setAmount(current);
-    } else if (Boolean(this._getUnit(current))) {
-      const unit = this._getUnit(current);
-      this.setUnit(unit);
-    } else if (Boolean(current)) {
-      // Prevents undefined from being set as ingredient.
-      // This shouldn't be happening in the first place.
-      // Remove bool check when fixed
-      this.setIngredientName(current);
-    } else {
-      // We do not actually want to throw here
-      // this is temporary until error handling is proper
-      throw new Error(ERRORS.INGREDIENT.NO_VALID_PART);
     }
   }
 
@@ -88,26 +66,14 @@ export class Ingredient {
     this.ingredient.set(current);
   }
 
-  isCompleteIngredient(): boolean {
-    return Boolean(
-      this.amount?.amount && this.unit && this.ingredient?.name?.length
-    );
-  }
-
-  isValidIngredient(): boolean {
-    // i.e. "1 cup rice", "1 egg"
-    if (this.isCompleteIngredient()) return true;
-    // TODO: add support for case with just ingredient name, i.e. salt
-    else if (this.ingredient?.name && this.amount?.amount && !this.unit) {
-      return true;
-    } else return false;
-  }
-
   validate(): boolean {
     // i.e. "1 cup rice", "1 egg"
-    if (this.isCompleteIngredient()) return true;
-    // TODO: add support for case with just ingredient name, i.e. salt
-    else if (this.ingredient?.name && this.amount?.amount && !this.unit) {
+    const validUnit = Boolean(this.unit) || this.unit === undefined;
+    if (
+      Boolean(this.ingredient?.name) &&
+      Boolean(this.amount?.amount) &&
+      validUnit
+    ) {
       return true;
     } else return false;
   }
@@ -119,16 +85,14 @@ export class Ingredient {
 
   // Not decalred as private for tests
   _getUnit(current: string): any {
-    // TODO: Handle Set Type
     const compare = this._formatBeforeComparison(current);
-    const unit = getUnitFromString(compare);
-    return unit;
+    return getUnitFromString(compare);
   }
 
   private _formatBeforeComparison(current: string) {
     // When a unit only contains one character, this is often meaningful
-    // i.e. "T" is TABLESPOON and "t" is TEASPOON
-    // but "TABLESPOON" and "tablespoon" are both TABLESPOON
+    //  i.e. "T" is TABLESPOON and "t" is TEASPOON
+    //  but "TABLESPOON" and "tablespoon" are both TABLESPOON
     const shouldChangeCase = current.length > 1;
     const compare = shouldChangeCase ? current.toLowerCase() : current;
     return compare;

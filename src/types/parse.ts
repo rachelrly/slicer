@@ -28,7 +28,7 @@ export function parse(recipe: string) {
   rawWords.forEach((word: string, i) => {
     if (!word) return;
     try {
-      current.sortCurrent(word);
+      current.sort(word);
       let nextWord = i + 2 === rawWords.length ? null : rawWords[i + 1];
       const nextIsDigit = Boolean(nextWord) && current.isDigit(nextWord);
       const nextIsUnit = false; // TODO: Define me!!!!

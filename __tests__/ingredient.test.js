@@ -5,19 +5,19 @@ describe("Ingredient class sorts, formats, and filters ingredient input", () => 
   describe("Given valid input for amount", () => {
     test("it sorts an integer input as amount", () => {
       const TestIngredient = new Ingredient();
-      TestIngredient.sortCurrentWord("1");
+      TestIngredient.sort("1");
       expect(TestIngredient.amount.amount).toBe(1);
     });
 
     test("it formats fraction input as float", () => {
       const TestIngredient = new Ingredient();
-      TestIngredient.sortCurrentWord("1/2");
+      TestIngredient.sort("1/2");
       expect(TestIngredient.amount.amount).toBe(0.5);
     });
 
     test("it preserves float input as float", () => {
       const TestIngredient = new Ingredient();
-      TestIngredient.sortCurrentWord("1.5");
+      TestIngredient.sort("1.5");
       expect(TestIngredient.amount.amount).toBe(1.5);
     });
 
@@ -31,7 +31,7 @@ describe("Ingredient class sorts, formats, and filters ingredient input", () => 
 
   describe("Given a valid unit string as input", () => {
     const TestIngredient = new Ingredient();
-    TestIngredient.sortCurrentWord("tsp");
+    TestIngredient.sort("tsp");
     test("it sets the ingredient's unit to the correct unit", () => {
       expect(TestIngredient.unit.name.short).toBe(UNITS.TEASPOON.name.short);
     });
@@ -40,7 +40,7 @@ describe("Ingredient class sorts, formats, and filters ingredient input", () => 
   describe("Given a string as ingredient name", () => {
     //TODO: add sad path for "undefined"
     const TestIngredient = new Ingredient();
-    TestIngredient.sortCurrentWord("salt");
+    TestIngredient.sort("salt");
 
     test("it set string input that is not an amount or unit as ingredient name", () => {
       expect(TestIngredient.ingredient.name).toBe("salt");
@@ -63,7 +63,7 @@ describe("Ingredient class sorts, formats, and filters ingredient input", () => 
     });
 
     test("it is a complete ingredient", () => {
-      TestIngredient.sortCurrentWord("C");
+      TestIngredient.sort("C");
       expect(TestIngredient.isCompleteIngredient()).toBe(true);
     });
 

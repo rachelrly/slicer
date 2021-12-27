@@ -17,7 +17,7 @@ var Ingredient = (function () {
         this.unit = undefined;
         this.ingredient = new ingredientName_1.IngredientName();
     }
-    Ingredient.prototype.sortCurrent = function (current) {
+    Ingredient.prototype.sort = function (current) {
         if (this.isDigit(current)) {
             if (this.unit || this.ingredient) {
                 throw new Error(errors_1.ERRORS.PARSE.HAS_DATA);
@@ -38,21 +38,6 @@ var Ingredient = (function () {
             this.setIngredientName(current);
         }
     };
-    Ingredient.prototype.sortCurrentWord = function (current) {
-        if (this.isDigit(current)) {
-            this.setAmount(current);
-        }
-        else if (Boolean(this._getUnit(current))) {
-            var unit = this._getUnit(current);
-            this.setUnit(unit);
-        }
-        else if (Boolean(current)) {
-            this.setIngredientName(current);
-        }
-        else {
-            throw new Error(errors_1.ERRORS.INGREDIENT.NO_VALID_PART);
-        }
-    };
     Ingredient.prototype.scale = function (constant) {
         var unitMl = this.unit.mlInUnit;
         var base = this.amount.amount * unitMl;
@@ -69,25 +54,12 @@ var Ingredient = (function () {
     Ingredient.prototype.setIngredientName = function (current) {
         this.ingredient.set(current);
     };
-    Ingredient.prototype.isCompleteIngredient = function () {
-        var _a, _b, _c;
-        return Boolean(((_a = this.amount) === null || _a === void 0 ? void 0 : _a.amount) && this.unit && ((_c = (_b = this.ingredient) === null || _b === void 0 ? void 0 : _b.name) === null || _c === void 0 ? void 0 : _c.length));
-    };
-    Ingredient.prototype.isValidIngredient = function () {
-        var _a, _b;
-        if (this.isCompleteIngredient())
-            return true;
-        else if (((_a = this.ingredient) === null || _a === void 0 ? void 0 : _a.name) && ((_b = this.amount) === null || _b === void 0 ? void 0 : _b.amount) && !this.unit) {
-            return true;
-        }
-        else
-            return false;
-    };
     Ingredient.prototype.validate = function () {
         var _a, _b;
-        if (this.isCompleteIngredient())
-            return true;
-        else if (((_a = this.ingredient) === null || _a === void 0 ? void 0 : _a.name) && ((_b = this.amount) === null || _b === void 0 ? void 0 : _b.amount) && !this.unit) {
+        var validUnit = Boolean(this.unit) || this.unit === undefined;
+        if (Boolean((_a = this.ingredient) === null || _a === void 0 ? void 0 : _a.name) &&
+            Boolean((_b = this.amount) === null || _b === void 0 ? void 0 : _b.amount) &&
+            validUnit) {
             return true;
         }
         else
