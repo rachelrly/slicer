@@ -3,15 +3,15 @@ const { UNITS } = require("../dist/types/units");
 const { BREAK_ON_CHAR } = require("../dist/utils/constants");
 
 const BASIC_BREAD = `
-3 tablespoons sugar 
+1 package active dry yeast
 2-1/4 cups warm water
 1 tablespoon salt
 6-1/4 cups bread flour
 2 tablespoons canola oil
-1 package active dry yeast
+3 tablespoons sugar
 `;
 
-describe.skip("Given an array with the most simple complete ingredient string", () => {
+describe("Given an array with the most simple complete ingredient string", () => {
   const INPUT = "3 tablespoons sugar";
   const recipe = parse(INPUT);
 
@@ -26,23 +26,58 @@ describe.skip("Given an array with the most simple complete ingredient string", 
   });
 });
 
-describe.skip("Given a full recipe", () => {
+describe("Given a full recipe", () => {
   const recipe = parse(BASIC_BREAD);
 
   test("it returns an array of the correct length", () => {
-    expect(recipe.ingredients?.length).toBe(6);
+    expect(recipe.length).toBe(6);
   });
 
-  test("it parses the first two ingredients correctly and in order", () => {
-    const firstIngredient = recipe.ingredients[0];
-    const secondIngredient = recipe.ingredients[1];
+  test("it parses the first ingredient correctly", () => {
+    const firstIngredient = recipe[5];
 
-    expect(firstIngredient.amount.amount).toBe(1);
-    expect(firstIngredient.unit).toBeUndefined();
-    expect(firstIngredient.ingredient.name).toBe("package active dry yeast");
+    expect(firstIngredient.amount.amount).toBe(3);
+    expect(firstIngredient.unit).toMatchObject(UNITS.TABLESPOON);
+    expect(firstIngredient.ingredient.name).toBe("sugar");
+  });
 
-    expect(secondIngredient.amount.amount).toBe(3);
-    expect(secondIngredient.unit.name.short).toBe(UNITS.TABLESPOON.name.short);
-    expect(secondIngredient.ingredient.name).toBe("sugar");
+  test("it parses the second ingredient correctly", () => {
+    const secondIngredient = recipe[1];
+
+    expect(secondIngredient.amount.amount).toBe(2.25);
+    expect(secondIngredient.unit).toMatchObject(UNITS.CUP);
+    expect(secondIngredient.ingredient.name).toBe("warm water");
+  });
+
+  test("it parses the third ingredient correctly", () => {
+    const thirdIngredient = recipe[2];
+
+    expect(thirdIngredient.amount.amount).toBe(1);
+    expect(thirdIngredient.unit).toMatchObject(UNITS.TABLESPOON);
+    expect(thirdIngredient.ingredient.name).toBe("salt");
+  });
+
+  test("it parses the fourth ingredient correctly", () => {
+    const fourthIngredient = recipe[3];
+
+    expect(fourthIngredient.amount.amount).toBe(6.25);
+    expect(fourthIngredient.unit).toMatchObject(UNITS.CUP);
+    expect(fourthIngredient.ingredient.name).toBe("bread flour");
+  });
+
+  test("it parses the fifth ingredient correctly", () => {
+    const fifthIngredient = recipe[4];
+
+    expect(fifthIngredient.amount.amount).toBe(2);
+    expect(fifthIngredient.unit).toMatchObject(UNITS.TABLESPOON);
+    expect(fifthIngredient.ingredient.name).toBe("canola oil");
+  });
+
+  test("it parses the sixth ingredient correctly", () => {
+    const sixthIngredient = recipe[0];
+
+    expect(sixthIngredient.amount.amount).toBe(1);
+    expect(sixthIngredient.unit).toBeUndefined();
+    expect(sixthIngredient.ingredient.name).toBe("package active dry yeast");
   });
 });

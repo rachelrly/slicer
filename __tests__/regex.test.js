@@ -33,7 +33,6 @@ describe("Given DIGIT regex", () => {
 
   test("it recognizes decimal as digit", () => {
     expect(DIGIT.test("1.1")).toBeTruthy();
-    // expect(DIGIT.test("1..1")).toBeFalsy();
   });
 
   test("it recognizes fraction as digit", () => {
