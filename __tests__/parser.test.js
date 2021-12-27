@@ -16,7 +16,7 @@ describe("Given an array with the most simple complete ingredient string", () =>
 
   test("it parses ingredient parts correctly", () => {
     expect(recipe[0].amount.amount).toBe(3);
-    expect(recipe[0].unit.name.short).toBe(UNITS.TABLESPOON.name.short);
+    expect(recipe[0].unit).toMatchObject(UNITS.TABLESPOON);
     expect(recipe[0].ingredient.name).toBe("sugar");
   });
 

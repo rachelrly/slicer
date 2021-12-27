@@ -13,11 +13,20 @@ var IngredientOptions;
 })(IngredientOptions = exports.IngredientOptions || (exports.IngredientOptions = {}));
 var Ingredient = (function () {
     function Ingredient() {
+        console.log("------------------------------------------------------");
+        console.log("THIS IS A NEW GODDAMN MOTHERFUCKING INGREDIENT");
+        console.log("------------------------------------------------------");
         this.amount = new amount_1.Amount();
         this.unit = undefined;
         this.ingredient = new ingredientName_1.IngredientName();
     }
     Ingredient.prototype.sortCurrent = function (current) {
+        console.log("SORTING THIS WORD FROM INGREDIENT CLASS", {
+            amount: this.amount,
+            unit: this.unit,
+            ing: this.ingredient,
+            current: current
+        });
         if (this.isDigit(current)) {
             this.setAmount(current);
         }
@@ -68,6 +77,16 @@ var Ingredient = (function () {
         return Boolean(((_a = this.amount) === null || _a === void 0 ? void 0 : _a.amount) && this.unit && ((_c = (_b = this.ingredient) === null || _b === void 0 ? void 0 : _b.name) === null || _c === void 0 ? void 0 : _c.length));
     };
     Ingredient.prototype.isValidIngredient = function () {
+        var _a, _b;
+        if (this.isCompleteIngredient())
+            return true;
+        else if (((_a = this.ingredient) === null || _a === void 0 ? void 0 : _a.name) && ((_b = this.amount) === null || _b === void 0 ? void 0 : _b.amount) && !this.unit) {
+            return true;
+        }
+        else
+            return false;
+    };
+    Ingredient.prototype.validate = function () {
         var _a, _b;
         if (this.isCompleteIngredient())
             return true;

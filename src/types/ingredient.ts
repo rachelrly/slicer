@@ -11,16 +11,27 @@ export enum IngredientOptions {
 }
 
 export class Ingredient {
-  amount? = new Amount();
-  unit?: UnitType = undefined;
-  ingredient? = new IngredientName();
-  // learn to initialize
+  amount?: Amount;
+  unit?: UnitType;
+  ingredient?: IngredientName;
+
+  constructor() {
+    this.amount = new Amount();
+    this.unit = undefined;
+    this.ingredient = new IngredientName();
+  }
 
   // gets current and processes
   // remember to re set items in parent because of prototype bs
   // parser.reduce into smaller list???
 
   sortCurrent(current: string): void {
+    console.log("SORTING THIS WORD FROM INGREDIENT CLASS", {
+      amount: this.amount,
+      unit: this.unit,
+      ing: this.ingredient,
+      current,
+    });
     if (this.isDigit(current)) {
       this.setAmount(current);
     } else if (Boolean(this._getUnit(current))) {
@@ -90,6 +101,15 @@ export class Ingredient {
   }
 
   isValidIngredient(): boolean {
+    // i.e. "1 cup rice", "1 egg"
+    if (this.isCompleteIngredient()) return true;
+    // TODO: add support for case with just ingredient name, i.e. salt
+    else if (this.ingredient?.name && this.amount?.amount && !this.unit) {
+      return true;
+    } else return false;
+  }
+
+  validate(): boolean {
     // i.e. "1 cup rice", "1 egg"
     if (this.isCompleteIngredient()) return true;
     // TODO: add support for case with just ingredient name, i.e. salt
