@@ -1,6 +1,5 @@
 const { parse } = require("../dist/types/parse");
 const { UNITS } = require("../dist/types/units");
-const { BREAK_ON_CHAR } = require("../dist/utils/constants");
 
 const BASIC_BREAD = `
 1 package active dry yeast
@@ -10,6 +9,16 @@ const BASIC_BREAD = `
 2 tablespoons canola oil
 3 tablespoons sugar
 `;
+
+const PANCAKES = `1 cup milk
+1/2 cup sour cream
+1/4 cup granulated sugar
+2 large eggs
+1 teaspoon vanilla extract
+1 1/2 cups all purpose flour
+2 teaspoons baking powder
+1 teaspoon salt
+Butter for greasing the pan`;
 
 describe("Given an array with the most simple complete ingredient string", () => {
   const INPUT = "3 tablespoons sugar";
@@ -79,5 +88,12 @@ describe("Given a full recipe", () => {
     expect(sixthIngredient.amount.amount).toBe(1);
     expect(sixthIngredient.unit).toBeUndefined();
     expect(sixthIngredient.ingredient.name).toBe("package active dry yeast");
+  });
+
+  describe("Given recipes with complex units", () => {
+    const pancakes = parse(PANCAKES);
+    test("it returns an array with expected length", () => {
+      expect(pancakes.length).toBe(8);
+    });
   });
 });
