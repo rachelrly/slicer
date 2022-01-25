@@ -1,6 +1,6 @@
-const { getUnitFromMl, getUnitFromString } = require("../dist/utils/format");
-const { UNITS } = require("../dist/types/units");
-const { ERRORS } = require("../dist/types/errors");
+import { getUnitFromMl, getUnitFromString } from "../src/utils/format";
+import { UNITS } from "../src/types/units";
+import { ERRORS } from "../src/types/errors";
 
 describe("Given an amount in ml", () => {
   test("it returns the a valid unit when it is not too high", () => {

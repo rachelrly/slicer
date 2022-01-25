@@ -1,5 +1,5 @@
-const { parse } = require("../dist/types/parse");
-const { UNITS } = require("../dist/types/units");
+import { parse } from "../src/types/parse";
+import { UNITS } from "../src/types/units";
 
 const BASIC_BREAD = `
 1 package active dry yeast
