@@ -1,4 +1,4 @@
-const { BREAK_ON_CHAR, DIGIT } = require("../dist/utils/constants");
+import { BREAK_ON_CHAR, DIGIT } from "../src/utils/constants";
 
 describe("Given BREAK_ON_CHAR regex", () => {
   test("it splits by spaces", () => {
