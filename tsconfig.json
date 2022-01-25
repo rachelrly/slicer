@@ -2,10 +2,10 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "removeComments": true,
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist",
     "sourceMap": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "__tests__"]
+  "include": ["src/**/*", "__tests__/**/*", "src/jest.config.ts"],
+  "exclude": ["node_modules"]
 }

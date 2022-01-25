@@ -1,5 +1,5 @@
-const { Ingredient } = require("../dist/types/ingredient");
-const { UNITS } = require("../dist/types/units");
+import { Ingredient } from "../src/types/ingredient";
+import { UNITS } from "../src/types/units";
 
 describe("Ingredient class sorts, formats, and filters ingredient input", () => {
   describe("Given a valid amount", () => {
