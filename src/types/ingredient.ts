@@ -17,12 +17,14 @@ export class Ingredient {
   unit?: UnitType
   ingredient?: IngredientName
   id: string
+  active: 'none' | string
 
   constructor() {
     this.amount = new Amount()
     this.unit = undefined
     this.ingredient = new IngredientName()
     this.id = uuid()
+    this.active = 'none'
   }
 
   sort(current: string): void {
@@ -70,6 +72,11 @@ export class Ingredient {
 
   setIngredientName(current: string) {
     this.ingredient.set(current)
+  }
+
+  setActive(state: string) {
+    if (this.active === state) this.active = 'none'
+    else this.active = state
   }
 
   validate(): boolean {
