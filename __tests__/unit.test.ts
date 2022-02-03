@@ -40,8 +40,3 @@ describe('Given an amount in ml', () => {
     expect(() => getUnitFromMl(-1)).toThrow(ERRORS.AMOUNT.NEGATIVE_INPUT)
   })
 })
-
-// describe("Given a valid unit string input", () => {
-//   test("it sorts `tsp` as TEASPOON", () => {
-//     expect(getUnitFromString("tsp")).toMatchObject("tsp");
-//   });
