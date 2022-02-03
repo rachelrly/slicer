@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid'
+
 import { UnitType } from './units'
 import { Amount } from './amount'
 import { IngredientName } from './ingredientName'
@@ -14,11 +16,15 @@ export class Ingredient {
   amount?: Amount
   unit?: UnitType
   ingredient?: IngredientName
+  id: string
+  active: 'none' | string
 
   constructor() {
     this.amount = new Amount()
     this.unit = undefined
     this.ingredient = new IngredientName()
+    this.id = uuid()
+    this.active = 'none'
   }
 
   sort(current: string): void {
@@ -66,6 +72,11 @@ export class Ingredient {
 
   setIngredientName(current: string) {
     this.ingredient.set(current)
+  }
+
+  setActive(state: string) {
+    if (this.active === state) this.active = 'none'
+    else this.active = state
   }
 
   validate(): boolean {
