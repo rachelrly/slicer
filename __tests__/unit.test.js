@@ -26,7 +26,6 @@ describe('Given an amount in ml', () => {
   describe('Given that nonstandard units are NOT included (default)', () => {
     test('it returns the the correct unit, including nonstandard units', () => {
       const one = getUnitFromMl(50)
-      console.log('THIS IS THE RESPONSE', one)
       expect(getUnitFromMl(1)).toMatchObject(UNITS.TEASPOON)
       // expect(getUnitFromMl(500)).toMatchObject(UNITS.GALLON);
       // expect(one).toMatchObject(UNITS.CUP);
