@@ -3,9 +3,9 @@ import { fractionToFloat } from '../utils/format'
 export class Amount {
   amount: number = 0
 
-  set(number: string) {
+  set(number: string, replace: boolean) {
     const float: number = this._toFloat(number)
-    const newAmount = this.amount + float
+    const newAmount = replace ? float : this.amount + float
     this.amount = newAmount
   }
 
