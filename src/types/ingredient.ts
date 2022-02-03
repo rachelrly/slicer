@@ -62,16 +62,21 @@ export class Ingredient {
   /**
    * Methods to validate and set ingredient list
    */
-  setAmount(current: string) {
-    this.amount.set(current)
+  setAmount(current: string, replace = false) {
+    this.amount.set(current, replace)
   }
 
   setUnit(unit: UnitType) {
     this.unit = unit
   }
 
-  setIngredientName(current: string) {
-    this.ingredient.set(current)
+  setIngredientName(current: string, replace = false) {
+    this.ingredient.set(current, replace)
+  }
+
+  setActive(state: string) {
+    if (this.active === state) this.active = 'none'
+    else this.active = state
   }
 
   setActive(state: string) {

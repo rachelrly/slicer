@@ -28,6 +28,14 @@ describe('Ingredient class sorts, formats, and filters ingredient input', () => 
       TestIngredient.sort('1.5')
       expect(TestIngredient.amount.amount).toBe(3)
     })
+
+    test('it replaces input when replace arg is true', () => {
+      const TestIngredient = new Ingredient()
+      TestIngredient.sort('1')
+      expect(TestIngredient.amount.amount).toBe(1)
+      TestIngredient.setAmount('5', true)
+      expect(TestIngredient.amount.amount).toBe(5)
+    })
   })
 
   describe('Given a valid unit string as input', () => {
@@ -50,6 +58,12 @@ describe('Ingredient class sorts, formats, and filters ingredient input', () => 
       TestIngredient.setIngredientName('and')
       TestIngredient.setIngredientName('pepper')
       expect(TestIngredient.ingredient.name).toBe('salt and pepper')
+    })
+
+    test('it replaces input when replace arg is true', () => {
+      const newIngredient = 'butter'
+      TestIngredient.setIngredientName(newIngredient, true)
+      expect(TestIngredient.ingredient.name).toBe(newIngredient)
     })
   })
 
