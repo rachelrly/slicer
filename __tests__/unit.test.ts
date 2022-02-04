@@ -1,6 +1,5 @@
-import { getUnitFromMl, getUnitFromString } from '../src/utils/format'
-import { UNITS } from '../src/types/units'
-import { ERRORS } from '../src/types/errors'
+import { getUnitFromMl } from '../src/utils'
+import { ERRORS, UNITS } from '../src/types'
 
 describe('Given an amount in ml', () => {
   test('it returns the a valid unit when it is not too high', () => {

@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid'
 
-import { UnitType } from './units'
+import { UnitType } from './Units'
 import { Amount } from './amount'
 import { IngredientName } from './ingredientName'
 import { ERRORS } from './errors'

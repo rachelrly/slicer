@@ -1,7 +1,7 @@
-import { Ingredient } from './ingredient'
-import { parse } from './parse'
-import { getUnitFromMl } from '../utils/format'
-import { UnitType } from './units'
+import { Ingredient } from './Ingredient'
+import { UnitType } from './Units'
+
+import { parse, getUnitFromMl } from '../utils'
 
 export class Recipe {
   input: string //instantiate when created

@@ -1,4 +1,4 @@
-import { fractionToFloat } from '../utils/format'
+import { fractionToFloat } from '../utils'
 
 export class Amount {
   amount: number = 0
