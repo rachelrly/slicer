@@ -18,6 +18,8 @@ export class Ingredient {
   ingredient?: IngredientName
   id: string
   active: 'none' | string
+  // If locked === false, the changes in ingredient amount don't effect the recipe's scale
+  locked: boolean
 
   constructor() {
     this.amount = new Amount()
@@ -25,6 +27,7 @@ export class Ingredient {
     this.ingredient = new IngredientName()
     this.id = uuid()
     this.active = 'none'
+    this.locked = true
   }
 
   sort(current: string): void {
@@ -79,9 +82,8 @@ export class Ingredient {
     else this.active = state
   }
 
-  setActive(state: string) {
-    if (this.active === state) this.active = 'none'
-    else this.active = state
+  toggleLocked() {
+    this.locked = !this.locked
   }
 
   validate(): boolean {

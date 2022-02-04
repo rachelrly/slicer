@@ -1,4 +1,4 @@
-import { BREAK_ON_CHAR, DIGIT } from '../src/utils/constants'
+import { BREAK_ON_CHAR } from '../src/utils/constants'
 
 describe('Given BREAK_ON_CHAR regex', () => {
   test('it splits by spaces', () => {
@@ -25,22 +25,24 @@ describe('Given BREAK_ON_CHAR regex', () => {
   })
 })
 
-describe('Given DIGIT regex', () => {
-  test('it recognizes digit as digit', () => {
-    expect(DIGIT.test('10')).toBeTruthy()
-    expect(DIGIT.test('www')).toBeFalsy()
-  })
+// This regex is no loger used in favor of /\d/
 
-  test('it recognizes decimal as digit', () => {
-    expect(DIGIT.test('1.1')).toBeTruthy()
-  })
+// describe('Given DIGIT regex', () => {
+//   test('it recognizes digit as digit', () => {
+//     expect(DIGIT.test('10')).toBeTruthy()
+//     expect(DIGIT.test('www')).toBeFalsy()
+//   })
 
-  test('it recognizes fraction as digit', () => {
-    expect(DIGIT.test('1/2')).toBeTruthy()
-  })
+//   test('it recognizes decimal as digit', () => {
+//     expect(DIGIT.test('1.1')).toBeTruthy()
+//   })
 
-  test('it recognizes mixed numeric and alphabetical characters as not a digit', () => {
-    expect(DIGIT.test('x.1')).toBeFalsy()
-    expect(DIGIT.test('x/2')).toBeFalsy()
-  })
-})
+//   test('it recognizes fraction as digit', () => {
+//     expect(DIGIT.test('1/2')).toBeTruthy()
+//   })
+
+//   test('it recognizes mixed numeric and alphabetical characters as not a digit', () => {
+//     expect(DIGIT.test('x.1')).toBeFalsy()
+//     expect(DIGIT.test('x/2')).toBeFalsy()
+//   })
+// })

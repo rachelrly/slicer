@@ -29,7 +29,14 @@ export const UNITS: UnitsType = {
       long: 'tablespoon',
       short: 'tbsp'
     },
-    matchString: new Set(['T', 'tbsp', 'tbsp.', 'tablespoon', 'tablespoons'])
+    matchString: new Set([
+      'T',
+      'tbsp',
+      'tbsps',
+      'tbsp.',
+      'tablespoon',
+      'tablespoons'
+    ])
   },
   OUNCE: {
     mlInUnit: 29.5735,

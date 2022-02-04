@@ -36,6 +36,17 @@ describe('Ingredient class sorts, formats, and filters ingredient input', () => 
       TestIngredient.setAmount('5', true)
       expect(TestIngredient.amount.amount).toBe(5)
     })
+
+    test('it toggles locked state', () => {
+      const TestIngredient = new Ingredient()
+      expect(TestIngredient.locked).toBe(true)
+
+      TestIngredient.toggleLocked()
+      expect(TestIngredient.locked).toBe(false)
+
+      TestIngredient.toggleLocked()
+      expect(TestIngredient.locked).toBe(true)
+    })
   })
 
   describe('Given a valid unit string as input', () => {
