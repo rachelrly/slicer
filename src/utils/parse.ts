@@ -1,5 +1,5 @@
-import { Ingredient } from './ingredient'
-import { BREAK_ON_CHAR } from '../utils/constants'
+import { Ingredient } from '../types'
+import { BREAK_ON_CHAR } from './constants'
 
 /**
  *

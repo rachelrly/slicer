@@ -1,20 +1,21 @@
-import { Ingredient } from './ingredient'
-import { parse } from './parse'
-import { getUnitFromMl } from '../utils/format'
-import { UnitType } from './units'
+import { Ingredient } from './Ingredient'
+import { parse, getUnitFromMl } from '../utils'
+import { UnitType } from './Units'
 
 export class Recipe {
-  input: string //instantiate when created
+  input: string = ''
   recipe: Ingredient[] = []
-  scaledRecipe: Ingredient[] = []
   constant: number = 1
 
   setConstant(constant: number) {
     this.constant = constant
   }
 
-  _parseRecipeString(input: string) {
-    this.recipe = parse(input)
+  setInputString(input: string) {
+    if (this.input !== input) {
+      this.input = input
+      this.recipe = parse(input)
+    }
   }
 
   scaleRecipe() {
@@ -45,7 +46,7 @@ export class Recipe {
         return ingredient
       }
     )
-    this.scaledRecipe = scaledRecipe
+    this.recipe = scaledRecipe
   }
 
   _getAmountForCurrentUnit(amountInMl: number, mlPerUnit: number) {

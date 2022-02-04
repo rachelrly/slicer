@@ -1,9 +1,9 @@
 import { v4 as uuid } from 'uuid'
 
-import { UnitType } from './units'
-import { Amount } from './amount'
-import { IngredientName } from './ingredientName'
-import { ERRORS } from './errors'
+import { UnitType } from './Units'
+import { Amount } from './Amount'
+import { IngredientName } from './IngredientName'
+import { ERRORS } from './Errors'
 import { getUnitFromString } from '../utils/format'
 
 export enum IngredientOptions {

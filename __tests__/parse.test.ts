@@ -1,5 +1,5 @@
-import { parse } from '../src/types/parse'
-import { UNITS } from '../src/types/units'
+import { parse } from '../src/utils'
+import { UNITS } from '../src/types'
 
 const BASIC_BREAD = `
 1 package active dry yeast

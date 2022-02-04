@@ -1,5 +1,4 @@
-import { Ingredient } from '../src/types/ingredient'
-import { UNITS } from '../src/types/units'
+import { UNITS, Ingredient } from '../src/types'
 
 describe('Ingredient class sorts, formats, and filters ingredient input', () => {
   describe('Given a valid amount', () => {
