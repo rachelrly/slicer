@@ -13,7 +13,8 @@ export const ERRORS = {
     HAS_DATA:
       'This ingredeient already has a ingredient name or unit. Units must be added before an ingredeint name.',
     HAS_UNIT:
-      'This ingredient already has a unit. Units may not be overwritten.'
+      'This ingredient already has a unit. Units may not be overwritten.',
+    NO_UNIT: 'No unit found for this amount input'
   },
   AMOUNT: {
     NEGATIVE_INPUT: 'Ingredients cannot have a negative amount.',

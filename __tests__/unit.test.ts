@@ -1,6 +1,8 @@
 import { getUnitFromMl } from '../src/utils'
 import { ERRORS, UNITS } from '../src/types'
 
+// TODO: Write test to demonstrate that units are sorted by ml
+
 describe('Given an amount in ml', () => {
   test('it returns the a valid unit when it is not too high', () => {
     expect(getUnitFromMl(10)).toBeTruthy
@@ -17,7 +19,7 @@ describe('Given an amount in ml', () => {
   describe.skip('Given that `includeNonStandardUnits` is true', () => {
     test('it returns only standard units', () => {
       //    expect(getUnitFromMl(50, true)).toMatchObject(UNITS.OUNCE);
-      expect(getUnitFromMl(1, true)).toMatchObject(UNITS.GRAM)
+      expect(getUnitFromMl(1)).toMatchObject(UNITS.GRAM)
       //    expect(getUnitFromMl(500, true)).toMatchObject(UNITS.PINT);
     })
   })

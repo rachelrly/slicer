@@ -15,6 +15,14 @@ type UnitsType = {
 }
 
 export const UNITS: UnitsType = {
+  GRAM: {
+    mlInUnit: 1,
+    name: {
+      long: 'gram',
+      short: 'g'
+    },
+    matchString: new Set(['g', 'g.', 'gram', 'grams'])
+  },
   TEASPOON: {
     mlInUnit: 4.92892,
     name: {
@@ -71,13 +79,6 @@ export const UNITS: UnitsType = {
     matchString: new Set(['q', 'q.', 'Q', 'quart', 'quarts']),
     notStandard: true
   },
-  POUND: {
-    name: {
-      long: 'pound',
-      short: 'lb'
-    },
-    matchString: new Set(['lb', 'lb.', 'lbs', 'lbs.', 'pound', 'pounds'])
-  },
   GALLON: {
     mlInUnit: 3785.41,
     name: {
@@ -85,13 +86,12 @@ export const UNITS: UnitsType = {
     },
     matchString: new Set(['G', 'G.', 'Gs', 'gallon', 'gallons'])
   },
-  GRAM: {
-    mlInUnit: 1,
+  POUND: {
     name: {
-      long: 'gram',
-      short: 'g'
+      long: 'pound',
+      short: 'lb'
     },
-    matchString: new Set(['g', 'g.', 'gram', 'grams'])
+    matchString: new Set(['lb', 'lb.', 'lbs', 'lbs.', 'pound', 'pounds'])
   },
   PINCH: {
     name: {

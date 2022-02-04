@@ -9,9 +9,11 @@ export function fractionToFloat(fraction: string, index: number): number {
 }
 
 export function getUnitFromMl(
-  amount: number,
-  nonstandardUnits = false // Not tsp, tbsp, cup
+  amount: number
+  // nonstandardUnits = false // Not tsp, tbsp, cup
 ): UnitType {
+  console.log('--------------------------------------------------')
+  console.log('RUNNING GET UNIT FROM ML WITH AMOUNT', { amount })
   if (amount === 0) {
     throw Error(ERRORS.AMOUNT.ZERO_INPUT)
   }
@@ -23,26 +25,22 @@ export function getUnitFromMl(
   if (amount < 0) {
     throw Error(ERRORS.AMOUNT.NEGATIVE_INPUT)
   }
-
-  function _getUnitBreakpoint(mlInUnit: number) {
-    // subtraction prevents scale up at exactly 1/2 of next unit
-    const offset = mlInUnit * 0.1
-    const doubled = mlInUnit * 2
-    return doubled - offset
-  }
-
-  for (const value of Object.values(UNITS)) {
-    // this should be compared to the next unit, not the current unit
-    const ml = value?.mlInUnit
-    if (Boolean(ml)) {
-      if (amount < _getUnitBreakpoint(ml)) {
-        // not handling nonstandard units for testing
-        const isIncluded = !value?.notStandard
-        if (isIncluded) return value
-        return
+  const units: UnitType[] = Object.values(UNITS)
+  const newUnit = units
+    .filter((unit) => Boolean(unit.mlInUnit))
+    .find((unit, index) => {
+      const next = units[index + 1]
+      if (!next) {
+        console.log('FOUND NEXT UNIT')
+        return true // Finds last unit
       }
-    } else return value
-  }
+      const breakpoint = getUnitBreakpoint(unit.mlInUnit, next.mlInUnit)
+      if (amount < breakpoint) return true
+    })
+  console.log('THIS IS MY NEW UNIT', newUnit)
+  if (!newUnit) {
+    throw Error(ERRORS.UNIT.NO_UNIT)
+  } else return newUnit
 }
 
 export function getUnitFromString(input: string) {
@@ -54,3 +52,16 @@ export function getUnitFromString(input: string) {
     }
   }
 }
+
+function getUnitBreakpoint(currMl: number, nextMl: number): number {
+  const offset = currMl * 0.1 // Prevents constant=0.5 from rounding up units
+  const average = (currMl + nextMl) / 2
+  return offset + average
+}
+
+// function _getUnitBreakpoint(mlInUnit: number) {
+//   // subtraction prevents scale up at exactly 1/2 of next unit
+//   const offset = mlInUnit * 0.1
+//   const doubled = mlInUnit * 2
+//   return doubled - offset
+// }
