@@ -4,7 +4,7 @@
   "description": "An algorithm that parses recipe input to make ingredients scalable",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --no-cache dist/__tests__",
+    "test": "tsc && jest --no-cache dist/__tests__",
     "start": "nodemon dist/index.js --port 5582"
   },
   "author": "Rachel Reilly",
