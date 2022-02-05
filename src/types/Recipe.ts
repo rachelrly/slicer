@@ -34,7 +34,7 @@ export class Recipe {
         }
         const totalMl =
           this.constant * ingredient.amount.amount * ingredient.unit.mlInUnit
-        const newUnit: UnitType = getUnitFromMl(totalMl, ingredient.unit)
+        const newUnit: UnitType = getUnitFromMl(totalMl)
         // If units are the same, do no further calculations
         if (newUnit === ingredient.unit) {
           ingredient.setAmount(`${amountConstantProduct}`, true)

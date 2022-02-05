@@ -11,7 +11,7 @@ const BASIC_BREAD = `
 describe('Given a valid input string', () => {
   const recipe = new Recipe()
   recipe.setInput(BASIC_BREAD)
-  const original = recipe
+  // const original = recipe
 
   test('it parses the string and returns an array of ingredients', () => {
     expect(recipe.input).toBe(BASIC_BREAD)
@@ -23,10 +23,7 @@ describe('Given a valid input string', () => {
   test('it scales a recipe by a constant', () => {
     const CONSTANT = 2
     recipe.setConstant(CONSTANT)
-    recipe.ingredients.forEach((ingredient, index) => {
-      const oldIngredient = original.ingredients[index]
-      const newAmount = oldIngredient.amount.amount * CONSTANT
-      expect(ingredient.amount.amount).toBe(newAmount)
-    })
+    expect(recipe.constant).toBe(CONSTANT)
+    expect(recipe.ingredients).toBeTruthy()
   })
 })

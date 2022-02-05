@@ -39,7 +39,7 @@ export function parse(recipe: string) {
         'Error sorting word from ingredient: ',
         error?.message ?? error
       )
-      console.log('BAD: Creating new ingredient and adding anyway')
+      console.error('BAD: Creating new ingredient and adding anyway')
       _addIngredient()
     }
   })

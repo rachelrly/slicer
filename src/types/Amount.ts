@@ -2,7 +2,6 @@ import { fractionToFloat } from '../utils'
 
 export class Amount {
   amount: number = 0
-
   set(number: string, replace: boolean) {
     const float: number = this._toFloat(number)
     const newAmount = replace ? float : this.amount + float
