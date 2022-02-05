@@ -1,4 +1,4 @@
-import { BREAK_ON_CHAR } from '../src/utils/constants'
+import { BREAK_ON_CHAR } from '../src/utils'
 
 describe('Given BREAK_ON_CHAR regex', () => {
   test('it splits by spaces', () => {

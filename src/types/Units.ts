@@ -15,13 +15,45 @@ type UnitsType = {
 }
 
 export const UNITS: UnitsType = {
-  TEASPOON: {
-    mlInUnit: 4.92892,
+  GALLON: {
+    mlInUnit: 3785.41,
     name: {
-      long: 'teaspoon',
-      short: 'tsp'
+      long: 'gallon'
     },
-    matchString: new Set(['t', 't.', 'tsp', 'teaspoon', 'teaspoons'])
+    matchString: new Set(['G', 'G.', 'Gs', 'gallon', 'gallons'])
+  },
+  QUART: {
+    mlInUnit: 946.353,
+    name: {
+      long: 'quart'
+    },
+    matchString: new Set(['q', 'q.', 'Q', 'quart', 'quarts']),
+    notStandard: true
+  },
+  PINT: {
+    mlInUnit: 473.176,
+    name: {
+      long: 'pint'
+    },
+    matchString: new Set(['p', 'p.', 'P', 'pint', 'pints']),
+    notStandard: true
+  },
+  CUP: {
+    mlInUnit: 236.588,
+    name: {
+      long: 'cup',
+      short: 'c'
+    },
+    matchString: new Set(['c', 'c.', 'cs', 'C', 'Cs', 'cup', 'cups'])
+  },
+  OUNCE: {
+    mlInUnit: 29.5735,
+    name: {
+      long: 'ounce',
+      short: 'oz'
+    },
+    matchString: new Set(['o', 'oz', 'oz.', 'ozs', 'ounce', 'ounces']),
+    notStandard: true
   },
   TABLESPOON: {
     mlInUnit: 14.7868,
@@ -38,52 +70,13 @@ export const UNITS: UnitsType = {
       'tablespoons'
     ])
   },
-  OUNCE: {
-    mlInUnit: 29.5735,
+  TEASPOON: {
+    mlInUnit: 4.92892,
     name: {
-      long: 'ounce',
-      short: 'oz'
+      long: 'teaspoon',
+      short: 'tsp'
     },
-    matchString: new Set(['o', 'oz', 'oz.', 'ozs', 'ounce', 'ounces']),
-    notStandard: true
-  },
-  CUP: {
-    mlInUnit: 236.588,
-    name: {
-      long: 'cup',
-      short: 'c'
-    },
-    matchString: new Set(['c', 'c.', 'cs', 'C', 'Cs', 'cup', 'cups'])
-  },
-  PINT: {
-    mlInUnit: 473.176,
-    name: {
-      long: 'pint'
-    },
-    matchString: new Set(['p', 'p.', 'P', 'pint', 'pints']),
-    notStandard: true
-  },
-  QUART: {
-    mlInUnit: 946.353,
-    name: {
-      long: 'quart'
-    },
-    matchString: new Set(['q', 'q.', 'Q', 'quart', 'quarts']),
-    notStandard: true
-  },
-  POUND: {
-    name: {
-      long: 'pound',
-      short: 'lb'
-    },
-    matchString: new Set(['lb', 'lb.', 'lbs', 'lbs.', 'pound', 'pounds'])
-  },
-  GALLON: {
-    mlInUnit: 3785.41,
-    name: {
-      long: 'gallon'
-    },
-    matchString: new Set(['G', 'G.', 'Gs', 'gallon', 'gallons'])
+    matchString: new Set(['t', 't.', 'tsp', 'teaspoon', 'teaspoons'])
   },
   GRAM: {
     mlInUnit: 1,
@@ -92,6 +85,13 @@ export const UNITS: UnitsType = {
       short: 'g'
     },
     matchString: new Set(['g', 'g.', 'gram', 'grams'])
+  },
+  POUND: {
+    name: {
+      long: 'pound',
+      short: 'lb'
+    },
+    matchString: new Set(['lb', 'lb.', 'lbs', 'lbs.', 'pound', 'pounds'])
   },
   PINCH: {
     name: {

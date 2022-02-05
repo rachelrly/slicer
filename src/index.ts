@@ -1,4 +1,4 @@
-export { Recipe } from './types/recipe'
+export { Recipe } from './types'
 
 // TEMPORARY: This is only until the Recipe class is 100
-export { parse } from './types/parse'
+export { parse } from './utils'
