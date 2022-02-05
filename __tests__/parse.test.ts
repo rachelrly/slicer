@@ -21,6 +21,15 @@ const COMPLEX = `1 cup milk
 1 teaspoon salt
 Butter for greasing the pan`
 
+// Sample recipe from Sliced web app
+const SLICED = `1/2 cup butter 
+0.75 c sugar 
+3 large eggs 
+3 tbsps lemon juice 
+1 c plain flour 
+2 tsp baking powder 
+1 cup ricotta 1/4 c milk`
+
 const BAD = `
 1/2 cup m<div>milk&&#$jkf</div>
 1/4 cup @#*(&)@#*@fdjkfhgkdhvsuga@#(&@*#@)
@@ -118,5 +127,12 @@ describe('Given bad recipe input (this will show errors to console)', () => {
   const recipe = parse(BAD)
   test('it does not fail and returns an array of ingredeints (this will show errors to console)', () => {
     expect(recipe).toBeTruthy()
+  })
+})
+
+describe('Given the recipe from the Sliced web app', () => {
+  const recipe = parse(SLICED)
+  test('it parses correctly', () => {
+    expect(recipe.length).toBe(8)
   })
 })
