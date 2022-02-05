@@ -90,12 +90,12 @@ describe('Given a full recipe', () => {
     expect(sixthIngredient.unit).toBeUndefined()
     expect(sixthIngredient.ingredient.name).toBe('package active dry yeast')
   })
+})
 
-  // what does this show that ingredient unit tests do not??
-  describe('Given recipes with complex units', () => {
-    const pancakes = parse(PANCAKES)
-    test('it returns an array with expected length', () => {
-      expect(pancakes.length).toBe(8)
-    })
+// what does this show that ingredient unit tests do not??
+describe('Given recipes with complex units', () => {
+  const pancakes = parse(PANCAKES)
+  test('it returns an array with expected length', () => {
+    expect(pancakes.length).toBe(8)
   })
 })

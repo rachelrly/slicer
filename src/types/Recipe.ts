@@ -7,6 +7,7 @@ export class Recipe {
   input: string
   ingredients: Ingredient[] = []
   constant: number = 1
+  standardUnitsOnly: boolean = true
 
   setConstant(constant: number) {
     if (constant !== this.constant) {
@@ -36,7 +37,7 @@ export class Recipe {
         }
         const totalMl =
           this.constant * ingredient.amount.amount * ingredient.unit.mlInUnit
-        const newUnit: UnitType = getUnitFromMl(totalMl)
+        const newUnit: UnitType = getUnitFromMl(totalMl, this.standardUnitsOnly)
         // If units are the same, do no further calculations
         if (newUnit === ingredient.unit) {
           ingredient.setAmount(`${amountConstantProduct}`, true)
