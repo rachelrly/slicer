@@ -1,4 +1,4 @@
-import { BREAK_ON_CHAR } from '../src/utils'
+import { BREAK_ON_CHAR, REPLACE_CHAR } from '../src/utils'
 
 describe('Given BREAK_ON_CHAR regex', () => {
   test('it splits by spaces', () => {
@@ -18,31 +18,15 @@ describe('Given BREAK_ON_CHAR regex', () => {
     with 
     spaces`
     expect(BREAK_ON_CHAR.test(multiline)).toBeTruthy()
-    // TODO: Extract the filter into a util. This is sloppy.
     expect(
       multiline.split(BREAK_ON_CHAR).filter((word) => Boolean(word)).length
     ).toBe(3)
   })
 })
 
-// This regex is no loger used in favor of /\d/
-
-// describe('Given DIGIT regex', () => {
-//   test('it recognizes digit as digit', () => {
-//     expect(DIGIT.test('10')).toBeTruthy()
-//     expect(DIGIT.test('www')).toBeFalsy()
-//   })
-
-//   test('it recognizes decimal as digit', () => {
-//     expect(DIGIT.test('1.1')).toBeTruthy()
-//   })
-
-//   test('it recognizes fraction as digit', () => {
-//     expect(DIGIT.test('1/2')).toBeTruthy()
-//   })
-
-//   test('it recognizes mixed numeric and alphabetical characters as not a digit', () => {
-//     expect(DIGIT.test('x.1')).toBeFalsy()
-//     expect(DIGIT.test('x/2')).toBeFalsy()
-//   })
-// })
+describe('Given REPLACE_CHAR regex', () => {
+  const BAD = '%&*^$#*(&(^<keep-this.string/>'
+  test('It replaces bad chars in the string', () => {
+    expect(BAD.replace(REPLACE_CHAR, '')).toBe('%keep-this.string/')
+  })
+})

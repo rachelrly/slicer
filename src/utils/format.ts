@@ -10,7 +10,7 @@ export function fractionToFloat(fraction: string, index: number): number {
 
 // this function takes an amount (of ml) and returns the
 //    correct unit based on the breakpoint.
-export function getUnitFromMl(amount: number): UnitType {
+export function getUnitFromMl(amount: number, standardOnly: boolean): UnitType {
   if (amount === 0) {
     throw Error(ERRORS.AMOUNT.ZERO_INPUT)
   }
@@ -21,7 +21,11 @@ export function getUnitFromMl(amount: number): UnitType {
     throw Error(ERRORS.AMOUNT.NEGATIVE_INPUT)
   }
   // Units are assumed to already be sorted in descending order of unit.mlInUnit
-  const units: UnitType[] = Object.values(UNITS).filter((unit) => unit.mlInUnit)
+  const units: UnitType[] = Object.values(UNITS).filter(
+    (unit) =>
+      unit.mlInUnit &&
+      (unit.standard === standardOnly || unit.standard === true)
+  )
   return units.find(
     (unit, i) =>
       i === units.length - 1 ||

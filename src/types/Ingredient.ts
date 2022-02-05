@@ -5,6 +5,7 @@ import { Amount } from './amount'
 import { IngredientName } from './ingredientName'
 import { ERRORS } from './errors'
 import { getUnitFromString } from '../utils/format'
+import { REPLACE_CHAR, MAX_WORD_LENGTH } from '../utils'
 
 export enum IngredientOptions {
   Amount = 'amount',
@@ -31,35 +32,26 @@ export class Ingredient {
   }
 
   sort(current: string): void {
-    if (this.isDigit(current)) {
+    if (current.length > MAX_WORD_LENGTH)
+      throw new Error(ERRORS.INPUT.BAD_INPUT)
+    const clean = current.replace(REPLACE_CHAR, '') // Removes most special characters
+    if (this.isDigit(clean)) {
       if (Boolean(this.unit) || Boolean(this.ingredient.name)) {
         throw new Error(ERRORS.AMOUNT.HAS_DATA)
       } else {
-        this.setAmount(current)
+        this.setAmount(clean)
       }
-    } else if (Boolean(this._getUnit(current))) {
+    } else if (Boolean(this._getUnit(clean))) {
       if (Boolean(this.ingredient.name)) {
         throw new Error(ERRORS.UNIT.HAS_DATA)
       } else if (Boolean(this.unit)) {
         throw new Error(ERRORS.UNIT.HAS_UNIT)
       } else {
-        this.setUnit(this._getUnit(current))
+        this.setUnit(this._getUnit(clean))
       }
     } else {
-      this.setIngredientName(current)
+      this.setIngredientName(clean)
     }
-  }
-
-  scale(constant: number) {
-    // currently scales amount only
-    const unitMl = this.unit.mlInUnit
-    const base = this.amount.amount * unitMl
-    const scaled = this.amount.amount * constant
-    const newAmount = scaled / base
-    this.setAmount(newAmount.toString())
-    // how to scale unit??
-    // new quantity in ml
-    // what qualifies as a switch?
   }
 
   /**

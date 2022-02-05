@@ -1,25 +1,73 @@
 import { getUnitFromMl } from '../src/utils'
 import { ERRORS, UNITS } from '../src/types'
 
-// TODO: Write test to demonstrate that units are sorted by ml
 describe('Given an amount in ml', () => {
   test('it returns the a valid unit when it is not too high', () => {
-    expect(getUnitFromMl(10)).toBeTruthy
-    expect(getUnitFromMl(50)).toBeTruthy
-    expect(getUnitFromMl(100)).toBeTruthy
-    expect(getUnitFromMl(1000)).toBeTruthy
-    expect(getUnitFromMl(10000)).toBeTruthy
-  })
-
-  test('it returns the next closest unit', () => {
-    expect(getUnitFromMl(10)).toMatchObject(UNITS.TABLESPOON)
+    const unit10 = getUnitFromMl(10, true)
+    const unit100 = getUnitFromMl(100, true)
+    const unit1000 = getUnitFromMl(1000, true)
+    const unit10000 = getUnitFromMl(10000, true)
+    expect(unit10).toBeTruthy()
+    expect(unit10.name).toBeTruthy() // Find a better way to typecheck this as Unit
+    expect(unit100).toBeTruthy()
+    expect(unit100.name).toBeTruthy()
+    expect(unit1000).toBeTruthy()
+    expect(unit1000.name).toBeTruthy()
+    expect(unit10000).toBeTruthy()
+    expect(unit10000.name).toBeTruthy()
   })
 
   test('it throws when input is too high', () => {
-    expect(() => getUnitFromMl(9999999)).toThrow(ERRORS.UNIT.UNREALISTIC_INPUT)
+    expect(() => getUnitFromMl(9999999, true)).toThrow(
+      ERRORS.UNIT.UNREALISTIC_INPUT
+    )
   })
 
   test('it throws when input is negative', () => {
-    expect(() => getUnitFromMl(-1)).toThrow(ERRORS.AMOUNT.NEGATIVE_INPUT)
+    expect(() => getUnitFromMl(-1, true)).toThrow(ERRORS.AMOUNT.NEGATIVE_INPUT)
+  })
+})
+
+describe('Given an amount in ml with standard units only', () => {
+  test('it returns TEASPOON for 10ml input', () => {
+    expect(getUnitFromMl(10, true)).toMatchObject(UNITS.TABLESPOON)
+  })
+
+  test('it returns TABLESPOON for 20ml input', () => {
+    expect(getUnitFromMl(20, true)).toMatchObject(UNITS.TABLESPOON)
+  })
+
+  test('it returns TABLESPOON for 100ml input', () => {
+    expect(getUnitFromMl(100, true)).toMatchObject(UNITS.TABLESPOON)
+  })
+
+  test('it returns CUP for 500ml input', () => {
+    expect(getUnitFromMl(500, true)).toMatchObject(UNITS.CUP)
+  })
+
+  test('it returns GALLON for 1000000ml (max) input', () => {
+    expect(getUnitFromMl(100000, true)).toMatchObject(UNITS.GALLON)
+  })
+})
+
+describe('Given an amount in ml with all units included', () => {
+  test('it returns TEASPOON for 10ml input', () => {
+    expect(getUnitFromMl(10, false)).toMatchObject(UNITS.TABLESPOON)
+  })
+
+  test('it returns OUNCE for 20ml input', () => {
+    expect(getUnitFromMl(20, false)).toMatchObject(UNITS.OUNCE)
+  })
+
+  test('it returns OUNCE for 100ml input', () => {
+    expect(getUnitFromMl(100, false)).toMatchObject(UNITS.OUNCE)
+  })
+
+  test('it returns PINT for 500ml input', () => {
+    expect(getUnitFromMl(500, false)).toMatchObject(UNITS.PINT)
+  })
+
+  test('it returns QUART for 1000ml input', () => {
+    expect(getUnitFromMl(1000, false)).toMatchObject(UNITS.QUART)
   })
 })

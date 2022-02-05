@@ -1,7 +1,8 @@
 import { parse } from '../src/utils'
-import { UNITS } from '../src/types'
+import { UNITS, ERRORS } from '../src/types'
+import { longInput } from './utils/longInput'
 
-const BASIC_BREAD = `
+const BASIC = `
 1 package active dry yeast
 2-1/4 cups warm water
 1 tablespoon salt
@@ -10,7 +11,7 @@ const BASIC_BREAD = `
 3 tablespoons sugar
 `
 
-const PANCAKES = `1 cup milk
+const COMPLEX = `1 cup milk
 1/2 cup sour cream
 1/4 cup granulated sugar
 2 large eggs
@@ -19,6 +20,12 @@ const PANCAKES = `1 cup milk
 2 teaspoons baking powder
 1 teaspoon salt
 Butter for greasing the pan`
+
+const BAD = `
+1/2 cup m<div>milk&&#$jkf</div>
+1/4 cup @#*(&)@#*@fdjkfhgkdhvsuga@#(&@*#@)
+2 large@#(&@*#@) eggs@#(&@*#@)
+1 <div></div><div></div><div></div>teaspoon vanilla extract`
 
 describe('Given an array with the most simple complete ingredient string', () => {
   const INPUT = '3 tablespoons sugar'
@@ -36,7 +43,7 @@ describe('Given an array with the most simple complete ingredient string', () =>
 })
 
 describe('Given a full recipe', () => {
-  const recipe = parse(BASIC_BREAD)
+  const recipe = parse(BASIC)
 
   test('it returns an array of the correct length', () => {
     expect(recipe.length).toBe(6)
@@ -82,18 +89,34 @@ describe('Given a full recipe', () => {
     expect(fifthIngredient.ingredient.name).toBe('canola oil')
   })
 
-  test('it parses the sixth ingredient correctly', () => {
+  test('it parses the final ingredient correctly', () => {
     const sixthIngredient = recipe[0]
 
     expect(sixthIngredient.amount.amount).toBe(1)
     expect(sixthIngredient.unit).toBeUndefined()
     expect(sixthIngredient.ingredient.name).toBe('package active dry yeast')
   })
+})
 
-  describe('Given recipes with complex units', () => {
-    const pancakes = parse(PANCAKES)
-    test('it returns an array with expected length', () => {
-      expect(pancakes.length).toBe(8)
-    })
+// what does this show that ingredient unit tests do not??
+describe('Given recipes with fractional and composite ingredients', () => {
+  const recipe = parse(COMPLEX)
+  test('it returns an array with expected length', () => {
+    expect(recipe.length).toBe(8)
+  })
+})
+
+describe('Given input that is too long', () => {
+  test('it throws', () => {
+    const words = longInput.split(' ').length
+    expect(words).toBeGreaterThan(750)
+    expect(() => parse(longInput)).toThrow(ERRORS.INPUT.BAD_LENGTH_INPUT)
+  })
+})
+
+describe('Given bad recipe input (this will show errors to console)', () => {
+  const recipe = parse(BAD)
+  test('it does not fail and returns an array of ingredeints (this will show errors to console)', () => {
+    expect(recipe).toBeTruthy()
   })
 })

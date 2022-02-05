@@ -1,5 +1,5 @@
-import { Ingredient } from '../types'
-import { BREAK_ON_CHAR } from './constants'
+import { Ingredient, ERRORS } from '../types'
+import { BREAK_ON_CHAR, MAX_INPUT_LENGTH } from './constants'
 
 /**
  *
@@ -23,6 +23,9 @@ export function parse(recipe: string) {
   // Give line breaks higher prescedence in sorting??
   const rawWords = recipe.split(BREAK_ON_CHAR).filter((word) => Boolean(word))
 
+  if (rawWords.length >= MAX_INPUT_LENGTH)
+    throw new Error(ERRORS.INPUT.BAD_LENGTH_INPUT)
+
   rawWords.forEach((word: string, i) => {
     try {
       current.sort(word)
@@ -39,7 +42,9 @@ export function parse(recipe: string) {
         'Error sorting word from ingredient: ',
         error?.message ?? error
       )
-      console.error('BAD: Creating new ingredient and adding anyway')
+      console.error(
+        `BAD: Excluding word '${word}' and adding ingredeint to array anyway`
+      )
       _addIngredient()
     }
   })

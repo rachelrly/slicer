@@ -1,29 +1,41 @@
 import { Recipe } from '../src'
-const BASIC_BREAD = `
-1 package active dry yeast
-2-1/4 cups warm water
-1 tablespoon salt
-6-1/4 cups bread flour
-2 tablespoons canola oil
-3 tablespoons sugar
+
+const NO_UNITS = `
+1 ingredient name
+0.5 ingredient name
+0.25 ingredient name
+2 ingredient name
 `
 
-describe('Given a valid input string', () => {
-  const recipe = new Recipe()
-  recipe.setInput(BASIC_BREAD)
-  // const original = recipe
-
+const recipe = new Recipe()
+// const original = recipe
+describe('Given an recipe with no units', () => {
   test('it parses the string and returns an array of ingredients', () => {
-    expect(recipe.input).toBe(BASIC_BREAD)
+    recipe.setInput(NO_UNITS)
+    expect(recipe.input).toBe(NO_UNITS)
     // Just checks for length of arr because validity of ingredients
     //     is tested in `parser.test.ts`
     expect(recipe.ingredients).toBeDefined()
-    expect(recipe.ingredients.length).toBe(6)
+    expect(recipe.ingredients.length).toBe(4)
   })
+
   test('it scales a recipe by a constant', () => {
     const CONSTANT = 2
     recipe.setConstant(CONSTANT)
     expect(recipe.constant).toBe(CONSTANT)
     expect(recipe.ingredients).toBeTruthy()
+    expect(recipe.ingredients[0].amount.amount).toBe(2)
+    expect(recipe.ingredients[1].amount.amount).toBe(1)
+    expect(recipe.ingredients[2].amount.amount).toBe(0.5)
+    expect(recipe.ingredients[3].amount.amount).toBe(4)
+  })
+
+  test('it excludes unlocked ingredients from scaling', () => {
+    recipe.ingredients[0].toggleLocked()
+    recipe.setConstant(0.5)
+    expect(recipe.ingredients[0].amount.amount).toBe(2)
+    expect(recipe.ingredients[1].amount.amount).toBe(0.5)
+    expect(recipe.ingredients[2].amount.amount).toBe(0.25)
+    expect(recipe.ingredients[3].amount.amount).toBe(2)
   })
 })
