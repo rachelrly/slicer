@@ -39,7 +39,9 @@ export function parse(recipe: string) {
         'Error sorting word from ingredient: ',
         error?.message ?? error
       )
-      console.error('BAD: Creating new ingredient and adding anyway')
+      console.error(
+        `BAD: Excluding word '${word}' and adding ingredeint to array anyway`
+      )
       _addIngredient()
     }
   })

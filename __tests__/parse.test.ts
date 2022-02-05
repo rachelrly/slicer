@@ -2,7 +2,7 @@ import { parse } from '../src/utils'
 import { UNITS } from '../src/types'
 // unhappy path with bad input
 // run more tests
-const BASIC_BREAD = `
+const BASIC = `
 1 package active dry yeast
 2-1/4 cups warm water
 1 tablespoon salt
@@ -11,7 +11,7 @@ const BASIC_BREAD = `
 3 tablespoons sugar
 `
 
-const PANCAKES = `1 cup milk
+const COMPLEX = `1 cup milk
 1/2 cup sour cream
 1/4 cup granulated sugar
 2 large eggs
@@ -20,6 +20,16 @@ const PANCAKES = `1 cup milk
 2 teaspoons baking powder
 1 teaspoon salt
 Butter for greasing the pan`
+
+const BAD = `1 cup milk&&#$jkf
+1/2 cup sour cream<div> M</div>
+1/4 cup granulated sugar
+2 large77342hjkre7fydsf623777777&&&& eggs
+1 <div> M</div><div> M</div><div> M</div>teaspoon vanilla extract
+1 1/2 cups all purpose flour
+2 teaspoons <div> M</div><div> M</div>baking powder
+1 teaspoon salt
+Butter for<div> M</div> greasing the pan<div> M</div><div> M</div><div> M</div>`
 
 describe('Given an array with the most simple complete ingredient string', () => {
   const INPUT = '3 tablespoons sugar'
@@ -37,7 +47,7 @@ describe('Given an array with the most simple complete ingredient string', () =>
 })
 
 describe('Given a full recipe', () => {
-  const recipe = parse(BASIC_BREAD)
+  const recipe = parse(BASIC)
 
   test('it returns an array of the correct length', () => {
     expect(recipe.length).toBe(6)
@@ -93,9 +103,16 @@ describe('Given a full recipe', () => {
 })
 
 // what does this show that ingredient unit tests do not??
-describe('Given recipes with complex units', () => {
-  const pancakes = parse(PANCAKES)
+describe('Given recipes with fractional and composite ingredients', () => {
+  const recipe = parse(COMPLEX)
   test('it returns an array with expected length', () => {
-    expect(pancakes.length).toBe(8)
+    expect(recipe.length).toBe(8)
+  })
+})
+
+describe('Given bad recipe input', () => {
+  const recipe = parse(BAD)
+  test('it returns an array with expected length', () => {
+    expect(recipe.length).toBeFalsy
   })
 })

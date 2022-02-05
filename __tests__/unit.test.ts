@@ -1,8 +1,6 @@
 import { getUnitFromMl } from '../src/utils'
 import { ERRORS, UNITS } from '../src/types'
 
-// fix test for unit scaling
-// TODO: Write test to demonstrate that units are sorted by ml
 describe('Given an amount in ml', () => {
   test('it returns the a valid unit when it is not too high', () => {
     const unit10 = getUnitFromMl(10, true)

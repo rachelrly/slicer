@@ -7,6 +7,7 @@ export class Recipe {
   input: string
   ingredients: Ingredient[] = []
   constant: number = 1
+  // TODO: If ingredient[any].unit.standard === false, set this to false
   standardUnitsOnly: boolean = true
 
   setConstant(constant: number) {
