@@ -23,25 +23,26 @@ export class Recipe {
   scaleRecipe() {
     const scaledRecipe = this.ingredients.map(
       (ingredient: Ingredient): Ingredient => {
+        const amountConstantProduct = ingredient.amount.amount * this.constant
         // This should not happen with the current algo
         //  since an ingredient needs a name and amount to be valid
         if (!ingredient?.amount?.amount) return ingredient
-        const newAmount = this._scaleAmountByConstant(
-          ingredient?.amount?.amount,
-          this.constant
-        )
-        ingredient.setAmount(newAmount, true)
         // No unit or unit does not scale, i.e. 'lb'
-        if (!ingredient?.unit || !ingredient?.unit?.mlInUnit) return ingredient
-        const totalMl: number =
-          ingredient.amount.amount * ingredient.unit.mlInUnit * this.constant
-        const newUnit: UnitType = getUnitFromMl(totalMl)
-        console.log('SETTING UNIT FROM ', { newUnit, oldUnit: ingredient.unit })
-        console.log('THESE ARE AMOUNT VALS', {
-          ingredient: ingredient.amount.amount,
-          totalMl
-        })
+        if (!ingredient?.unit || !ingredient.unit?.mlInUnit) {
+          ingredient.setAmount(`${amountConstantProduct}`, true)
+          return ingredient
+        }
+        const totalMl =
+          this.constant * ingredient.amount.amount * ingredient.unit.mlInUnit
+        const newUnit: UnitType = getUnitFromMl(totalMl, ingredient.unit)
+        // If units are the same, do no further calculations
+        if (newUnit === ingredient.unit) {
+          ingredient.setAmount(`${amountConstantProduct}`, true)
+          return ingredient
+        }
+        const scaledAmount = totalMl / newUnit.mlInUnit
         ingredient.setUnit(newUnit)
+        ingredient.setAmount(`${scaledAmount}`, true)
         return ingredient
       }
     )
@@ -55,8 +56,8 @@ export class Recipe {
     return roundedValue.toString()
   }
 
-  _scaleAmountByConstant(amount: number, constant: number) {
-    const product = amount * constant
-    return product.toString()
-  }
+  // _scaleAmountByConstant(amount: number, constant: number) {
+  //   const product = amount * constant
+  //   return parseFloat(`${product}`)
+  // }
 }
