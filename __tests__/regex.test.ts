@@ -1,4 +1,4 @@
-import { BREAK_ON_CHAR } from '../src/utils'
+import { BREAK_ON_CHAR, REPLACE_CHAR } from '../src/utils'
 
 describe('Given BREAK_ON_CHAR regex', () => {
   test('it splits by spaces', () => {
@@ -18,9 +18,15 @@ describe('Given BREAK_ON_CHAR regex', () => {
     with 
     spaces`
     expect(BREAK_ON_CHAR.test(multiline)).toBeTruthy()
-    // TODO: Extract the filter into a util. This is sloppy.
     expect(
       multiline.split(BREAK_ON_CHAR).filter((word) => Boolean(word)).length
     ).toBe(3)
+  })
+})
+
+describe('Given REPLACE_CHAR regex', () => {
+  const BAD = '%&*^$#*(&(^<keep-this.string/>'
+  test('It replaces bad chars in the string', () => {
+    expect(BAD.replace(REPLACE_CHAR, '')).toBe('%keep-this.string/')
   })
 })

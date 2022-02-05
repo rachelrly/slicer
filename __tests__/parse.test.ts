@@ -21,15 +21,11 @@ const COMPLEX = `1 cup milk
 1 teaspoon salt
 Butter for greasing the pan`
 
-const BAD = `1 cup milk&&#$jkf
-1/2 cup sour cream<div> M</div>
-1/4 cup granulated sugar
-2 large77342hjkre7fydsf623777777&&&& eggs
-1 <div> M</div><div> M</div><div> M</div>teaspoon vanilla extract
-1 1/2 cups all purpose flour
-2 teaspoons <div> M</div><div> M</div>baking powder
-1 teaspoon salt
-Butter for<div> M</div> greasing the pan<div> M</div><div> M</div><div> M</div>`
+const BAD = `
+1/2 cup m<div>milk&&#$jkf</div>
+1/4 cup @#*(&)@#*@fdjkfhgkdhvsuga@#(&@*#@)
+2 large@#(&@*#@) eggs@#(&@*#@)
+1 <div></div><div></div><div></div>teaspoon vanilla extract`
 
 describe('Given an array with the most simple complete ingredient string', () => {
   const INPUT = '3 tablespoons sugar'
