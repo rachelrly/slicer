@@ -20,6 +20,7 @@ export function getUnitFromMl(amount: number): UnitType {
   if (amount < 0) {
     throw Error(ERRORS.AMOUNT.NEGATIVE_INPUT)
   }
+  // Units are assumed to already be sorted in descending order of unit.mlInUnit
   const units: UnitType[] = Object.values(UNITS).filter((unit) => unit.mlInUnit)
   return units.find(
     (unit, i) =>

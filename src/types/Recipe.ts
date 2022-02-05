@@ -55,9 +55,4 @@ export class Recipe {
     // Turns to string because Amount.set takes in string
     return roundedValue.toString()
   }
-
-  // _scaleAmountByConstant(amount: number, constant: number) {
-  //   const product = amount * constant
-  //   return parseFloat(`${product}`)
-  // }
 }
