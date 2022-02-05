@@ -28,7 +28,7 @@ export class Recipe {
         //  since an ingredient needs a name and amount to be valid
         if (!ingredient?.amount?.amount) return ingredient
         // Locked ingredients do not scale
-        if (ingredient.locked === true) return ingredient
+        if (ingredient.locked === false) return ingredient
         // No unit or unit does not scale, i.e. 'lb'
         if (!ingredient?.unit || !ingredient.unit?.mlInUnit) {
           ingredient.setAmount(`${amountConstantProduct}`, true)
