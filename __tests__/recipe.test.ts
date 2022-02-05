@@ -1,5 +1,6 @@
 import { Recipe } from '../src'
-const TEST_RECIPE_2 = `
+
+const NO_UNITS = `
 1 ingredient name
 0.5 ingredient name
 0.25 ingredient name
@@ -10,8 +11,8 @@ const recipe = new Recipe()
 // const original = recipe
 describe('Given an recipe with no units', () => {
   test('it parses the string and returns an array of ingredients', () => {
-    recipe.setInput(TEST_RECIPE_2)
-    expect(recipe.input).toBe(TEST_RECIPE_2)
+    recipe.setInput(NO_UNITS)
+    expect(recipe.input).toBe(NO_UNITS)
     // Just checks for length of arr because validity of ingredients
     //     is tested in `parser.test.ts`
     expect(recipe.ingredients).toBeDefined()
@@ -38,11 +39,3 @@ describe('Given an recipe with no units', () => {
     expect(recipe.ingredients[3].amount.amount).toBe(2)
   })
 })
-
-// make test with no scalable units and validate
-// constaint multiplied
-// make test with locked ingredient and validate by index
-// unhappy path?
-
-// break recipe class into more testable functions
-// make test for ingredietns with no units

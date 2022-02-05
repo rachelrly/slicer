@@ -1,7 +1,7 @@
 import { parse } from '../src/utils'
-import { UNITS } from '../src/types'
-// unhappy path with bad input
-// run more tests
+import { UNITS, ERRORS } from '../src/types'
+import { longInput } from './utils/longInput'
+
 const BASIC = `
 1 package active dry yeast
 2-1/4 cups warm water
@@ -110,9 +110,17 @@ describe('Given recipes with fractional and composite ingredients', () => {
   })
 })
 
-describe('Given bad recipe input', () => {
+describe('Given input that is too long', () => {
+  test('it throws', () => {
+    const words = longInput.split(' ').length
+    expect(words).toBeGreaterThan(750)
+    expect(() => parse(longInput)).toThrow(ERRORS.INPUT.BAD_LENGTH_INPUT)
+  })
+})
+
+describe('Given bad recipe input (this will show errors to console)', () => {
   const recipe = parse(BAD)
-  test('it returns an array with expected length', () => {
-    expect(recipe.length).toBeFalsy
+  test('it does not fail and returns an array of ingredeints (this will show errors to console)', () => {
+    expect(recipe).toBeTruthy()
   })
 })

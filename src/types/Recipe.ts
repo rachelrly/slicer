@@ -18,8 +18,10 @@ export class Recipe {
   }
 
   setInput(input: string) {
-    this.ingredients = parse(input)
-    this.input = input
+    if (input !== this.input) {
+      this.ingredients = parse(input)
+      this.input = input
+    }
   }
 
   private _scaleRecipe() {

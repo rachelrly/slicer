@@ -32,7 +32,8 @@ export class Ingredient {
   }
 
   sort(current: string): void {
-    if (current.length > MAX_WORD_LENGTH) throw new Error(ERRORS.BAD_INPUT)
+    if (current.length > MAX_WORD_LENGTH)
+      throw new Error(ERRORS.INPUT.BAD_INPUT)
     const clean = current.replace(REPLACE_CHAR, '') // Removes most special characters
     if (this.isDigit(clean)) {
       if (Boolean(this.unit) || Boolean(this.ingredient.name)) {

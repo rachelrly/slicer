@@ -1,5 +1,5 @@
-import { Ingredient } from '../types'
-import { BREAK_ON_CHAR } from './constants'
+import { Ingredient, ERRORS } from '../types'
+import { BREAK_ON_CHAR, MAX_INPUT_LENGTH } from './constants'
 
 /**
  *
@@ -22,6 +22,9 @@ export function parse(recipe: string) {
   // Could lose important data by treating all break chars equally.
   // Give line breaks higher prescedence in sorting??
   const rawWords = recipe.split(BREAK_ON_CHAR).filter((word) => Boolean(word))
+
+  if (rawWords.length >= MAX_INPUT_LENGTH)
+    throw new Error(ERRORS.INPUT.BAD_LENGTH_INPUT)
 
   rawWords.forEach((word: string, i) => {
     try {
