@@ -1,6 +1,6 @@
 # The Slicer
 
-This repo contains the TypeScript algorithm to slice copy and pasted recipes.
+This repo contains the TypeScript algorithm to convert recipe strings into a list of Ingredients.
 
 The goal of this project is to make a recipe parsing package with broader application than the [Sliced app](https://github.com/rachelrly/sliced).
 
@@ -8,35 +8,23 @@ The goal of this project is to make a recipe parsing package with broader applic
 
 - TypeScript
 - Jest
+- [ts-jest](https://www.npmjs.com/package/ts-jest)
 
 ## Codebase
 
-### /src
+### `/src`
 
-Contains the TypeScript code of the Slicer algorithm
+Contains the TypeScript code of the Slicer algorithm.
+Top level [Recipe 👀](/src/types/Recipe.ts) class is exported from this folder.
 
-#### /types
+#### `/types`
 
-##### ingredient.ts
+Contains the TS classes for `Recipe`, `Ingredient`, `Amount` and `IngredientName` along with the constant definition of `UNITS` and `ERRORS` and necessary types.
 
-Defines `Amount` and `IngredientName` classes and integrates them with valid `Unit` to create the `Ingredient` class
+#### `/utils`
 
-##### units.ts
+Contains [parse.ts 👀](/src/utils/parse.ts), which turns a recipe string into an ingredient list, and other utility functions.
 
-Declares valid units and equivalencies
+### `/__tests__`
 
-##### parser.ts
-
-Contains the class that loops through the string and controls the behavior of the parser
-
-#### index.ts
-
-Currently does nothing
-
-### /dist
-
-Contains the compiled JavaScript code for the project
-
-### /tests
-
-This folder contains unit tests for the various parts of the Slicer.
+Contains unit tests for the algorithm
