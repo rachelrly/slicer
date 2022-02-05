@@ -1,6 +1,7 @@
 import { parse } from '../src/utils'
 import { UNITS } from '../src/types'
-
+// unhappy path with bad input
+// run more tests
 const BASIC_BREAD = `
 1 package active dry yeast
 2-1/4 cups warm water
@@ -82,7 +83,7 @@ describe('Given a full recipe', () => {
     expect(fifthIngredient.ingredient.name).toBe('canola oil')
   })
 
-  test('it parses the sixth ingredient correctly', () => {
+  test('it parses the final ingredient correctly', () => {
     const sixthIngredient = recipe[0]
 
     expect(sixthIngredient.amount.amount).toBe(1)
@@ -90,6 +91,7 @@ describe('Given a full recipe', () => {
     expect(sixthIngredient.ingredient.name).toBe('package active dry yeast')
   })
 
+  // what does this show that ingredient unit tests do not??
   describe('Given recipes with complex units', () => {
     const pancakes = parse(PANCAKES)
     test('it returns an array with expected length', () => {

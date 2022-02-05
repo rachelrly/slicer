@@ -24,25 +24,3 @@ describe('Given BREAK_ON_CHAR regex', () => {
     ).toBe(3)
   })
 })
-
-// This regex is no loger used in favor of /\d/
-
-// describe('Given DIGIT regex', () => {
-//   test('it recognizes digit as digit', () => {
-//     expect(DIGIT.test('10')).toBeTruthy()
-//     expect(DIGIT.test('www')).toBeFalsy()
-//   })
-
-//   test('it recognizes decimal as digit', () => {
-//     expect(DIGIT.test('1.1')).toBeTruthy()
-//   })
-
-//   test('it recognizes fraction as digit', () => {
-//     expect(DIGIT.test('1/2')).toBeTruthy()
-//   })
-
-//   test('it recognizes mixed numeric and alphabetical characters as not a digit', () => {
-//     expect(DIGIT.test('x.1')).toBeFalsy()
-//     expect(DIGIT.test('x/2')).toBeFalsy()
-//   })
-// })
