@@ -50,18 +50,6 @@ export class Ingredient {
     }
   }
 
-  scale(constant: number) {
-    // currently scales amount only
-    const unitMl = this.unit.mlInUnit
-    const base = this.amount.amount * unitMl
-    const scaled = this.amount.amount * constant
-    const newAmount = scaled / base
-    this.setAmount(newAmount.toString())
-    // how to scale unit??
-    // new quantity in ml
-    // what qualifies as a switch?
-  }
-
   /**
    * Methods to validate and set ingredient list
    */

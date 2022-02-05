@@ -11,7 +11,7 @@ export class Recipe {
   setConstant(constant: number) {
     if (constant !== this.constant) {
       this.constant = constant
-      this.scaleRecipe()
+      this._scaleRecipe()
     }
   }
 
@@ -20,13 +20,15 @@ export class Recipe {
     this.input = input
   }
 
-  scaleRecipe() {
+  private _scaleRecipe() {
     const scaledRecipe = this.ingredients.map(
       (ingredient: Ingredient): Ingredient => {
         const amountConstantProduct = ingredient.amount.amount * this.constant
         // This should not happen with the current algo
         //  since an ingredient needs a name and amount to be valid
         if (!ingredient?.amount?.amount) return ingredient
+        // Locked ingredients do not scale
+        if (ingredient.locked === true) return ingredient
         // No unit or unit does not scale, i.e. 'lb'
         if (!ingredient?.unit || !ingredient.unit?.mlInUnit) {
           ingredient.setAmount(`${amountConstantProduct}`, true)
@@ -47,12 +49,5 @@ export class Recipe {
       }
     )
     this.ingredients = scaledRecipe
-  }
-
-  _getAmountForCurrentUnit(amountInMl: number, mlPerUnit: number) {
-    const value = amountInMl / mlPerUnit
-    const roundedValue = Number(value.toFixed(2))
-    // Turns to string because Amount.set takes in string
-    return roundedValue.toString()
   }
 }
