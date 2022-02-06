@@ -1,5 +1,6 @@
-import { Ingredient, ERRORS } from '../types'
+import { Ingredient } from '../types'
 import { isNumber } from './number'
+import { ERRORS } from './errors'
 
 export function makeIngredientArray(words: string[]) {
   const ingredients: Ingredient[] = []

@@ -1,8 +1,8 @@
 import { v4 as uuid } from 'uuid'
 
 import { UnitType } from './units'
-import { ERRORS } from './errors'
 import {
+  ERRORS,
   getUnitFromString,
   MAX_WORD_LENGTH,
   toNumber,

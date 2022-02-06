@@ -1,10 +1,10 @@
-import { UNITS, ERRORS, UnitType } from '../types'
+import { UNITS, UnitType } from '../types'
 import { MAX_SUPPORTED_ML } from './constants'
+import { ERRORS } from './errors'
 
 /**
  * Various helper functions that have to do with string:Unit:ml conversion
  */
-
 export function getUnitFromMl(
   amount: number,
   standard: boolean = true

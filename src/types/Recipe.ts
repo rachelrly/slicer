@@ -1,6 +1,5 @@
 import { Ingredient } from './Ingredient'
-import { ERRORS } from './errors'
-import { makeIngredientArray, MAX_INPUT_LENGTH } from '../utils'
+import { makeIngredientArray, MAX_INPUT_LENGTH, ERRORS } from '../utils'
 import { splitInput } from '../utils/string'
 
 export class Recipe {
