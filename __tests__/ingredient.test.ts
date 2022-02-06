@@ -92,4 +92,11 @@ describe('Given a valid amount, unit, and ingredient name', () => {
     expect(ing.unit).toMatchObject(UNITS.CUP)
     expect(ing.name).toBe('water')
   })
+
+  test('it returns the correct display object', () => {
+    const { amount, unit, name } = ing.display()
+    expect(amount).toBe('1')
+    expect(unit).toBe(ing.unit.name)
+    expect(name).toBe('water')
+  })
 })
