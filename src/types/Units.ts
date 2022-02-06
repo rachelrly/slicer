@@ -5,10 +5,28 @@ export interface UnitName {
 
 export interface UnitType {
   readonly name: UnitName
-  readonly matchString: any // For recipe input
-  mlInUnit?: number
-  readonly standard?: boolean // This only pertains to scalable units
+  readonly matchString: any
+  readonly ml?: {
+    ml: number
+    min: number
+    standard?: {
+      // If standard: {}, breakpoint is the same,
+      //  but it is included when filtering for standard units only
+      min?: number
+    }
+  }
 }
+
+const ML_PER_UNIT = {
+  GALLON: 3785.41,
+  QUART: 946.353,
+  PINT: 473.176,
+  CUP: 236.588,
+  OUNCE: 29.5735,
+  TABLESPOON: 14.7868,
+  TEASPOON: 4.92892,
+  GRAM: 1
+} as const
 
 type UnitsType = {
   [key: string]: UnitType
@@ -16,54 +34,66 @@ type UnitsType = {
 
 export const UNITS: UnitsType = {
   GALLON: {
-    mlInUnit: 3785.41,
     name: {
       long: 'gallon'
     },
-    standard: true,
-    matchString: new Set(['G', 'G.', 'Gs', 'gallon', 'gallons'])
+    matchString: new Set(['G', 'G.', 'Gs', 'gallon', 'gallons']),
+    ml: {
+      ml: ML_PER_UNIT.GALLON,
+      min: ML_PER_UNIT.QUART * 2,
+      standard: {
+        min: ML_PER_UNIT.CUP * 4
+      }
+    }
   },
   QUART: {
-    mlInUnit: 946.353,
     name: {
       long: 'quart'
     },
     matchString: new Set(['q', 'q.', 'Q', 'quart', 'quarts']),
-    standard: false
+    ml: {
+      ml: ML_PER_UNIT.QUART,
+      min: ML_PER_UNIT.QUART
+    }
   },
   PINT: {
-    mlInUnit: 473.176,
     name: {
       long: 'pint'
     },
     matchString: new Set(['p', 'p.', 'P', 'pint', 'pints']),
-    standard: false
+    ml: {
+      ml: ML_PER_UNIT.PINT,
+      min: ML_PER_UNIT.PINT
+    }
   },
   CUP: {
-    mlInUnit: 236.588,
     name: {
       long: 'cup',
       short: 'c'
     },
-    standard: true,
-    matchString: new Set(['c', 'c.', 'cs', 'C', 'Cs', 'cup', 'cups'])
+    matchString: new Set(['c', 'c.', 'cs', 'C', 'Cs', 'cup', 'cups']),
+    ml: {
+      ml: ML_PER_UNIT.CUP,
+      min: ML_PER_UNIT.CUP / 4,
+      standard: {}
+    }
   },
   OUNCE: {
-    mlInUnit: 29.5735,
     name: {
       long: 'ounce',
       short: 'oz'
     },
-    matchString: new Set(['o', 'oz', 'oz.', 'ozs', 'ounce', 'ounces']),
-    standard: false
+    ml: {
+      ml: ML_PER_UNIT.OUNCE,
+      min: ML_PER_UNIT.OUNCE / 2
+    },
+    matchString: new Set(['o', 'oz', 'oz.', 'ozs', 'ounce', 'ounces'])
   },
   TABLESPOON: {
-    mlInUnit: 14.7868,
     name: {
       long: 'tablespoon',
       short: 'tbsp'
     },
-    standard: true,
     matchString: new Set([
       'T',
       'tbsp',
@@ -71,24 +101,36 @@ export const UNITS: UnitsType = {
       'tbsp.',
       'tablespoon',
       'tablespoons'
-    ])
+    ]),
+    ml: {
+      ml: ML_PER_UNIT.TABLESPOON,
+      min: ML_PER_UNIT.TABLESPOON / 2,
+      standard: {}
+    }
   },
   TEASPOON: {
-    mlInUnit: 4.92892,
     name: {
       long: 'teaspoon',
       short: 'tsp'
     },
-    standard: true,
-    matchString: new Set(['t', 't.', 'tsp', 'teaspoon', 'teaspoons'])
+    matchString: new Set(['t', 't.', 'tsp', 'teaspoon', 'teaspoons']),
+    ml: {
+      ml: ML_PER_UNIT.TEASPOON,
+      min: ML_PER_UNIT.TEASPOON / 4,
+      standard: {
+        min: 0
+      }
+    }
   },
   GRAM: {
-    mlInUnit: 1,
     name: {
       long: 'gram',
       short: 'g'
     },
-    standard: false,
+    ml: {
+      ml: ML_PER_UNIT.GRAM,
+      min: 0
+    },
     matchString: new Set(['g', 'g.', 'gram', 'grams'])
   },
   POUND: {
@@ -116,4 +158,4 @@ export const UNITS: UnitsType = {
     },
     matchString: new Set(['dash'])
   }
-}
+} as const

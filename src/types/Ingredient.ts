@@ -1,31 +1,34 @@
 import { v4 as uuid } from 'uuid'
 
-import { UnitType } from './Units'
-import { Amount } from './amount'
-import { IngredientName } from './ingredientName'
-import { ERRORS } from './errors'
-import { getUnitFromString } from '../utils/format'
-import { REPLACE_CHAR, MAX_WORD_LENGTH } from '../utils'
+import { UnitType } from './units'
+import {
+  ERRORS,
+  getUnitFromString,
+  MAX_WORD_LENGTH,
+  toNumber,
+  isNumber,
+  getUnitFromMl,
+  getAmountInUnit
+} from '../utils'
 
-export enum IngredientOptions {
-  Amount = 'amount',
-  Unit = 'unit',
-  Ingredient = 'ingredient'
+export interface IngredientDisplayType {
+  amount: string
+  unit: undefined | { long: string; short?: string }
+  name: string
 }
 
 export class Ingredient {
-  amount?: Amount
+  amount?: number
   unit?: UnitType
-  ingredient?: IngredientName
+  name?: string
   id: string
   active: 'none' | string
-  // If locked === false, the changes in ingredient amount don't effect the recipe's scale
   locked: boolean
 
   constructor() {
-    this.amount = new Amount()
+    this.amount = undefined
     this.unit = undefined
-    this.ingredient = new IngredientName()
+    this.name = ''
     this.id = uuid()
     this.active = 'none'
     this.locked = true
@@ -33,40 +36,75 @@ export class Ingredient {
 
   sort(current: string): void {
     if (current.length > MAX_WORD_LENGTH)
-      throw new Error(ERRORS.INPUT.BAD_INPUT)
-    const clean = current.replace(REPLACE_CHAR, '') // Removes most special characters
-    if (this.isDigit(clean)) {
-      if (Boolean(this.unit) || Boolean(this.ingredient.name)) {
+      throw new Error(ERRORS.BAD_INPUT_LENGTH)
+    if (this._isAmount(current)) {
+      this.setAmount(current, true)
+    } else if (this._isUnit(current)) {
+      if (!this.amount) {
         throw new Error(ERRORS.AMOUNT.HAS_DATA)
-      } else {
-        this.setAmount(clean)
       }
-    } else if (Boolean(this._getUnit(clean))) {
-      if (Boolean(this.ingredient.name)) {
-        throw new Error(ERRORS.UNIT.HAS_DATA)
-      } else if (Boolean(this.unit)) {
-        throw new Error(ERRORS.UNIT.HAS_UNIT)
-      } else {
-        this.setUnit(this._getUnit(clean))
+      this.setUnit(current)
+      if ('ml' in this.unit) {
+        this.amount = this.amount * this.unit.ml.ml
       }
     } else {
-      this.setIngredientName(clean)
+      if (!this.amount) {
+        throw new Error(ERRORS.UNIT.HAS_DATA)
+      }
+      this.setName(current, true)
     }
   }
 
-  /**
-   * Methods to validate and set ingredient list
-   */
-  setAmount(current: string, replace = false) {
-    this.amount.set(current, replace)
+  scale(constant: number) {
+    if (this.locked === false) {
+      return
+    }
+    const amount = (constant * this.amount).toString()
+    this.setAmount(amount)
+    if (this.unit && 'ml' in this.unit) {
+      this.unit = getUnitFromMl(this.amount)
+    }
   }
 
-  setUnit(unit: UnitType) {
-    this.unit = unit
+  _isAmount(current: string): boolean {
+    return isNumber(current)
   }
 
-  setIngredientName(current: string, replace = false) {
-    this.ingredient.set(current, replace)
+  _isUnit(current: string): boolean {
+    return Boolean(getUnitFromString(current))
+  }
+
+  setAmount(current: string, add = false) {
+    const float: number = toNumber(current)
+    if (add && Boolean(this.amount)) {
+      this.amount += float
+    } else {
+      this.amount = float
+    }
+  }
+
+  setNewAmount(amount: string) {
+    if (this._isAmount(amount)) {
+      const num: number = toNumber(amount)
+      if (this.unit && 'ml' in this.unit) {
+        this.amount = num * this.unit.ml.ml
+      } else {
+        this.amount = num
+      }
+    }
+  }
+
+  setUnit(unit: string) {
+    this.unit = getUnitFromString(unit)
+  }
+
+  setName(current: string, concat = false) {
+    if (concat && this.name !== '') {
+      const newName = `${this.name} ${current}`
+      this.name = newName
+    } else {
+      this.name = current
+    }
   }
 
   setActive(state: string) {
@@ -80,33 +118,27 @@ export class Ingredient {
 
   validate(): boolean {
     // i.e. "1 cup rice", "1 egg"
-    const validUnit = Boolean(this.unit) || this.unit === undefined
-    if (
-      Boolean(this.ingredient?.name) &&
-      Boolean(this.amount?.amount) &&
-      validUnit
-    ) {
+    if (Boolean(this.name) && Boolean(this.amount)) {
       return true
-    } else return false
+    } else {
+      return false
+    }
   }
 
-  isDigit(word: string): boolean {
-    const regex = /\d/
-    return Boolean(word.match(regex))
-  }
-
-  // Not decalred as private for tests
-  _getUnit(current: string): any {
-    const compare = this._formatBeforeComparison(current)
-    return getUnitFromString(compare)
-  }
-
-  private _formatBeforeComparison(current: string) {
-    // When a unit only contains one character, this is often meaningful
-    //  i.e. "T" is TABLESPOON and "t" is TEASPOON
-    //  but "TABLESPOON" and "tablespoon" are both TABLESPOON
-    const shouldChangeCase = current.length > 1
-    const compare = shouldChangeCase ? current.toLowerCase() : current
-    return compare
+  display() {
+    const data: IngredientDisplayType = {
+      amount: '',
+      unit: undefined,
+      name: this.name
+    }
+    if (this.unit) {
+      data.unit = this.unit.name
+      if ('ml' in this.unit) {
+        data.amount = getAmountInUnit(this.amount, this.unit).toString()
+      } else {
+        data.amount = this.amount.toString()
+      }
+    }
+    return data
   }
 }
