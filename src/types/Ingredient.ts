@@ -7,8 +7,15 @@ import {
   MAX_WORD_LENGTH,
   toNumber,
   isNumber,
-  getUnitFromMl
+  getUnitFromMl,
+  getAmountInUnit
 } from '../utils'
+
+export interface IngredientDisplayType {
+  amount: string
+  unit: undefined | { long: string; short?: string }
+  name: string
+}
 
 export class Ingredient {
   amount?: number
@@ -63,14 +70,24 @@ export class Ingredient {
     return isNumber(current)
   }
 
-  setAmount(current: string, add = false) {
-    const float: number = toNumber(current)
-    const newAmount = add && Boolean(this.amount) ? this.amount + float : float
-    this.amount = newAmount
-  }
-
   _isUnit(current: string): boolean {
     return Boolean(getUnitFromString(current))
+  }
+
+  setAmount(current: string, add = false) {
+    const float: number = toNumber(current)
+    if (add && Boolean(this.amount)) {
+      this.amount += float
+    } else {
+      // TODO: Set this up
+      // if (this.validate()) {
+      //   if (this.unit && 'ml' in this.unit) {
+      //     this.amount = float * this.unit.ml.ml
+      //     return
+      //   }
+      // }
+      this.amount = float
+    }
   }
 
   setUnit(unit: string) {
@@ -102,5 +119,22 @@ export class Ingredient {
     } else {
       return false
     }
+  }
+
+  display() {
+    const data: IngredientDisplayType = {
+      amount: '',
+      unit: undefined,
+      name: this.name
+    }
+    if (this.unit) {
+      data.unit = this.unit.name
+      if ('ml' in this.unit) {
+        data.amount = getAmountInUnit(this.amount, this.unit).toString()
+      } else {
+        data.amount = this.amount.toString()
+      }
+    }
+    return data
   }
 }

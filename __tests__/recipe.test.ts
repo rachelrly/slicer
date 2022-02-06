@@ -16,9 +16,8 @@ const SLICED = `1/2 cup butter
 2 tsp baking powder 
 1 cup ricotta 1/4 c milk`
 
-const recipe = new Recipe()
-
 describe('Given an recipe with no units', () => {
+  const recipe = new Recipe()
   test('it parses the string and returns an array of ingredients', () => {
     recipe.set(NO_UNITS)
     expect(recipe.input).toBe(NO_UNITS)
@@ -159,7 +158,6 @@ describe('Given the sample recipe from Sliced web app and a constant of 2', () =
 
     test('it scales the sixth ingredient correctly', () => {
       const ing = recipe.ingredients[5]
-      // this does not work w scaled units
       expect(getAmountInUnit(ing.amount, ing.unit)).toBe(1.33)
       expect(ing.unit).toMatchObject(UNITS.TABLESPOON)
       expect(ing.name).toBe('baking powder')
