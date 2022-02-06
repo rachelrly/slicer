@@ -7,7 +7,7 @@ describe('Given an amount in ml', () => {
     const unit1000 = getUnitFromMl(1000, true)
     const unit10000 = getUnitFromMl(10000, true)
     expect(unit10).toBeTruthy()
-    expect(unit10.name).toBeTruthy() // Find a better way to typecheck this as Unit
+    expect(unit10.name).toBeTruthy()
     expect(unit100).toBeTruthy()
     expect(unit100.name).toBeTruthy()
     expect(unit1000).toBeTruthy()

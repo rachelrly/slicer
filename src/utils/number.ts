@@ -1,7 +1,3 @@
-/**
- * Functions that turn strings to floats to display fractions
- */
-
 export function toFloat(fraction: string, index: number): number {
   const numerator = fraction.slice(0, index)
   const denominator = fraction.slice(index + 1)

@@ -4,7 +4,7 @@ This repo contains the TypeScript algorithm to convert recipe strings into a lis
 
 The goal of this project is to make a recipe parsing package with broader application than the [Sliced app](https://github.com/rachelrly/sliced).
 
-## Tech Stack
+## Stack
 
 - TypeScript
 - Jest

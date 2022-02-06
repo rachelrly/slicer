@@ -35,10 +35,10 @@ export function getUnitFromString(input: string) {
   // When a unit only contains one character, this is often meaningful
   //    i.e. "T" is TABLESPOON and "t" is TEASPOON
   //    but "TABLESPOON" and "tablespoon" are both TABLESPOON
-  // Set does not match variable without toString()
   const compare = input.length > 1 ? input.toLowerCase() : input
   for (const unit of Object.values(UNITS)) {
     const matches = unit.matchString
+    // Set does not match variable without toString()
     const compareval = matches.has(compare.toString())
     if (compareval) {
       return unit
