@@ -6,7 +6,8 @@ import {
   getUnitFromString,
   MAX_WORD_LENGTH,
   toNumber,
-  isNumber
+  isNumber,
+  getUnitFromMl
 } from '../utils'
 
 export class Ingredient {
@@ -53,6 +54,9 @@ export class Ingredient {
     }
     const amount = (constant * this.amount).toString()
     this.setAmount(amount)
+    if (this.unit && 'ml' in this.unit) {
+      this.unit = getUnitFromMl(this.amount)
+    }
   }
 
   _isAmount(current: string): boolean {

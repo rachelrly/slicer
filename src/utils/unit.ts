@@ -68,6 +68,6 @@ export function getDisplayAmount(
   return getAmountInUnit(amount, unit).toString()
 }
 
-export function getAmountInUnit(amount: number, { ml }: UnitType) {
-  return amount / ml.ml
+export function getAmountInUnit(amount: number, { ml }: UnitType): number {
+  return Number(parseFloat(`${amount / ml.ml}`).toFixed(2))
 }
