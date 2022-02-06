@@ -40,10 +40,6 @@ describe('Given an amount in ml with standard units only', () => {
     expect(getUnitFromMl(50, true)).toMatchObject(UNITS.TABLESPOON)
   })
 
-  // test('it returns TABLESPOON for 89ml input', () => {
-  //   expect(getUnitFromMl(88.7208, true)).toMatchObject(UNITS.TABLESPOON)
-  // })
-
   test('it returns TABLESPOON for 100ml input', () => {
     expect(getUnitFromMl(100, true)).toMatchObject(UNITS.CUP)
   })
@@ -76,11 +72,5 @@ describe('Given an amount in ml with all units included', () => {
 
   test('it returns QUART for 1000ml input', () => {
     expect(getUnitFromMl(1000, false)).toMatchObject(UNITS.QUART)
-  })
-})
-
-describe('Given valid input', () => {
-  test('it makes breakpoints', () => {
-    // test what you're actually getting from these breakpoints
   })
 })

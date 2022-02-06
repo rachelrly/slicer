@@ -114,7 +114,6 @@ describe('Given the sample recipe from Sliced web app and a constant of 2', () =
 
   describe('After constant is set to 2', () => {
     const CONSTANT = 2
-
     test('it scales a recipe by a constant', () => {
       recipe.scale(CONSTANT)
       expect(recipe.constant).toBe(CONSTANT)

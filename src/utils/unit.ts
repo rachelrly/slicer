@@ -49,11 +49,10 @@ export function getUnitFromString(input: string) {
 function getBreakpoint(
   { ml }: UnitType,
   standard: boolean // Standard units only
-): { min: number; max: number } {
-  const breakpoints = { min: ml.min, max: ml.max }
+): { min: number } {
+  const breakpoints = { min: ml.min }
   if (standard && 'standard' in ml) {
     if ('min' in ml.standard) breakpoints.min = ml.standard.min
-    if ('max' in ml.standard) breakpoints.max = ml.standard.max
   }
   return breakpoints
 }

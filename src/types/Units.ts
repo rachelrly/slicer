@@ -11,11 +11,9 @@ export interface UnitType {
   readonly ml?: {
     ml: number
     min: number
-    max: number
     standard?: {
       // if standard is present and empty
       min?: number // breakpoints are the same as before
-      max?: number
     }
   }
 }
@@ -43,7 +41,6 @@ export const UNITS: UnitsType = {
     matchString: new Set(['G', 'G.', 'Gs', 'gallon', 'gallons']),
     ml: {
       ml: ML_PER_UNIT.GALLON,
-      max: MAX_SUPPORTED_ML,
       min: ML_PER_UNIT.QUART * 2,
       standard: {
         min: ML_PER_UNIT.CUP * 4
@@ -57,8 +54,7 @@ export const UNITS: UnitsType = {
     matchString: new Set(['q', 'q.', 'Q', 'quart', 'quarts']),
     ml: {
       ml: ML_PER_UNIT.QUART,
-      min: ML_PER_UNIT.QUART,
-      max: ML_PER_UNIT.QUART * 2
+      min: ML_PER_UNIT.QUART
     }
   },
   PINT: {
@@ -68,8 +64,7 @@ export const UNITS: UnitsType = {
     matchString: new Set(['p', 'p.', 'P', 'pint', 'pints']),
     ml: {
       ml: ML_PER_UNIT.PINT,
-      min: ML_PER_UNIT.PINT,
-      max: ML_PER_UNIT.QUART
+      min: ML_PER_UNIT.PINT
     }
   },
   CUP: {
@@ -81,10 +76,7 @@ export const UNITS: UnitsType = {
     ml: {
       ml: ML_PER_UNIT.CUP,
       min: ML_PER_UNIT.CUP / 4,
-      max: ML_PER_UNIT.PINT,
-      standard: {
-        max: ML_PER_UNIT.GALLON / 2
-      }
+      standard: {}
     }
   },
   OUNCE: {
@@ -94,8 +86,7 @@ export const UNITS: UnitsType = {
     },
     ml: {
       ml: ML_PER_UNIT.OUNCE,
-      min: ML_PER_UNIT.OUNCE / 2,
-      max: ML_PER_UNIT.CUP / 4
+      min: ML_PER_UNIT.OUNCE / 2
     },
     matchString: new Set(['o', 'oz', 'oz.', 'ozs', 'ounce', 'ounces'])
   },
@@ -115,10 +106,7 @@ export const UNITS: UnitsType = {
     ml: {
       ml: ML_PER_UNIT.TABLESPOON,
       min: ML_PER_UNIT.TABLESPOON / 2,
-      max: ML_PER_UNIT.TABLESPOON * 2,
-      standard: {
-        max: ML_PER_UNIT.CUP / 4
-      }
+      standard: {}
     }
   },
   TEASPOON: {
@@ -130,7 +118,6 @@ export const UNITS: UnitsType = {
     ml: {
       ml: ML_PER_UNIT.TEASPOON,
       min: ML_PER_UNIT.TEASPOON / 4,
-      max: ML_PER_UNIT.TABLESPOON / 2,
       standard: {
         min: 0
       }
@@ -143,8 +130,7 @@ export const UNITS: UnitsType = {
     },
     ml: {
       ml: ML_PER_UNIT.GRAM,
-      min: 0,
-      max: ML_PER_UNIT.TEASPOON / 4
+      min: 0
     },
     matchString: new Set(['g', 'g.', 'gram', 'grams'])
   },
