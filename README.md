@@ -4,12 +4,6 @@ This repo contains the TypeScript algorithm to convert recipe strings into a lis
 
 The goal of this project is to make a recipe parsing package with broader application than the [Sliced app](https://github.com/rachelrly/sliced).
 
-## Stack
-
-- TypeScript
-- Jest
-- [ts-jest](https://www.npmjs.com/package/ts-jest)
-
 ## Codebase
 
 ### `/src`
@@ -25,6 +19,8 @@ Contains the TS classes for [`Recipe`](/src/types/recipe.ts) and [`Ingredient`](
 Contains constants and utility functions, notably [`makeIngredientArray()`](/src/utils/makeIngredientArray.ts), which takes in a an array of words and converts them to an array of Ingredients.
 
 ### `/__tests__`
+
+Contains the Jest tests for the algorithm
 
 #### `ingredient.test.ts`
 
