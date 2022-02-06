@@ -11,12 +11,6 @@ import {
   getAmountInUnit
 } from '../utils'
 
-export interface IngredientDisplayType {
-  amount: string
-  unit: undefined | { long: string; short?: string }
-  name: string
-}
-
 export class Ingredient {
   amount?: number
   unit?: UnitType
@@ -125,20 +119,10 @@ export class Ingredient {
     }
   }
 
-  display() {
-    const data: IngredientDisplayType = {
-      amount: '',
-      unit: undefined,
-      name: this.name
+  displayAmount(): string {
+    if (this.unit === undefined || !this.unit?.ml) {
+      return `${this.amount}`
     }
-    if (this.unit) {
-      data.unit = this.unit.name
-      if ('ml' in this.unit) {
-        data.amount = getAmountInUnit(this.amount, this.unit).toString()
-      } else {
-        data.amount = this.amount.toString()
-      }
-    }
-    return data
+    return getAmountInUnit(this.amount, this.unit).toString()
   }
 }

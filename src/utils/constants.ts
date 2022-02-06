@@ -1,6 +1,5 @@
-export const MAXIMUM_SUPPORTED_ML = 100000 // depreciated to standardize naming
-
-export const MAX_SUPPORTED_ML = 100000
+// 4 Gallons
+export const MAX_SUPPORTED_ML = 15500
 
 export const MAX_WORD_LENGTH = 30
 
@@ -10,6 +9,3 @@ export const BREAK_ON_CHAR = /[\s|-]/
 
 // Keeps alphabetical chars, digits, '-', '/', '-', '%'
 export const REPLACE_CHAR = /(?![\-|\.|\/\\|\%])(\W)/g
-
-// This is not being used in favor of the simple /\d/
-// export const DIGIT = /^[\d|\.|\/]+$/
