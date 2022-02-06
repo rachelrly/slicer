@@ -2,7 +2,7 @@
  * Functions that turn strings to floats to display fractions
  */
 
-export function fractionToFloat(fraction: string, index: number): number {
+export function toFloat(fraction: string, index: number): number {
   const numerator = fraction.slice(0, index)
   const denominator = fraction.slice(index + 1)
   const total = Number(numerator) / Number(denominator)
@@ -14,11 +14,13 @@ export function toNumber(amount: string): number {
   const regexData = regex.exec(amount)
   const isFraction = regexData?.index
   if (isFraction) {
-    // sent to the util as a string
-    return fractionToFloat(amount, regexData?.index)
+    return toFloat(amount, regexData?.index)
   } else {
-    // rounded to two digits
     return Number(amount)
   }
-  // TODO: add support for formatted fracs here
+}
+
+export function isNumber(current: string): boolean {
+  const regex = /\d/
+  return Boolean(current.match(regex))
 }

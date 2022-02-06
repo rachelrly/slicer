@@ -1,4 +1,4 @@
-import { BREAK_ON_CHAR, REPLACE_CHAR } from '../src/utils'
+import { BREAK_ON_CHAR, REPLACE_CHAR } from '../src'
 
 describe('Given BREAK_ON_CHAR regex', () => {
   test('it splits by spaces', () => {

@@ -1,12 +1,16 @@
 import { v4 as uuid } from 'uuid'
 
 import { UnitType } from './units'
-import { Amount } from './amount'
 import { ERRORS } from './errors'
-import { getUnitFromMl, getUnitFromString, MAX_WORD_LENGTH } from '../utils'
+import {
+  getUnitFromString,
+  MAX_WORD_LENGTH,
+  toNumber,
+  isNumber
+} from '../utils'
 
 export class Ingredient {
-  amount?: Amount
+  amount?: number
   unit?: UnitType
   name?: string
   id: string
@@ -14,7 +18,7 @@ export class Ingredient {
   locked: boolean
 
   constructor() {
-    this.amount = new Amount()
+    this.amount = undefined
     this.unit = undefined
     this.name = ''
     this.id = uuid()
@@ -25,19 +29,18 @@ export class Ingredient {
   sort(current: string): void {
     if (current.length > MAX_WORD_LENGTH)
       throw new Error(ERRORS.BAD_INPUT_LENGTH)
-    // Removes most special characters
-    if (this.isAmount(current)) {
+    if (this._isAmount(current)) {
       this.setAmount(current, true)
     } else if (this._isUnit(current)) {
-      if (!this.amount.base) {
+      if (!this.amount) {
         throw new Error(ERRORS.AMOUNT.HAS_DATA)
       }
       this.setUnit(current)
       if ('ml' in this.unit) {
-        this.amount.setIsMl()
+        this.amount = this.amount * this.unit.ml.ml
       }
     } else {
-      if (!this.amount.base) {
+      if (!this.amount) {
         throw new Error(ERRORS.UNIT.HAS_DATA)
       }
       this.setName(current, true)
@@ -47,24 +50,19 @@ export class Ingredient {
   scale(constant: number) {
     if (this.locked === false) {
       return
-    } else if (Boolean(this.unit) && 'ml' in this.unit) {
-      const amount = constant * this.amount.base
-      this.unit = getUnitFromMl(amount)
-      this.setAmount(amount.toString())
-    } else {
-      const amount = (constant * this.amount.base).toString()
-      this.setAmount(amount)
     }
+    const amount = (constant * this.amount).toString()
+    this.setAmount(amount)
   }
 
-  isAmount(current: string): boolean {
-    const regex = /\d/
-    // Used externally for next word validation
-    return Boolean(current.match(regex))
+  _isAmount(current: string): boolean {
+    return isNumber(current)
   }
 
   setAmount(current: string, add = false) {
-    this.amount.set(current, add)
+    const float: number = toNumber(current)
+    const newAmount = add && Boolean(this.amount) ? this.amount + float : float
+    this.amount = newAmount
   }
 
   _isUnit(current: string): boolean {
@@ -95,8 +93,10 @@ export class Ingredient {
 
   validate(): boolean {
     // i.e. "1 cup rice", "1 egg"
-    if (Boolean(this.name) && Boolean(this.amount.base)) {
+    if (Boolean(this.name) && Boolean(this.amount)) {
       return true
-    } else return false
+    } else {
+      return false
+    }
   }
 }

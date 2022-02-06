@@ -1,4 +1,4 @@
-import { MAX_SUPPORTED_ML, ML_PER_UNIT } from '../utils'
+import { MAX_SUPPORTED_ML } from '../utils'
 
 export interface UnitName {
   long: string
@@ -20,7 +20,16 @@ export interface UnitType {
   }
 }
 
-// if no min or max, in standard, use this
+const ML_PER_UNIT = {
+  GALLON: 3785.41,
+  QUART: 946.353,
+  PINT: 473.176,
+  CUP: 236.588,
+  OUNCE: 29.5735,
+  TABLESPOON: 14.7868,
+  TEASPOON: 4.92892,
+  GRAM: 1
+} as const
 
 type UnitsType = {
   [key: string]: UnitType
@@ -48,8 +57,8 @@ export const UNITS: UnitsType = {
     matchString: new Set(['q', 'q.', 'Q', 'quart', 'quarts']),
     ml: {
       ml: ML_PER_UNIT.QUART,
-      min: ML_PER_UNIT.PINT / 2,
-      max: ML_PER_UNIT.GALLON / 2
+      min: ML_PER_UNIT.QUART,
+      max: ML_PER_UNIT.QUART * 2
     }
   },
   PINT: {
@@ -59,8 +68,8 @@ export const UNITS: UnitsType = {
     matchString: new Set(['p', 'p.', 'P', 'pint', 'pints']),
     ml: {
       ml: ML_PER_UNIT.PINT,
-      min: (ML_PER_UNIT.CUP / 3) * 2,
-      max: ML_PER_UNIT.QUART / 2
+      min: ML_PER_UNIT.PINT,
+      max: ML_PER_UNIT.QUART
     }
   },
   CUP: {
@@ -78,7 +87,6 @@ export const UNITS: UnitsType = {
       }
     }
   },
-
   OUNCE: {
     name: {
       long: 'ounce',
@@ -86,7 +94,7 @@ export const UNITS: UnitsType = {
     },
     ml: {
       ml: ML_PER_UNIT.OUNCE,
-      min: ML_PER_UNIT.OUNCE,
+      min: ML_PER_UNIT.OUNCE / 2,
       max: ML_PER_UNIT.CUP / 4
     },
     matchString: new Set(['o', 'oz', 'oz.', 'ozs', 'ounce', 'ounces'])
@@ -107,7 +115,7 @@ export const UNITS: UnitsType = {
     ml: {
       ml: ML_PER_UNIT.TABLESPOON,
       min: ML_PER_UNIT.TABLESPOON / 2,
-      max: ML_PER_UNIT.OUNCE,
+      max: ML_PER_UNIT.TABLESPOON * 2,
       standard: {
         max: ML_PER_UNIT.CUP / 4
       }
@@ -165,4 +173,4 @@ export const UNITS: UnitsType = {
     },
     matchString: new Set(['dash'])
   }
-}
+} as const

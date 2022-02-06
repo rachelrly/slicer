@@ -16,14 +16,13 @@ export class Recipe {
         throw new Error(ERRORS.BAD_INPUT_LENGTH)
       }
       if (input !== this.input) {
+        const ingredients = makeIngredientArray(inputArr)
         this.input = input
-        this.ingredients = makeIngredientArray(inputArr)
+        this.ingredients = ingredients
       }
     } catch (error) {
       throw new Error(
-        `CATCHING FROM RECIPE.SET${ERRORS.BAD_INPUT}: ${
-          error?.message ?? error
-        }`
+        `CATCHING FROM RECIPE.SET${ERRORS.BAD_INPUT}: ${error?.message}`
       )
     }
   }
@@ -35,7 +34,7 @@ export class Recipe {
       )
       this.constant = constant
     } catch (error) {
-      throw new Error(`${ERRORS.RECIPE_NOT_SCALED}: ${error?.message ?? error}`)
+      throw new Error(`${ERRORS.RECIPE_NOT_SCALED}: ${error?.message}`)
     }
   }
 }

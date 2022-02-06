@@ -1,6 +1,5 @@
-import { makeIngredientArray, splitInput, MAX_WORD_LENGTH } from '../src/utils'
-import { UNITS, ERRORS } from '../src/types'
-import { longInput as LONG } from './utils/longInput'
+import { makeIngredientArray, splitInput, UNITS, getAmountInUnit } from '../src'
+// import { longInput as LONG } from './utils/longInput'
 
 const BASIC = `
 1 package active dry yeast
@@ -36,20 +35,6 @@ const BAD = `
 2 large@#(&@*#@) eggs@#(&@*#@)
 1 <div></div><div></div><div></div>teaspoon vanilla extract`
 
-describe('Given an array with the most simple complete ingredient string', () => {
-  const INPUT = '3 tablespoons sugar'
-  const recipe = makeIngredientArray(splitInput(INPUT))
-  test('it parses ingredient parts correctly', () => {
-    expect(recipe[0].amount.base).toBe(3)
-    expect(recipe[0].unit).toMatchObject(UNITS.TABLESPOON)
-    expect(recipe[0].name).toBe('sugar')
-  })
-
-  test('it returns an array with one ingredient', () => {
-    expect(recipe?.length).toBe(1)
-  })
-})
-
 describe('Given a full recipe', () => {
   const recipe = makeIngredientArray(splitInput(BASIC))
   test('it returns an array of the correct length', () => {
@@ -57,45 +42,45 @@ describe('Given a full recipe', () => {
   })
 
   test('it parses the first ingredient correctly', () => {
-    const firstIngredient = recipe[5]
-    expect(firstIngredient.amount.base).toBe(3)
-    expect(firstIngredient.unit).toMatchObject(UNITS.TABLESPOON)
-    expect(firstIngredient.name).toBe('sugar')
+    const ing = recipe[0]
+    expect(ing.amount).toBe(1)
+    expect(ing.unit).toBeUndefined()
+    expect(ing.name).toBe('package active dry yeast')
   })
 
   test('it parses the second ingredient correctly', () => {
-    const secondIngredient = recipe[1]
-    expect(secondIngredient.amount.base).toBe(2.25)
-    expect(secondIngredient.unit).toMatchObject(UNITS.CUP)
-    expect(secondIngredient.name).toBe('warm water')
+    const ing = recipe[1]
+    expect(getAmountInUnit(ing.amount, ing.unit)).toBe(2.25)
+    expect(ing.unit).toMatchObject(UNITS.CUP)
+    expect(ing.name).toBe('warm water')
   })
 
   test('it parses the third ingredient correctly', () => {
-    const thirdIngredient = recipe[2]
-    expect(thirdIngredient.amount.base).toBe(1)
-    expect(thirdIngredient.unit).toMatchObject(UNITS.TABLESPOON)
-    expect(thirdIngredient.name).toBe('salt')
+    const ing = recipe[2]
+    expect(getAmountInUnit(ing.amount, ing.unit)).toBe(1)
+    expect(ing.unit).toMatchObject(UNITS.TABLESPOON)
+    expect(ing.name).toBe('salt')
   })
 
   test('it parses the fourth ingredient correctly', () => {
-    const fourthIngredient = recipe[3]
-    expect(fourthIngredient.amount.base).toBe(6.25)
-    expect(fourthIngredient.unit).toMatchObject(UNITS.CUP)
-    expect(fourthIngredient.name).toBe('bread flour')
+    const ing = recipe[3]
+    expect(getAmountInUnit(ing.amount, ing.unit)).toBe(6.25)
+    expect(ing.unit).toMatchObject(UNITS.CUP)
+    expect(ing.name).toBe('bread flour')
   })
 
   test('it parses the fifth ingredient correctly', () => {
-    const fifthIngredient = recipe[4]
-    expect(fifthIngredient.amount.base).toBe(2)
-    expect(fifthIngredient.unit).toMatchObject(UNITS.TABLESPOON)
-    expect(fifthIngredient.name).toBe('canola oil')
+    const ing = recipe[4]
+    expect(getAmountInUnit(ing.amount, ing.unit)).toBe(2)
+    expect(ing.unit).toMatchObject(UNITS.TABLESPOON)
+    expect(ing.name).toBe('canola oil')
   })
 
-  test('it parses the first ingredient correctly', () => {
-    const firstIngredient = recipe[0]
-    expect(firstIngredient.amount.base).toBe(1)
-    expect(firstIngredient.unit).toBeUndefined()
-    expect(firstIngredient.name).toBe('package active dry yeast')
+  test('it parses the final ingredient correctly', () => {
+    const ing = recipe[5]
+    expect(getAmountInUnit(ing.amount, ing.unit)).toBe(3)
+    expect(ing.unit).toMatchObject(UNITS.TABLESPOON)
+    expect(ing.name).toBe('sugar')
   })
 })
 

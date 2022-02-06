@@ -1,5 +1,4 @@
-import { getUnitFromMl } from '../src/utils'
-import { ERRORS, UNITS } from '../src/types'
+import { getUnitFromMl, ERRORS, UNITS } from '../src'
 
 describe('Given an amount in ml', () => {
   test('it returns the a valid unit when it is not too high', () => {
@@ -37,8 +36,12 @@ describe('Given an amount in ml with standard units only', () => {
     expect(getUnitFromMl(20, true)).toMatchObject(UNITS.TABLESPOON)
   })
 
+  test('it returns TABLESPOON for 50ml input', () => {
+    expect(getUnitFromMl(50, true)).toMatchObject(UNITS.TABLESPOON)
+  })
+
   test('it returns TABLESPOON for 100ml input', () => {
-    expect(getUnitFromMl(100, true)).toMatchObject(UNITS.TABLESPOON)
+    expect(getUnitFromMl(100, true)).toMatchObject(UNITS.CUP)
   })
 
   test('it returns CUP for 500ml input', () => {
@@ -51,7 +54,7 @@ describe('Given an amount in ml with standard units only', () => {
 })
 
 describe('Given an amount in ml with all units included', () => {
-  test('it returns TEASPOON for 10ml input', () => {
+  test('it returns TABLESPOON for 10ml input', () => {
     expect(getUnitFromMl(10, false)).toMatchObject(UNITS.TABLESPOON)
   })
 
@@ -59,8 +62,8 @@ describe('Given an amount in ml with all units included', () => {
     expect(getUnitFromMl(20, false)).toMatchObject(UNITS.OUNCE)
   })
 
-  test('it returns OUNCE for 100ml input', () => {
-    expect(getUnitFromMl(100, false)).toMatchObject(UNITS.OUNCE)
+  test('it returns CUP for 100ml input', () => {
+    expect(getUnitFromMl(100, false)).toMatchObject(UNITS.CUP)
   })
 
   test('it returns PINT for 500ml input', () => {

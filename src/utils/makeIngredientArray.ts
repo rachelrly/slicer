@@ -1,4 +1,5 @@
 import { Ingredient, ERRORS } from '../types'
+import { isNumber } from './number'
 
 export function makeIngredientArray(words: string[]) {
   const ingredients: Ingredient[] = []
@@ -16,13 +17,12 @@ export function makeIngredientArray(words: string[]) {
         _addIngredient()
       } else {
         let nextWord = words[i + 1]
-        const add = current.isAmount(nextWord)
-        if (add && current.validate()) {
+        if (isNumber(nextWord) && current.validate()) {
           _addIngredient()
         }
       }
     } catch (error) {
-      console.error(`${ERRORS.WORD_NOT_SORTED}: ${error?.message ?? error}`)
+      console.error(`${ERRORS.WORD_NOT_SORTED}: ${error?.message}`)
     }
   })
   return ingredients
