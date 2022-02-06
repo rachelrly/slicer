@@ -99,4 +99,9 @@ describe('Given a valid amount, unit, and ingredient name', () => {
     expect(unit).toBe(ing.unit.name)
     expect(name).toBe('water')
   })
+
+  test('it replaces the amount and sets to the amount in the current units ml', () => {
+    ing.setNewAmount('2')
+    expect(getAmountInUnit(ing.amount, ing.unit)).toBe(2)
+  })
 })
