@@ -1,23 +1,18 @@
-import { fractionToFloat } from '../utils'
+import { toNumber } from '../utils'
 
 export class Amount {
-  amount: number = 0
-  set(number: string, replace: boolean) {
-    const float: number = this._toFloat(number)
-    const newAmount = replace ? float : this.amount + float
-    this.amount = newAmount
+  base: number = 0
+  isMl?: boolean = false
+
+  set(number: string, add = false) {
+    const float: number = toNumber(number)
+    const newAmount = add ? this.base + float : float
+    this.base = newAmount
   }
 
-  _toFloat(amount: string): number {
-    const regex = /\//gi
-    const regexData = regex.exec(amount)
-    const isFraction = regexData?.index
-    if (isFraction) {
-      // sent to the util as a string
-      return fractionToFloat(amount, regexData?.index)
-    } else {
-      return Number(amount)
-    }
-    // TODO: add support for formatted fracs here
+  scale() {}
+
+  setIsMl() {
+    if (!this.isMl) this.isMl = true
   }
 }

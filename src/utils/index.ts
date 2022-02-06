@@ -1,3 +1,5 @@
-export * from './parse'
-export * from './format'
+export * from './makeIngredientArray'
+export * from './unit'
 export * from './constants'
+export * from './number'
+export * from './string'

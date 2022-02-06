@@ -5,8 +5,8 @@ export interface UnitName {
 
 export interface UnitType {
   readonly name: UnitName
-  readonly matchString: any // For recipe input
-  mlInUnit?: number
+  readonly matchString: any
+  readonly ml?: number
   readonly standard?: boolean // This only pertains to scalable units
 }
 
@@ -16,7 +16,7 @@ type UnitsType = {
 
 export const UNITS: UnitsType = {
   GALLON: {
-    mlInUnit: 3785.41,
+    ml: 3785.41,
     name: {
       long: 'gallon'
     },
@@ -24,7 +24,7 @@ export const UNITS: UnitsType = {
     matchString: new Set(['G', 'G.', 'Gs', 'gallon', 'gallons'])
   },
   QUART: {
-    mlInUnit: 946.353,
+    ml: 946.353,
     name: {
       long: 'quart'
     },
@@ -32,7 +32,7 @@ export const UNITS: UnitsType = {
     standard: false
   },
   PINT: {
-    mlInUnit: 473.176,
+    ml: 473.176,
     name: {
       long: 'pint'
     },
@@ -40,7 +40,7 @@ export const UNITS: UnitsType = {
     standard: false
   },
   CUP: {
-    mlInUnit: 236.588,
+    ml: 236.588,
     name: {
       long: 'cup',
       short: 'c'
@@ -49,7 +49,7 @@ export const UNITS: UnitsType = {
     matchString: new Set(['c', 'c.', 'cs', 'C', 'Cs', 'cup', 'cups'])
   },
   OUNCE: {
-    mlInUnit: 29.5735,
+    ml: 29.5735,
     name: {
       long: 'ounce',
       short: 'oz'
@@ -58,7 +58,7 @@ export const UNITS: UnitsType = {
     standard: false
   },
   TABLESPOON: {
-    mlInUnit: 14.7868,
+    ml: 14.7868,
     name: {
       long: 'tablespoon',
       short: 'tbsp'
@@ -74,7 +74,7 @@ export const UNITS: UnitsType = {
     ])
   },
   TEASPOON: {
-    mlInUnit: 4.92892,
+    ml: 4.92892,
     name: {
       long: 'teaspoon',
       short: 'tsp'
@@ -83,7 +83,7 @@ export const UNITS: UnitsType = {
     matchString: new Set(['t', 't.', 'tsp', 'teaspoon', 'teaspoons'])
   },
   GRAM: {
-    mlInUnit: 1,
+    ml: 1,
     name: {
       long: 'gram',
       short: 'g'
