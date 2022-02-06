@@ -1,4 +1,5 @@
-import { Recipe, UNITS, getAmountInUnit } from '../src'
+import { Recipe, UNITS, ERRORS, getAmountInUnit } from '../src'
+import { LONG_INPUT } from './utils'
 
 const NO_UNITS = `
 1 ingredient name
@@ -6,7 +7,6 @@ const NO_UNITS = `
 0.25 ingredient name
 2 ingredient name
 `
-
 // Sample recipe from Sliced web app
 const SLICED = `1/2 cup butter 
 0.75 c sugar 
@@ -15,15 +15,6 @@ const SLICED = `1/2 cup butter
 1 c plain flour 
 2 tsp baking powder 
 1 cup ricotta 1/4 c milk`
-
-// TEST WITH ACTUAL RECIPE
-// describe('Given input that is too long', () => {
-//   test('it throws', () => {
-//     const words = splitInput(LONG)
-//     expect(words.length).toBeGreaterThan(MAX_WORD_LENGTH)
-//     expect(() => makeIngredientArray(words)).toThrow(ERRORS.BAD_INPUT_LENGTH)
-//   })
-// })
 
 describe('Given an recipe with no units', () => {
   const recipe = new Recipe()
@@ -184,5 +175,12 @@ describe('Given the sample recipe from Sliced web app and a constant of 2', () =
       expect(ing.unit).toMatchObject(UNITS.CUP)
       expect(ing.name).toBe('milk')
     })
+  })
+})
+
+describe('Given input that exceeds the maximum length', () => {
+  test('it throws a BAD_INPUT_LENGTH error', () => {
+    const recipe = new Recipe()
+    expect(() => recipe.set(LONG_INPUT)).toThrow(ERRORS.BAD_INPUT_LENGTH)
   })
 })

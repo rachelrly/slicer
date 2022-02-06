@@ -1,5 +1,4 @@
 import { makeIngredientArray, splitInput, UNITS, getAmountInUnit } from '../src'
-// import { longInput as LONG } from './utils/longInput'
 
 const BASIC = `
 1 package active dry yeast
@@ -7,8 +6,7 @@ const BASIC = `
 1 tablespoon salt
 6-1/4 cups bread flour
 2 tablespoons canola oil
-3 tablespoons sugar
-`
+3 tablespoons sugar`
 
 const COMPLEX = `1 cup milk
 1/2 cup sour cream
@@ -75,7 +73,6 @@ describe('Given a full recipe', () => {
   })
 })
 
-// what does this show that ingredient unit tests do not??
 describe('Given recipes with fractional and composite ingredients', () => {
   const recipe = makeIngredientArray(splitInput(COMPLEX))
   test('it returns an array with expected length', () => {
@@ -85,6 +82,8 @@ describe('Given recipes with fractional and composite ingredients', () => {
 
 describe('Given bad recipe input (this will show errors to console)', () => {
   // Skipped because it logs verbose errors
+  // This test shows that the parser ignores input it cannot handle
+  //    rather than throwing an error
   test.skip('it does not fail and returns an array of ingredeints (this will show errors to console)', () => {
     const recipe = makeIngredientArray(splitInput(BAD))
     expect(recipe).toBeTruthy()
