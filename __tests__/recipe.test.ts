@@ -29,7 +29,7 @@ describe('Given an recipe with no units', () => {
     expect(recipe.ingredients.length).toBe(4)
   })
 
-  test.skip('it scales a recipe by a constant', () => {
+  test('it scales a recipe by a constant', () => {
     const CONSTANT = 2
     recipe.scale(CONSTANT)
     expect(recipe.constant).toBe(CONSTANT)
@@ -40,7 +40,7 @@ describe('Given an recipe with no units', () => {
     expect(recipe.ingredients[3].amount.base).toBe(4)
   })
 
-  test.skip('it excludes unlocked ingredients from scaling', () => {
+  test('it excludes unlocked ingredients from scaling', () => {
     recipe.ingredients[0].toggleLocked()
     recipe.scale(0.5)
     expect(recipe.ingredients[0].amount.base).toBe(2)
@@ -120,6 +120,16 @@ describe('Given the sample recipe from Sliced web app and a constant of 2', () =
       expect(sixthIngredient.amount.base).toBe(0.25)
       expect(sixthIngredient.unit).toMatchObject(UNITS.CUP)
       expect(sixthIngredient.name).toBe('milk')
+    })
+  })
+
+  describe('After constant is set', () => {
+    test('it scales a recipe by a constant', () => {
+      const CONSTANT = 2
+      recipe.scale(CONSTANT)
+      console.log('THIS IS MY NRE RECIPE', recipe.ingredients)
+      expect(recipe.constant).toBe(CONSTANT)
+      expect(recipe.ingredients).toBeTruthy()
     })
   })
 })

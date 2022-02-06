@@ -33,6 +33,7 @@ export class Recipe {
       this.ingredients.forEach((ingredient: Ingredient): void =>
         ingredient.scale(constant)
       )
+      this.constant = constant
     } catch (error) {
       throw new Error(`${ERRORS.RECIPE_NOT_SCALED}: ${error?.message ?? error}`)
     }

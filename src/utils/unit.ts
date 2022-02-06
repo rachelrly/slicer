@@ -4,7 +4,10 @@ import { MAXIMUM_SUPPORTED_ML } from './constants'
 /**
  * Various helper functions that have to do with string:Unit:ml conversion
  */
-export function getUnitFromMl(amount: number, standardOnly: boolean): UnitType {
+export function getUnitFromMl(
+  amount: number,
+  standardOnly: boolean = true
+): UnitType {
   // this function takes an amount (of ml) and returns the
   //    correct unit based on the breakpoint.
   if (amount === 0) {
@@ -21,10 +24,11 @@ export function getUnitFromMl(amount: number, standardOnly: boolean): UnitType {
     (unit) =>
       unit.ml && (unit.standard === standardOnly || unit.standard === true)
   )
+  console.log('THESE ARE THE UNITS IM GOING WITH', units)
   return units.find(
     (unit, i) =>
-      i === units.length - 1 ||
-      amount > getUnitBreakpoint(unit.ml, units[i + 1].ml)
+      amount > getUnitBreakpoint(unit.ml, units[i + 1].ml) ||
+      i === units.length - 1
   )
 }
 
@@ -47,5 +51,5 @@ export function getUnitFromString(input: string) {
 function getUnitBreakpoint(curr: number, next: number): number {
   const offset = curr * 0.1 // Prevents constant=0.5 from rounding up units
   const average = (curr + next) / 2
-  return average - offset
+  return average + offset
 }

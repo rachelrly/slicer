@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid'
 import { UnitType } from './units'
 import { Amount } from './amount'
 import { ERRORS } from './errors'
-import { getUnitFromString, MAX_WORD_LENGTH } from '../utils'
+import { getUnitFromMl, getUnitFromString, MAX_WORD_LENGTH } from '../utils'
 
 export class Ingredient {
   amount?: Amount
@@ -45,8 +45,12 @@ export class Ingredient {
   }
 
   scale(constant: number) {
-    if (Boolean(this.unit) && 'isMl' in this.amount) {
-      // handle scaling behavior
+    if (this.locked === false) {
+      return
+    } else if (Boolean(this.unit) && 'ml' in this.unit) {
+      const amount = constant * this.amount.base
+      this.unit = getUnitFromMl(amount)
+      this.setAmount(amount.toString())
     } else {
       const amount = (constant * this.amount.base).toString()
       this.setAmount(amount)

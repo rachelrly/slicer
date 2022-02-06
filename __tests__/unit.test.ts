@@ -71,3 +71,9 @@ describe('Given an amount in ml with all units included', () => {
     expect(getUnitFromMl(1000, false)).toMatchObject(UNITS.QUART)
   })
 })
+
+describe('Given valid input', () => {
+  test('it makes breakpoints', () => {
+    // test what you're actually getting from these breakpoints
+  })
+})
