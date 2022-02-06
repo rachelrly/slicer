@@ -10,8 +10,9 @@ export interface UnitType {
     ml: number
     min: number
     standard?: {
-      // if standard is present and empty
-      min?: number // breakpoints are the same as before
+      // If standard: {}, breakpoint is the same,
+      //  but it is included when filtering for standard units only
+      min?: number
     }
   }
 }

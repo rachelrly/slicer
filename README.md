@@ -1,4 +1,4 @@
-# The Slicer
+# Recipe Slicer
 
 This repo contains the TypeScript algorithm to convert recipe strings into a list of Ingredients.
 
@@ -15,16 +15,29 @@ The goal of this project is to make a recipe parsing package with broader applic
 ### `/src`
 
 Contains the TypeScript code of the Slicer algorithm.
-Top level [Recipe 👀](/src/types/Recipe.ts) class is exported from this folder.
 
 #### `/types`
 
-Contains the TS classes for `Recipe`, `Ingredient`, `Amount` and `IngredientName` along with the constant definition of `UNITS` and `ERRORS` and necessary types.
+Contains the TS classes for [`Recipe`](/src/types/recipe.ts) and [`Ingredient`](/src/types/ingredient.ts), and the typed constant definition of [`UNITS`](/src/types/units.ts).
 
 #### `/utils`
 
-Contains [parse.ts 👀](/src/utils/parse.ts), which turns a recipe string into an ingredient list, and other utility functions.
+Contains constants and utility functions, notably [`makeIngredientArray()`](/src/utils/makeIngredientArray.ts), which takes in a an array of words and converts them to an array of Ingredients.
 
 ### `/__tests__`
 
-Contains unit tests for the algorithm
+#### `ingredient.test.ts`
+
+Tests the Ingredient class
+
+#### `recipe.test.ts`
+
+Tests the recipe class
+
+#### `unit.test.ts`
+
+Tests functions in [`/src/utils.unit.ts`](/src/utils/unit.ts)
+
+#### `regex.test.ts`
+
+Tests regex for character breaks ([`BREAK_ON_CHAR`](/src/utils/constants.ts)) and ([`REPLACE_CHAR`](/src/utils/constants.ts))
