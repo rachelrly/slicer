@@ -19,8 +19,5 @@ export const ERRORS = {
     ZERO_INPUT: "Ingredients with an amount of '0' are not scalable.",
     HAS_DATA:
       'This ingredeient already has a unit or ingredient name. Amounts must be added first.'
-  },
-  INPUT: {
-    BAD_INPUT: 'This is not a valid input.'
   }
 } as const

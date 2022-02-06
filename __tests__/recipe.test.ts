@@ -16,6 +16,15 @@ const SLICED = `1/2 cup butter
 2 tsp baking powder 
 1 cup ricotta 1/4 c milk`
 
+// TEST WITH ACTUAL RECIPE
+// describe('Given input that is too long', () => {
+//   test('it throws', () => {
+//     const words = splitInput(LONG)
+//     expect(words.length).toBeGreaterThan(MAX_WORD_LENGTH)
+//     expect(() => makeIngredientArray(words)).toThrow(ERRORS.BAD_INPUT_LENGTH)
+//   })
+// })
+
 describe('Given an recipe with no units', () => {
   const recipe = new Recipe()
   test('it parses the string and returns an array of ingredients', () => {

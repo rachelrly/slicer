@@ -83,15 +83,6 @@ describe('Given recipes with fractional and composite ingredients', () => {
   })
 })
 
-// TEST WITH ACTUAL RECIPE
-// describe('Given input that is too long', () => {
-//   test('it throws', () => {
-//     const words = splitInput(LONG)
-//     expect(words.length).toBeGreaterThan(MAX_WORD_LENGTH)
-//     expect(() => makeIngredientArray(words)).toThrow(ERRORS.BAD_INPUT_LENGTH)
-//   })
-// })
-
 describe('Given bad recipe input (this will show errors to console)', () => {
   // Skipped because it logs verbose errors
   test.skip('it does not fail and returns an array of ingredeints (this will show errors to console)', () => {

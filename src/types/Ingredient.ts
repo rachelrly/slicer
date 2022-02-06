@@ -79,14 +79,18 @@ export class Ingredient {
     if (add && Boolean(this.amount)) {
       this.amount += float
     } else {
-      // TODO: Set this up
-      // if (this.validate()) {
-      //   if (this.unit && 'ml' in this.unit) {
-      //     this.amount = float * this.unit.ml.ml
-      //     return
-      //   }
-      // }
       this.amount = float
+    }
+  }
+
+  setNewAmount(amount: string) {
+    if (this._isAmount(amount)) {
+      const num: number = toNumber(amount)
+      if (this.unit && 'ml' in this.unit) {
+        this.amount = num * this.unit.ml.ml
+      } else {
+        this.amount = num
+      }
     }
   }
 

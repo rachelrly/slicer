@@ -1,5 +1,3 @@
-import { MAX_SUPPORTED_ML } from '../utils'
-
 export interface UnitName {
   long: string
   short?: string
