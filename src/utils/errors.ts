@@ -15,6 +15,7 @@ export const ERRORS = {
     NO_UNIT: 'No unit found for this amount input'
   },
   AMOUNT: {
+    INVALID: 'Invalid amount input. Recipe will not be scaled.',
     NEGATIVE_INPUT: 'Ingredients cannot have a negative amount.',
     ZERO_INPUT: "Ingredients with an amount of '0' are not scalable.",
     HAS_DATA:

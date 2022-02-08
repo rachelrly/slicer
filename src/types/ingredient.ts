@@ -87,10 +87,13 @@ export class Ingredient {
     if (this._isAmount(amount)) {
       const num: number = toNumber(amount)
       if (this.unit && 'ml' in this.unit) {
+        // Sets user provided amount as new amount
         this.amount = num * this.unit.ml.ml
       } else {
         this.amount = num
       }
+    } else {
+      throw new Error(ERRORS.AMOUNT.INVALID)
     }
   }
 
