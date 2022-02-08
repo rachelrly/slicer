@@ -48,8 +48,8 @@ describe('Given an amount in ml with standard units only', () => {
     expect(getUnitFromMl(500, true)).toMatchObject(UNITS.CUP)
   })
 
-  test('it returns GALLON for 1000000ml (max) input', () => {
-    expect(getUnitFromMl(100000, true)).toMatchObject(UNITS.GALLON)
+  test('it returns GALLON for 10000ml (max) input', () => {
+    expect(getUnitFromMl(1000, true)).toMatchObject(UNITS.GALLON)
   })
 })
 
