@@ -1,5 +1,5 @@
 export * from './makeIngredientArray'
-export * from './formatFraction'
+export * from './formatAmount'
 export * from './unit'
 export * from './constants'
 export * from './number'

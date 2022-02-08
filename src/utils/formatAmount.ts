@@ -9,9 +9,10 @@ export function formatAmount(decimal: number) {
   // check if this is in fact a fraction before using
   let top: string | number = decimal.toString().replace(/\d+[.]/, '')
   let bottom = Math.pow(10, top.length)
-  if (decimal > 1) {
+  if (bottom) {
     top = +top + Math.floor(decimal) * bottom
+    const x = gcd(top, bottom)
+    return `${top / x + '/' + bottom / x}`
   }
-  const x = gcd(top, bottom)
-  return `${top / x + '/' + bottom / x}`
+  return decimal
 }

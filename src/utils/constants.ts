@@ -1,5 +1,3 @@
-export const MAXIMUM_SUPPORTED_ML = 100000 // depreciated to standardize naming
-
 export const MAX_SUPPORTED_ML = 15200
 
 export const MAX_WORD_LENGTH = 30
