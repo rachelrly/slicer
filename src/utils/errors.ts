@@ -7,7 +7,7 @@ export const ERRORS = {
     NO_VALID_PART: 'Input is not a valid amount, unit, or ingredient name.'
   },
   UNIT: {
-    UNREALISTIC_INPUT: 'Amounts over 20 gallons (xx ml) cannot be scaled.',
+    UNREALISTIC_INPUT: 'Amounts over 4 gallons cannot be scaled.',
     HAS_DATA:
       'This ingredeient already has a ingredient name or unit. Units must be added before an ingredeint name.',
     HAS_UNIT:
@@ -15,6 +15,7 @@ export const ERRORS = {
     NO_UNIT: 'No unit found for this amount input'
   },
   AMOUNT: {
+    INVALID: 'Invalid amount input. Recipe will not be scaled.',
     NEGATIVE_INPUT: 'Ingredients cannot have a negative amount.',
     ZERO_INPUT: "Ingredients with an amount of '0' are not scalable.",
     HAS_DATA:

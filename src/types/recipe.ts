@@ -27,12 +27,18 @@ export class Recipe {
   }
 
   scale(constant: number) {
+    let rollback = {
+      ingredients: [...this.ingredients],
+      constant: this.constant
+    }
     try {
       this.ingredients.forEach((ingredient: Ingredient): void =>
         ingredient.scale(constant)
       )
       this.constant = constant
     } catch (error) {
+      this.ingredients = rollback.ingredients
+      this.constant = rollback.constant
       throw new Error(`${ERRORS.RECIPE_NOT_SCALED}: ${error?.message}`)
     }
   }

@@ -8,7 +8,8 @@ import {
   toNumber,
   isNumber,
   getUnitFromMl,
-  getAmountInUnit
+  getAmountInUnit,
+  formatAmount
 } from '../utils'
 
 export interface IngredientDisplayType {
@@ -87,10 +88,13 @@ export class Ingredient {
     if (this._isAmount(amount)) {
       const num: number = toNumber(amount)
       if (this.unit && 'ml' in this.unit) {
+        // Sets user provided amount as new amount
         this.amount = num * this.unit.ml.ml
       } else {
         this.amount = num
       }
+    } else {
+      throw new Error(ERRORS.AMOUNT.INVALID)
     }
   }
 
@@ -125,7 +129,7 @@ export class Ingredient {
     }
   }
 
-  display() {
+  display(format = true) {
     const data: IngredientDisplayType = {
       amount: '',
       unit: undefined,
@@ -134,9 +138,12 @@ export class Ingredient {
     if (this.unit) {
       data.unit = this.unit.name
       if ('ml' in this.unit) {
-        data.amount = getAmountInUnit(this.amount, this.unit).toString()
+        data.amount = formatAmount(
+          getAmountInUnit(this.amount, this.unit),
+          format
+        )
       } else {
-        data.amount = this.amount.toString()
+        data.amount = formatAmount(this.amount, format)
       }
     }
     return data

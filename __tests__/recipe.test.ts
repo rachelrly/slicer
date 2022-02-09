@@ -176,6 +176,72 @@ describe('Given the sample recipe from Sliced web app and a constant of 2', () =
       expect(ing.name).toBe('milk')
     })
   })
+
+  describe('After constant is set to 0.5', () => {
+    const CONSTANT = 0.5
+    test('it scales a recipe by a constant', () => {
+      recipe.scale(CONSTANT)
+      expect(recipe.constant).toBe(CONSTANT)
+      expect(recipe.ingredients).toBeTruthy()
+    })
+
+    test('it scales the first ingredient correctly', () => {
+      const ing = recipe.ingredients[0]
+      expect(getAmountInUnit(ing.amount, ing.unit)).toBe(0.5)
+      expect(ing.unit).toMatchObject(UNITS.CUP)
+      expect(ing.name).toBe('butter')
+    })
+
+    test('it scales the second ingredient correctly', () => {
+      const ing = recipe.ingredients[1]
+      expect(getAmountInUnit(ing.amount, ing.unit)).toBe(0.75)
+      expect(ing.unit).toMatchObject(UNITS.CUP)
+      expect(ing.name).toBe('sugar')
+    })
+
+    test('it scales the third ingredient correctly', () => {
+      const ing = recipe.ingredients[2]
+      expect(ing.amount).toBe(3)
+      expect(ing.unit).toBeUndefined()
+      expect(ing.name).toBe('large eggs')
+    })
+
+    test('it scales the fourth ingredient correctly', () => {
+      const ing = recipe.ingredients[3]
+      expect(getAmountInUnit(ing.amount, ing.unit)).toBe(3)
+      expect(ing.unit).toMatchObject(UNITS.TABLESPOON)
+      expect(ing.name).toBe('lemon juice')
+    })
+
+    test('it scales the fifth ingredient correctly', () => {
+      const ing = recipe.ingredients[4]
+      expect(getAmountInUnit(ing.amount, ing.unit)).toBe(1)
+      expect(ing.unit).toMatchObject(UNITS.CUP)
+      expect(ing.name).toBe('plain flour')
+    })
+
+    test('it scales the sixth ingredient correctly', () => {
+      const ing = recipe.ingredients[5]
+      // Is this what we want? The original units are TEASPOON
+      expect(getAmountInUnit(ing.amount, ing.unit)).toBe(0.67)
+      expect(ing.unit).toMatchObject(UNITS.TABLESPOON)
+      expect(ing.name).toBe('baking powder')
+    })
+
+    test('it scales the seventh ingredient correctly', () => {
+      const ing = recipe.ingredients[6]
+      expect(getAmountInUnit(ing.amount, ing.unit)).toBe(1)
+      expect(ing.unit).toMatchObject(UNITS.CUP)
+      expect(ing.name).toBe('ricotta')
+    })
+
+    test('it scales the final ingredient correctly', () => {
+      const ing = recipe.ingredients[7]
+      expect(getAmountInUnit(ing.amount, ing.unit)).toBe(4)
+      expect(ing.unit).toMatchObject(UNITS.TABLESPOON)
+      expect(ing.name).toBe('milk')
+    })
+  })
 })
 
 describe('Given input that exceeds the maximum length', () => {
