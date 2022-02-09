@@ -9,7 +9,8 @@ import {
   isNumber,
   getUnitFromMl,
   getAmountInUnit,
-  formatAmount
+  formatAmount,
+  REPLACE_CHAR
 } from '../utils'
 
 export interface IngredientDisplayType {
@@ -61,7 +62,12 @@ export class Ingredient {
       return
     }
     const amount = (constant * this.amount).toString()
-    this.setAmount(amount)
+    console.log('THESE ARE MY AMOUNTS FROM INGREDIENT.SCALE', {
+      amount,
+      old: this.amount,
+      constant
+    })
+    this.setNewAmount(amount)
     if (this.unit && 'ml' in this.unit) {
       this.unit = getUnitFromMl(this.amount)
     }
@@ -85,8 +91,8 @@ export class Ingredient {
   }
 
   setNewAmount(amount: string) {
-    console.log('ATTEMPTING TO SET NEW AMOUTN WITH', amount)
     const rollback = this.amount
+    console.log('THIS IS MY NEW AMOUNT', { amount })
     if (this._isAmount(amount)) {
       const num: number = toNumber(amount)
       if (this.unit && 'ml' in this.unit) {
@@ -113,6 +119,13 @@ export class Ingredient {
     } else {
       this.name = current
     }
+  }
+
+  setNewName(current: string) {
+    if (current.length >= MAX_WORD_LENGTH) {
+      throw new Error(ERRORS.BAD_WORD_LENGTH)
+    }
+    this.setName(current.replace(REPLACE_CHAR, ''))
   }
 
   setActive(state: string) {
