@@ -1,48 +1,73 @@
-// Adapted from https://gist.github.com/redteam-snippets/3934258
+// This uses string matching as opposed to calculations
+//  because I couldn't figure out a clean way to handle
+//  reduced fractions for repeating decimals and rounding
+//  and because there is a fininte amount of useful fractions in cooking
 
-function gcd(a: number, b: number): number {
-  return b ? gcd(b, a % b) : a
+export const FRACTIONS = {
+  '0': {
+    min: 0,
+    max: 0.11
+  },
+  '1/4': {
+    min: 0.12,
+    max: 0.28
+  },
+  '1/3': {
+    min: 0.29,
+    max: 0.43
+  },
+  '1/2': {
+    min: 0.44,
+    max: 0.58
+  },
+  '2/3': {
+    min: 0.59,
+    max: 0.7
+  },
+  '3/4': {
+    min: 0.71,
+    max: 0.85
+  },
+  '1': {
+    min: 0.86,
+    max: 1
+  }
 }
 
-export function formatAmount(amount: number) {
-  // Use regex to test for whole number
-  const string = parseFloat(amount.toFixed(2)).toString()
-  const regex = /\./gi
-  const decimalPoint = regex.exec(string)?.index
-  console.log('THIS IS MY NUM AND DECIMAL POINT', {
-    decimalPoint,
-    string,
-    amount
-  })
-  if (decimalPoint) {
-    // check if this is a whole number or amount
-    // check if this is in fact a fraction before using
-    //const mixed = string.split(' ')
-    // NOT WORKING
-    // is left side of dec over 1??
-    // const whole = mixed[1] ? mixed[0] : ''
-    let topString = string.slice(decimalPoint + 1)
-    let top = parseFloat(topString)
-    let bottom = Math.pow(10, topString.length)
-    // top > bottom top % bottom
-    if (bottom) {
-      top = +top + Math.floor(amount) * bottom
-      const x = gcd(top, bottom)
-      top = top / x
-      bottom = bottom / x
-      console.log('REDUCED HERE', top / bottom, top / (bottom - 1), {
-        topString,
-        bottom,
-        top
-      })
-      if (top > bottom) {
-        const mod = top % bottom
-        const whole = string.slice(0, decimalPoint)
-        return `${whole + ' '}${mod + '/' + bottom}`
-      }
+export function formatAmount(amount: number, fractions = true): string {
+  const string = formatAmountString(amount)
+  if (fractions) {
+    return formatFraction(string)
+  }
+  return string
+}
 
-      return `${top + '/' + bottom}`
+function formatAmountString(amount: number): string {
+  return parseFloat(amount.toFixed(2)).toString()
+}
+
+export function formatFraction(amount: string): string {
+  const decimalPoint = getDecimalIndex(amount)
+  if (decimalPoint) {
+    const whole = amount.slice(0, decimalPoint)
+    const float = parseFloat(`0.${amount.slice(decimalPoint + 1)}`)
+    for (const [fraction, range] of Object.entries(FRACTIONS)) {
+      if (inRange(float, range.min, range.max)) {
+        if (fraction.length === 1) {
+          return `${Number(whole) + Number(fraction)}`
+        }
+        return whole && whole !== '0' ? `${whole} ${fraction}` : fraction
+      }
     }
   }
-  return `${amount}`
+  return amount
+}
+
+function inRange(x: number, min: number, max: number) {
+  return x >= min && x <= max
+}
+
+function getDecimalIndex(amount: string) {
+  const regex = /\./gi
+  return regex.exec(amount)?.index ?? false
 }
