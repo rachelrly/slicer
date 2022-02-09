@@ -129,23 +129,12 @@ export class Ingredient {
     }
   }
 
-  display(format = true) {
-    const data: IngredientDisplayType = {
-      amount: '',
-      unit: undefined,
-      name: this.name
-    }
+  displayAmount(format = true) {
     if (this.unit) {
-      data.unit = this.unit.name
       if ('ml' in this.unit) {
-        data.amount = formatAmount(
-          getAmountInUnit(this.amount, this.unit),
-          format
-        )
-      } else {
-        data.amount = formatAmount(this.amount, format)
+        return formatAmount(getAmountInUnit(this.amount, this.unit), format)
       }
     }
-    return data
+    return formatAmount(this.amount, format)
   }
 }
