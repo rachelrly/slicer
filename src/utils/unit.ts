@@ -31,7 +31,6 @@ export function getUnitFromMl(
   // New unit for amount
   const unit = units.find((unit) => {
     const { min } = getBreakpoint(unit, standard)
-    console.log('I HAVE A MIN BREAKPOINT!!!', min)
     if (amount >= min) return true
   })
   if (!unit) {
