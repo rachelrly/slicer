@@ -237,8 +237,8 @@ describe('Given the sample recipe from Sliced web app and a constant of 2', () =
 
     test('it scales the final ingredient correctly', () => {
       const ing = recipe.ingredients[7]
-      expect(getAmountInUnit(ing.amount, ing.unit)).toBe(4)
-      expect(ing.unit).toMatchObject(UNITS.TABLESPOON)
+      expect(getAmountInUnit(ing.amount, ing.unit)).toBe(0.25)
+      expect(ing.unit).toMatchObject(UNITS.CUP)
       expect(ing.name).toBe('milk')
     })
   })

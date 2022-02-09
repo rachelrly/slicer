@@ -86,18 +86,9 @@ export class Ingredient {
   }
 
   setNewAmount(amount: string) {
-    const rollback = this.amount
     if (this._isAmount(amount)) {
-      const num: number = toNumber(amount)
-      if (this.unit && 'ml' in this.unit) {
-        // Sets user provided amount as new amount
-        console.log('BEFORE SET NEW AMOUNT', this.amount)
-        this.amount = num
-      } else {
-        this.amount = num
-      }
+      this.setAmount(amount, false)
     } else {
-      this.amount = rollback
       throw new Error(ERRORS.AMOUNT.INVALID)
     }
   }
