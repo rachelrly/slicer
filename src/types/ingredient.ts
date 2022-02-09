@@ -61,9 +61,11 @@ export class Ingredient {
     if (this.locked === false) {
       return
     }
+    // Scales amount
     const amount = (constant * this.amount).toString()
     this.setNewAmount(amount)
-    if (this.unit && 'ml' in this.unit) {
+    // Scales unit
+    if (this.unit !== undefined && 'ml' in this.unit) {
       this.unit = getUnitFromMl(this.amount)
     }
   }
