@@ -94,10 +94,8 @@ describe('Given a valid amount, unit, and ingredient name', () => {
   })
 
   test('it returns the correct display object', () => {
-    const { amount, unit, name } = ing.display()
+    const amount = ing.display()
     expect(amount).toBe('1')
-    expect(unit).toBe(ing.unit.name)
-    expect(name).toBe('water')
   })
 
   test('it replaces the amount and sets to the amount in the current units ml', () => {
