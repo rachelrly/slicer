@@ -85,15 +85,19 @@ export class Ingredient {
   }
 
   setNewAmount(amount: string) {
+    console.log('ATTEMPTING TO SET NEW AMOUTN WITH', amount)
+    const rollback = this.amount
     if (this._isAmount(amount)) {
       const num: number = toNumber(amount)
       if (this.unit && 'ml' in this.unit) {
         // Sets user provided amount as new amount
+        console.log('BEFORE SET NEW AMOUNT')
         this.amount = num * this.unit.ml.ml
       } else {
         this.amount = num
       }
     } else {
+      this.amount = rollback
       throw new Error(ERRORS.AMOUNT.INVALID)
     }
   }
@@ -129,7 +133,7 @@ export class Ingredient {
     }
   }
 
-  display(format = true) {
+  displayAmount(format = true) {
     if (this.unit) {
       if ('ml' in this.unit) {
         return formatAmount(getAmountInUnit(this.amount, this.unit), format)

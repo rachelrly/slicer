@@ -94,7 +94,7 @@ describe('Given a valid amount, unit, and ingredient name', () => {
   })
 
   test('it returns the correct display object', () => {
-    const amount = ing.display()
+    const amount = ing.displayAmount()
     expect(amount).toBe('1')
   })
 
