@@ -34,9 +34,9 @@ export const FRACTIONS = {
   }
 }
 
-export function formatAmount(amount: number, fractions = true): string {
+export function formatAmount(amount: number, format = true): string {
   const string = formatAmountString(amount)
-  if (fractions) {
+  if (format) {
     return formatFraction(string)
   }
   return string
