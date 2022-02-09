@@ -95,6 +95,12 @@ export class Ingredient {
     }
   }
 
+  setNewUnlockedAmount(amount: string) {
+    if (this.unit && 'ml' in this.unit) {
+      this.setNewAmount(`${parseFloat(amount) * this.unit.ml.ml}`)
+    }
+  }
+
   setUnit(unit: string) {
     this.unit = getUnitFromString(unit)
   }
