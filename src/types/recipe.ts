@@ -32,9 +32,9 @@ export class Recipe {
       constant: this.constant
     }
     try {
-      this.ingredients.forEach((ingredient: Ingredient): void =>
-        ingredient.scale(constant)
-      )
+      this.ingredients.forEach((_, index): void => {
+        this.ingredients[index].scale(constant)
+      })
       this.constant = constant
     } catch (error) {
       this.ingredients = rollback.ingredients

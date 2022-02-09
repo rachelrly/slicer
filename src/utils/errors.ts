@@ -3,6 +3,7 @@ export const ERRORS = {
   BAD_INPUT: 'Unable to parse recipe input',
   RECIPE_NOT_SCALED: 'Unable to scale recipe',
   WORD_NOT_SORTED: 'Unable to sort current word',
+  BAD_WORD_LENGTH: 'This word is too long to set',
   INGREDIENT: {
     NO_VALID_PART: 'Input is not a valid amount, unit, or ingredient name.'
   },

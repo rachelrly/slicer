@@ -22,12 +22,20 @@ export function getUnitFromMl(
   }
   // Units are assumed to already be sorted in descending order of unit.ml
   const units: UnitType[] = Object.values(UNITS).filter((unit) =>
-    'ml' in unit && standard ? Boolean('standard' in unit.ml) : true
+    unit?.ml && standard
+      ? Boolean('standard' in unit.ml)
+      : unit?.ml // Not filtering for standard
+      ? true
+      : false
   )
+  // New unit for amount
   const unit = units.find((unit) => {
     const { min } = getBreakpoint(unit, standard)
-    if (amount > min) return amount >= min
+    if (amount >= min) return true
   })
+  if (!unit) {
+    throw new Error(ERRORS.UNIT.NO_UNIT)
+  }
   return unit
 }
 
@@ -48,7 +56,7 @@ export function getUnitFromString(input: string) {
 
 function getBreakpoint(
   { ml }: UnitType,
-  standard: boolean // Standard units only
+  standard: boolean = true // Standard units only
 ): { min: number } {
   const breakpoints = { min: ml.min }
   if (standard && 'standard' in ml) {

@@ -9,7 +9,8 @@ import {
   isNumber,
   getUnitFromMl,
   getAmountInUnit,
-  formatAmount
+  formatAmount,
+  REPLACE_CHAR
 } from '../utils'
 
 export interface IngredientDisplayType {
@@ -60,9 +61,11 @@ export class Ingredient {
     if (this.locked === false) {
       return
     }
+    // Scales amount
     const amount = (constant * this.amount).toString()
-    this.setAmount(amount)
-    if (this.unit && 'ml' in this.unit) {
+    this.setNewAmount(amount)
+    // Scales unit
+    if (this.unit !== undefined && 'ml' in this.unit) {
       this.unit = getUnitFromMl(this.amount)
     }
   }
@@ -86,13 +89,7 @@ export class Ingredient {
 
   setNewAmount(amount: string) {
     if (this._isAmount(amount)) {
-      const num: number = toNumber(amount)
-      if (this.unit && 'ml' in this.unit) {
-        // Sets user provided amount as new amount
-        this.amount = num * this.unit.ml.ml
-      } else {
-        this.amount = num
-      }
+      this.setAmount(amount, false)
     } else {
       throw new Error(ERRORS.AMOUNT.INVALID)
     }
@@ -109,6 +106,13 @@ export class Ingredient {
     } else {
       this.name = current
     }
+  }
+
+  setNewName(current: string) {
+    if (current.length >= MAX_WORD_LENGTH) {
+      throw new Error(ERRORS.BAD_WORD_LENGTH)
+    }
+    this.setName(current.replace(REPLACE_CHAR, ''))
   }
 
   setActive(state: string) {
@@ -129,7 +133,7 @@ export class Ingredient {
     }
   }
 
-  display(format = true) {
+  displayAmount(format = true) {
     if (this.unit) {
       if ('ml' in this.unit) {
         return formatAmount(getAmountInUnit(this.amount, this.unit), format)
