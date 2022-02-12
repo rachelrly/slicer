@@ -6,7 +6,7 @@ export const MAX_INPUT_LENGTH = 300
 
 export const BREAK_ON_CHAR = /[\s|-]/
 
-// Keeps alphabetical chars, digits, '-', '/', '-', '%'
+// Keeps alphabetical chars, digits, '-', '/', '-', '%', and whitespace
 export const REPLACE_CHAR = /(?![\-|\.|\/\\|\%|\s])(\W)/g
 
 // Fractions use string matching and a range as opposed to calculated
