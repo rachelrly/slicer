@@ -5,6 +5,7 @@ export const ERRORS = {
   WORD_NOT_SORTED: 'Unable to sort current word',
   BAD_WORD_LENGTH: 'This word is too long to set',
   INGREDIENT: {
+    BAD_INPUT: 'Cannot change ingredient name.',
     NO_VALID_PART: 'Input is not a valid amount, unit, or ingredient name.'
   },
   UNIT: {

@@ -98,3 +98,15 @@ describe('Given a valid amount, unit, and ingredient name', () => {
     expect(amount).toBe('1')
   })
 })
+
+describe('Given a string to replace a field in the recipe', () => {
+  const ing = new Ingredient()
+  ing.sort('1')
+  ing.sort('cup')
+  ing.sort('oldname')
+  test('it changes ingredient name', () => {
+    const NEW_NAME = 'newname'
+    ing.setNewName(NEW_NAME)
+    expect(ing.name).toBe(NEW_NAME)
+  })
+})

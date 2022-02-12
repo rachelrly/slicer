@@ -97,7 +97,10 @@ export class Ingredient {
 
   setNewUnlockedAmount(amount: string) {
     if (this.unit && 'ml' in this.unit) {
-      this.setNewAmount(`${parseFloat(amount) * this.unit.ml.ml}`)
+      // we want to get new amount in ml
+      this.setNewAmount(`${toNumber(amount) * this.unit.ml.ml}`)
+    } else {
+      this.setNewAmount(amount)
     }
   }
 
@@ -118,7 +121,11 @@ export class Ingredient {
     if (current.length >= MAX_WORD_LENGTH) {
       throw new Error(ERRORS.BAD_WORD_LENGTH)
     }
-    this.setName(current.replace(REPLACE_CHAR, ''))
+    const name = current.replace(REPLACE_CHAR, '')
+    if (!name.length) {
+      throw new Error(ERRORS.INGREDIENT.BAD_INPUT)
+    }
+    this.setName(name)
   }
 
   setActive(state: string) {
