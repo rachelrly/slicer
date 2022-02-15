@@ -1,9 +1,11 @@
 {
-  "name": "slicer",
-  "version": "1.0.0",
+  "name": "recipe-slicer",
+  "version": "1.0.1",
   "description": "An algorithm that parses recipe input to make ingredients scalable",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
+    "prepublish": "tsc",
     "test": "tsc && jest --no-cache dist/__tests__"
   },
   "author": "Rachel Reilly",
