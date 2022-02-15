@@ -1,39 +1,31 @@
 # Recipe Slicer
 
-This repo contains the TypeScript algorithm to convert recipe strings into a list of Ingredients.
+The Recipe Slicer is a TypeScript algorithm to convert recipe strings into a list of Ingredients.
 
-The goal of this project is to make a recipe parsing package with broader application than the [Sliced app](https://github.com/rachelrly/sliced).
+The goal of this project is to make a recipe manipulation algorithm with broader application than my app [Sliced](https://github.com/rachelrly/sliced).
 
-## Codebase
+Install the recipe slicer with `npm install recipe-slicer`.
 
-### `/src`
+## How to Use
 
-Contains the TypeScript code of the Slicer algorithm.
+### class Recipe
 
-#### `/types`
+The Recipe class is a top-level class with with two methods: `set` and `scale`. `set` takes a recipe string as an argument and sets the list of ingredients. `scale` takes in a constant as an argument and scales the recipe by that constant.
 
-Contains the TS classes for [`Recipe`](/src/types/recipe.ts) and [`Ingredient`](/src/types/ingredient.ts), and the typed constant definition of [`UNITS`](/src/types/units.ts).
+### class Ingredient
 
-#### `/utils`
+The Ingredient class stores the `amount`, `unit`, and `name` of the ingredient. If an ingredient has a unit that supports ml conversion, the `amount` is in ml. Otherwise, the `amount` is the complete `amount` value.
 
-Contains constants and utility functions, notably [`makeIngredientArray()`](/src/utils/makeIngredientArray.ts), which takes in a an array of words and converts them to an array of Ingredients.
+The Ingredient class has a `sort` method that takes a one-word string as an argument and sorts it as an `amount` or `unit`. All other valid inputs are set as the `name`.
 
-### `/__tests__`
+To display the Ingredient amount as a fraction, use `Ingredient.display()`. For decimals (converted to units when applicable), use `Ingredient.display(false)`
 
-Contains the Jest tests for the algorithm
+### UNITS
 
-#### `ingredient.test.ts`
+### utils
 
-Tests the Ingredient class
+There are several utility functions that help with recipe parsing.
 
-#### `recipe.test.ts`
+`toNumber` takes in a string, which could be a decimal, whole number, or fraction, and returns the numeric value. `toFloat` takes in a string and the index of the '/', converting the fraction to a numeric value.
 
-Tests the recipe class
-
-#### `unit.test.ts`
-
-Tests functions in [`/src/utils.unit.ts`](/src/utils/unit.ts)
-
-#### `regex.test.ts`
-
-Tests regex for character breaks ([`BREAK_ON_CHAR`](/src/utils/constants.ts)) and ([`REPLACE_CHAR`](/src/utils/constants.ts))
+`formatFraction` formats floats as fractions for display. This function rounds to the nearest '1/4' or '1/3' increment.

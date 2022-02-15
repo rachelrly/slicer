@@ -4,7 +4,8 @@
     "removeComments": true,
     "rootDir": ".",
     "outDir": "dist",
-    "sourceMap": true
+    "sourceMap": true,
+    "declaration": true
   },
   "include": ["src/**/*", "__tests__/**/*", "__tests__/jest.config.ts"],
   "exclude": ["node_modules"]
